@@ -262,116 +262,157 @@ physiotherapist committed to improving functional outcomes and quality of life.
 </ul>
 </section>
 
-<!-- SUBMISSION PROCESS START -->
-<section class="submission-process">
-
-  <h2>Submission Process</h2>
-
-  <div class="submission-steps">
-
-    <div class="submission-step">
-      <div class="step-number">1</div>
-      <h3>Prepare Your Document</h3>
-      <p>
-        Ensure your paper, poster, or article follows all
-        PhysioPulse guidelines, formatting, and ethical standards.
-      </p>
-    </div>
-
-    <div class="submission-step">
-      <div class="step-number">2</div>
-      <h3>Fill Required Details</h3>
-      <p>
-        Complete all mandatory author details, affiliations,
-        abstract, and contact information accurately.
-      </p>
-    </div>
-
-    <div class="submission-step">
-      <div class="step-number">3</div>
-      <h3>Upload & Submit</h3>
-      <p>
-        Upload your document through the official submission form
-        and submit it for editorial review.
-      </p>
-    </div>
-
-    <div class="submission-step">
-      <div class="step-number">4</div>
-      <h3>Review & Publication</h3>
-      <p>
-        Submitted articles undergo peer review. Accepted articles
-        will be published on the PhysioPulse website.
-      </p>
-    </div>
-
-  </div>
-</section>
+<!-- SUBMISSION PROCESS + SUBMIT BUTTON (MERGED FULL CODE) -->
 
 <style>
-/* ===== SUBMISSION PROCESS STYLES ===== */
-
-.submission-process {
-  padding: 50px 20px;
-  background: #f6f9fc;
-  font-family: Arial, Helvetica, sans-serif;
+html {
+  scroll-behavior: smooth;
 }
 
-.submission-process h2 {
-  text-align: center;
-  font-size: 32px;
-  font-weight: 700;
-  color: #1F6F8B; /* PhysioPulse heading colour */
-  margin-bottom: 40px;
+:root {
+  --physio-blue: #0a5ea8; /* PhysioPulse heading colour */
+  --physio-blue-dark: #084b87;
 }
 
-.submission-steps {
-  max-width: 1100px;
-  margin: auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 25px;
-}
-
-.submission-step {
-  background: #ffffff;
-  padding: 25px;
+.submission-wrapper {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #f5f9ff;
   border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-  transition: transform 0.3s ease;
 }
 
-.submission-step:hover {
-  transform: translateY(-6px);
+.submission-wrapper h2 {
+  color: var(--physio-blue);
+  margin-bottom: 20px;
+}
+
+/* Steps */
+.step {
+  display: flex;
+  margin-bottom: 18px;
 }
 
 .step-number {
-  width: 48px;
-  height: 48px;
-  background: #1F6F8B; /* PhysioPulse colour */
-  color: #ffffff;
-  font-size: 18px;
+  width: 36px;
+  height: 36px;
+  background: var(--physio-blue);
+  color: #fff;
   font-weight: bold;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 15px;
+  margin-right: 15px;
+  flex-shrink: 0;
 }
 
-.submission-step h3 {
-  font-size: 20px;
-  color: #1F6F8B;
+.step h4 {
+  margin: 0;
+  color: var(--physio-blue);
+}
+
+.step p {
+  margin: 4px 0 0;
+  color: #444;
+}
+
+/* Button */
+.submit-btn {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 14px 34px;
+  background: var(--physio-blue);
+  color: #fff;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+.submit-btn:hover {
+  background: var(--physio-blue-dark);
+}
+
+/* Submission target box */
+#submission-box {
+  max-width: 900px;
+  margin: 60px auto;
+  padding: 40px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.1);
+}
+
+#submission-box h2 {
+  color: var(--physio-blue);
   margin-bottom: 10px;
 }
-
-.submission-step p {
-  font-size: 15px;
-  color: #444;
-  line-height: 1.6;
-}
 </style>
-<!-- SUBMISSION PROCESS END -->
+
+<!-- SUBMISSION PROCESS -->
+<section class="submission-wrapper">
+  <h2>Submission Process</h2>
+
+  <div class="step">
+    <div class="step-number">1</div>
+    <div>
+      <h4>Prepare Your Document</h4>
+      <p>Ensure your paper follows PhysioPulse submission guidelines and format.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">2</div>
+    <div>
+      <h4>Fill Required Details</h4>
+      <p>Enter all mandatory author and article information correctly.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">3</div>
+    <div>
+      <h4>Upload Manuscript</h4>
+      <p>Upload your paper, poster, or article through the official form.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">4</div>
+    <div>
+      <h4>Submit for Review</h4>
+      <p>Your submission will be reviewed by the editorial team.</p>
+    </div>
+  </div>
+
+  <!-- BUTTON → SAME PAGE SUBMISSION BOX -->
+  <a href="#submission-box" class="submit-btn">
+    Submit via Google Form
+  </a>
+
+  <p style="margin-top:10px; font-size:14px; color:#555;">
+    Google sign-in is required for file upload.
+  </p>
+</section>
+
+<!-- TARGET SUBMISSION INTERFACE -->
+<section id="submission-box">
+  <h2>Paper / Poster / Article Submission</h2>
+
+  <p>
+    Submit your academic work to
+    <strong>PhysioPulse – Evidence-Based Physiotherapy Journal</strong>
+    using our official submission form.
+  </p>
+
+  <!-- GOOGLE FORM LINK -->
+  <a
+    href="https://docs.google.com/forms/d/e/1FAIpQLSfq-g84q0M5GP24WYjUE6a7STOqgU9hmp3fwOoSTgL8XpSnhw/viewform"
+    target="_blank"
+    class="submit-btn">
+    Open Submission Form
+  </a>
+</section>
     
 <!-- E-CERTIFICATE NOTICE -->
 <div class="certificate-notice">
@@ -575,6 +616,7 @@ Google sign-in is required for file upload.
 
 </body>
 </html>
+
 
 
 
