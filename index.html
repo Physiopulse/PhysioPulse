@@ -262,91 +262,166 @@ physiotherapist committed to improving functional outcomes and quality of life.
 </ul>
 </section>
 
-<section class="submission-process">
-  <h2 class="title">Submission Process</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Submission Process | PhysioPulse</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <div class="step">
-    <span class="step-number">1</span>
-    <div class="step-content">
+<style>
+body{
+  margin:0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background:#f4f7fb;
+  color:#333;
+}
+
+/* SECTION */
+#submission{
+  padding:70px 20px;
+}
+
+#submission h2{
+  text-align:center;
+  font-size:32px;
+  color:#7a2e2e;
+  margin-bottom:50px;
+}
+
+/* GRID */
+.steps{
+  max-width:1100px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:30px;
+}
+
+/* CARD */
+.step{
+  background:#ffffff;
+  border-radius:14px;
+  padding:35px 25px;
+  position:relative;
+  box-shadow:0 8px 20px rgba(0,0,0,0.08);
+}
+
+/* STEP NUMBER */
+.step-number{
+  position:absolute;
+  top:-18px;
+  left:-18px;
+  width:46px;
+  height:46px;
+  background:#8b3a3a;
+  color:#fff;
+  font-weight:700;
+  font-size:18px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* TITLE */
+.step h3{
+  font-size:20px;
+  color:#7a2e2e;
+  margin:10px 0 15px;
+}
+
+/* TEXT */
+.step p{
+  font-size:15px;
+  line-height:1.6;
+  color:#555;
+}
+
+/* ICON */
+.step-icon{
+  font-size:40px;
+  margin-bottom:10px;
+  color:#8b3a3a;
+}
+
+/* BUTTON */
+.submit-btn{
+  display:block;
+  width:max-content;
+  margin:50px auto 0;
+  padding:14px 28px;
+  background:#1e88e5;
+  color:#fff;
+  text-decoration:none;
+  border-radius:8px;
+  font-weight:600;
+  transition:0.3s;
+}
+.submit-btn:hover{
+  background:#0d6efd;
+}
+</style>
+</head>
+
+<body>
+
+<section id="submission">
+  <h2>Submission Process</h2>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-number">1</div>
+      <div class="step-icon">📄</div>
       <h3>Prepare Your Document</h3>
-      <p>Ensure your paper meets all submission guidelines and formatting requirements.</p>
+      <p>
+        Ensure your paper, poster, or article strictly follows
+        PhysioPulse author guidelines, ethical standards, and
+        scientific formatting requirements.
+      </p>
     </div>
-  </div>
 
-  <div class="step">
-    <span class="step-number">2</span>
-    <div class="step-content">
-      <h3>Click Submission Button</h3>
-      <p>Use the “Open Submission Form” button above to access the Google Form.</p>
-    </div>
-  </div>
-
-  <div class="step">
-    <span class="step-number">3</span>
-    <div class="step-content">
+    <div class="step">
+      <div class="step-number">2</div>
+      <div class="step-icon">📝</div>
       <h3>Fill Required Details</h3>
-      <p>Complete all mandatory fields in the submission form accurately.</p>
+      <p>
+        Complete all mandatory fields in the submission form,
+        including author details, affiliations, abstract,
+        keywords, and declarations.
+      </p>
     </div>
-  </div>
 
-  <div class="step">
-    <span class="step-number">4</span>
-    <div class="step-content">
+    <div class="step">
+      <div class="step-number">3</div>
+      <div class="step-icon">📤</div>
       <h3>Upload & Submit</h3>
-      <p>Upload your paper and supporting documents, then submit for review.</p>
+      <p>
+        Upload your manuscript and supporting documents in
+        PDF or DOCX format and submit the form for editorial
+        review.
+      </p>
     </div>
+
+    <div class="step">
+      <div class="step-number">4</div>
+      <div class="step-icon">✅</div>
+      <h3>Review & Publication</h3>
+      <p>
+        Submitted articles undergo peer review. Once accepted,
+        the article is published and an official
+        <strong>E-Certificate</strong> is issued to the authors.
+      </p>
+    </div>
+
   </div>
+
+  <a href="#submit" class="submit-btn">Submit Your Paper</a>
 </section>
 
-    .submission-process {
-  max-width: 800px;
-  margin: 40px auto;
-  padding: 20px;
-  font-family: Arial, sans-serif;
-}
-
-.submission-process .title {
-  font-size: 32px;
-  font-weight: bold;
-  margin-bottom: 30px;
-  color: #2c2c2c;
-}
-
-.step {
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: 25px;
-}
-
-.step-number {
-  width: 40px;
-  height: 40px;
-  background-color: #7b1e1e; /* dark red circle */
-  color: #fff;
-  font-weight: bold;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 15px;
-  flex-shrink: 0;
-}
-
-.step-content h3 {
-  margin: 0;
-  font-size: 20px;
-  color: #333;
-}
-
-.step-content p {
-  margin-top: 6px;
-  font-size: 15px;
-  color: #666;
-  line-height: 1.5;
-}
-
-</p>
-</section>
+</body>
+</html>
     
 <!-- E-CERTIFICATE NOTICE -->
 <div class="certificate-notice">
@@ -550,6 +625,7 @@ Google sign-in is required for file upload.
 
 </body>
 </html>
+
 
 
 
