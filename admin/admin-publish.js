@@ -1,22 +1,6 @@
 /* ================= PASSWORD ================= */
 const ADMIN_PASSWORD = "physio-admin";
 
-/* ================= ELEMENTS ================= */
-const loginBox = document.getElementById("loginBox");
-const panel = document.getElementById("panel");
-const error = document.getElementById("error");
-
-const titleInput = document.getElementById("title");
-const subtitleInput = document.getElementById("subtitle");
-const pdfInput = document.getElementById("pdf");
-const thumbInput = document.getElementById("thumb");
-
-const pdfDrop = document.getElementById("pdfDrop");
-const imgDrop = document.getElementById("imgDrop");
-const pdfInfo = document.getElementById("pdfInfo");
-const imgPreview = document.getElementById("imgPreview");
-const paperList = document.getElementById("paperList");
-
 /* ================= LOGIN ================= */
 function login() {
   if (password.value === ADMIN_PASSWORD) {
@@ -141,3 +125,53 @@ function deletePaper(index) {
   localStorage.setItem("physiopulse_papers", JSON.stringify(papers));
   renderPapers();
 }
+function handlePDFDrop(file) {
+  if (file?.type !== "application/pdf") {
+    alert("Please drop a valid PDF");
+    return;
+  }
+  pdfInfo.innerText = file.name;
+  pdfInput.value = `pdfs/${file.name}`;
+}
+
+function handleImageDrop(file) {
+  if (!file?.type.startsWith("image/")) {
+    alert("Please drop a valid image");
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = e => {
+    imgPreview.src = e.target.result;
+    imgPreview.style.display = "block";
+  };
+  reader.readAsDataURL(file);
+  thumbInput.value = `images/${file.name}`;
+}
+
+/* ================= SAFE DOM INIT ================= */
+window.addEventListener("DOMContentLoaded", () => {
+
+  window.loginBox = document.getElementById("loginBox");
+  window.panel = document.getElementById("panel");
+  window.error = document.getElementById("error");
+
+  window.titleInput = document.getElementById("title");
+  window.subtitleInput = document.getElementById("subtitle");
+  window.pdfInput = document.getElementById("pdf");
+  window.thumbInput = document.getElementById("thumb");
+
+  window.pdfDrop = document.getElementById("pdfDrop");
+  window.imgDrop = document.getElementById("imgDrop");
+  window.pdfInfo = document.getElementById("pdfInfo");
+  window.imgPreview = document.getElementById("imgPreview");
+  window.paperList = document.getElementById("paperList");
+
+  setupDrop(pdfDrop, handlePDFDrop);
+  setupDrop(imgDrop, handleImageDrop);
+
+  if (localStorage.getItem("pp_admin") === "true") {
+    showPanel();
+  }
+});
+
+
