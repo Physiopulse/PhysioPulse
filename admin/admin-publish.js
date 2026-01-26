@@ -14,7 +14,6 @@ function login() {
 function showPanel() {
   loginBox.classList.add("hidden");
   panel.classList.remove("hidden");
-  renderPapers();
 }
 
 function logout() {
@@ -33,7 +32,9 @@ function setupDrop(zone, callback) {
     zone.classList.add("drag");
   });
 
-  zone.addEventListener("dragleave", () => zone.classList.remove("drag"));
+  zone.addEventListener("dragleave", () => {
+    zone.classList.remove("drag");
+  });
 
   zone.addEventListener("drop", e => {
     e.preventDefault();
@@ -42,17 +43,19 @@ function setupDrop(zone, callback) {
   });
 }
 
+/* PDF */
 setupDrop(pdfDrop, file => {
-  if (file?.type !== "application/pdf") {
+  if (!file || file.type !== "application/pdf") {
     alert("Please drop a valid PDF");
     return;
   }
-  pdfInfo.innerText = `${file.name}`;
-  pdfInput.value = `pdfs/${file.name}`;
+  pdfInfo.innerText = `${file.name} (${(file.size/1024/1024).toFixed(2)} MB)`;
+  pdf.value = `pdfs/${file.name}`;
 });
 
+/* IMAGE */
 setupDrop(imgDrop, file => {
-  if (!file?.type.startsWith("image/")) {
+  if (!file || !file.type.startsWith("image/")) {
     alert("Please drop a valid image");
     return;
   }
@@ -62,12 +65,13 @@ setupDrop(imgDrop, file => {
     imgPreview.style.display = "block";
   };
   reader.readAsDataURL(file);
-  thumbInput.value = `images/${file.name}`;
+
+  thumb.value = `images/${file.name}`;
 });
 
 /* ================= PUBLISH ================= */
 function publish() {
-  if (!titleInput.value || !pdfInput.value || !thumbInput.value) {
+  if (!title.value || !pdf.value || !thumb.value) {
     alert("Please complete all fields");
     return;
   }
@@ -75,103 +79,77 @@ function publish() {
   const papers = JSON.parse(localStorage.getItem("physiopulse_papers") || "[]");
 
   papers.push({
-    title: titleInput.value,
-    subtitle: subtitleInput.value,
-    pdf: pdfInput.value,
-    thumb: thumbInput.value
+    title: title.value,
+    subtitle: subtitle.value,
+    pdf: pdf.value,
+    thumb: thumb.value
   });
 
   localStorage.setItem("physiopulse_papers", JSON.stringify(papers));
-
-  titleInput.value = "";
-  subtitleInput.value = "";
-  pdfInput.value = "";
-  thumbInput.value = "";
-  pdfInfo.innerText = "";
-  imgPreview.style.display = "none";
-
-  renderPapers();
   alert("Paper published successfully!");
 }
+/* ======================================================
+   DELETE / UNPUBLISH FEATURE
+   ====================================================== */
 
-/* ================= DELETE ================= */
 function renderPapers() {
-  paperList.innerHTML = "";
+  const list = document.getElementById("paperList");
+  if (!list) return;
 
   const papers = JSON.parse(localStorage.getItem("physiopulse_papers") || "[]");
+  list.innerHTML = "";
 
   if (papers.length === 0) {
-    paperList.innerHTML = "<p>No papers published yet.</p>";
+    list.innerHTML = "<p>No papers published yet.</p>";
     return;
   }
 
-  papers.forEach((p, i) => {
+  papers.forEach((p, index) => {
     const div = document.createElement("div");
-    div.className = "paper-item";
+    div.style.border = "1px solid #ddd";
+    div.style.padding = "12px";
+    div.style.borderRadius = "10px";
+    div.style.marginBottom = "10px";
+    div.style.background = "#f9f9f9";
+
     div.innerHTML = `
       <strong>${p.title}</strong><br>
       <small>${p.subtitle || ""}</small><br>
-      <button onclick="deletePaper(${i})">Delete</button>
+      <button onclick="deletePaper(${index})"
+        style="
+          margin-top:8px;
+          background:#c0392b;
+          color:#fff;
+          border:none;
+          padding:6px 14px;
+          border-radius:6px;
+          cursor:pointer
+        ">
+        Delete
+      </button>
     `;
-    paperList.appendChild(div);
+
+    list.appendChild(div);
   });
 }
 
 function deletePaper(index) {
-  if (!confirm("Unpublish this paper?")) return;
+  if (!confirm("Are you sure you want to unpublish this paper?")) return;
 
   const papers = JSON.parse(localStorage.getItem("physiopulse_papers") || "[]");
   papers.splice(index, 1);
   localStorage.setItem("physiopulse_papers", JSON.stringify(papers));
+
   renderPapers();
-}
-function handlePDFDrop(file) {
-  if (file?.type !== "application/pdf") {
-    alert("Please drop a valid PDF");
-    return;
-  }
-  pdfInfo.innerText = file.name;
-  pdfInput.value = `pdfs/${file.name}`;
+  alert("Paper unpublished successfully.");
 }
 
-function handleImageDrop(file) {
-  if (!file?.type.startsWith("image/")) {
-    alert("Please drop a valid image");
-    return;
-  }
-  const reader = new FileReader();
-  reader.onload = e => {
-    imgPreview.src = e.target.result;
-    imgPreview.style.display = "block";
-  };
-  reader.readAsDataURL(file);
-  thumbInput.value = `images/${file.name}`;
-}
+/* Re-render after publish */
+const originalPublish = publish;
+publish = function () {
+  originalPublish();
+  renderPapers();
+};
 
-/* ================= SAFE DOM INIT ================= */
-window.addEventListener("DOMContentLoaded", () => {
-
-  window.loginBox = document.getElementById("loginBox");
-  window.panel = document.getElementById("panel");
-  window.error = document.getElementById("error");
-
-  window.titleInput = document.getElementById("title");
-  window.subtitleInput = document.getElementById("subtitle");
-  window.pdfInput = document.getElementById("pdf");
-  window.thumbInput = document.getElementById("thumb");
-
-  window.pdfDrop = document.getElementById("pdfDrop");
-  window.imgDrop = document.getElementById("imgDrop");
-  window.pdfInfo = document.getElementById("pdfInfo");
-  window.imgPreview = document.getElementById("imgPreview");
-  window.paperList = document.getElementById("paperList");
-
-  setupDrop(pdfDrop, handlePDFDrop);
-  setupDrop(imgDrop, handleImageDrop);
-
-  if (localStorage.getItem("pp_admin") === "true") {
-    showPanel();
-  }
-});
-
-
+/* Render on admin load */
+renderPapers();
