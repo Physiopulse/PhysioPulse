@@ -76,17 +76,16 @@ function publish() {
     return;
   }
 
-  const papers = JSON.parse(localStorage.getItem("physiopulse_papers") || "[]");
+const pdf = document.getElementById("pdfFile").value;
+const image = document.getElementById("imgFile").value;
 
 papers.push({
-  title: title,
-  subtitle: subtitle,
-  pdf: "pdfs/" + pdfFilename,
-  image: "images/" + imageFilename
+  title,
+  subtitle,
+  pdf,
+  image
 });
 
-  localStorage.setItem("physiopulse_papers", JSON.stringify(papers));
-  alert("Paper published successfully!");
 }
 /* ======================================================
    DELETE / UNPUBLISH FEATURE
@@ -153,6 +152,7 @@ publish = function () {
 
 /* Render on admin load */
 renderPapers();
+
 
 
 
