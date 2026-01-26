@@ -1,79 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>PhysioPulse | Admin</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>PhysioPulse | Admin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f2f9f8;
-      padding: 40px;
-    }
-
-    .box {
-      max-width: 560px;
-      margin: auto;
-      background: #fff;
-      padding: 32px;
-      border-radius: 14px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-    }
-
-    h1, h2 {
-      text-align: center;
-      color: #1f7a7a;
-    }
-
-    label {
-      font-weight: bold;
-      margin-top: 16px;
-      display: block;
-    }
-
-    input {
-      width: 100%;
-      padding: 10px;
-      margin-top: 6px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
-
-    button {
-      margin-top: 22px;
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 25px;
-      background: #1f7a7a;
-      color: #fff;
-      font-size: 15px;
-      cursor: pointer;
-    }
-
-    .danger {
-      background: #c0392b;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    .paper {
-      border: 1px solid #ddd;
-      padding: 10px;
-      border-radius: 6px;
-      margin-top: 10px;
-    }
-
-    img.preview {
-      max-width: 150px;
-      display: block;
-      margin-top: 10px;
-      border-radius: 8px;
-    }
-  </style>
+<style>
+body{
+  font-family:Poppins, sans-serif;
+  background:#f2f9f8;
+  padding:40px;
+}
+.box{
+  max-width:560px;
+  margin:auto;
+  background:#fff;
+  padding:32px;
+  border-radius:18px;
+  box-shadow:0 20px 50px rgba(0,0,0,.15);
+}
+h1,h2{text-align:center;color:#1f7a7a}
+label{font-weight:600;display:block;margin-top:16px}
+input{
+  width:100%;
+  padding:12px;
+  margin-top:6px;
+  border-radius:10px;
+  border:1px solid #ccc;
+}
+button{
+  margin-top:24px;
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:30px;
+  background:linear-gradient(135deg,#1f7a7a,#2fa36b);
+  color:#fff;
+  font-weight:600;
+  cursor:pointer;
+}
+.logout{background:#c0392b}
+.hidden{display:none}
+#error{color:red;text-align:center;margin-top:10px}
+#imgPreview{display:none;max-width:140px;margin-top:10px;border-radius:8px}
+.paper{
+  border:1px solid #ddd;
+  padding:12px;
+  border-radius:10px;
+  margin-bottom:10px;
+  background:#fafafa
+}
+</style>
 </head>
 
 <body>
@@ -82,13 +59,12 @@
 <div class="box" id="loginBox">
   <h1>Admin Login</h1>
   <input type="password" id="password" placeholder="Admin password">
-  <button type="button" onclick="login()">Login</button>
-  <p id="error" style="color:red;text-align:center"></p>
+  <button onclick="login()">Login</button>
+  <div id="error"></div>
 </div>
 
 <!-- PANEL -->
 <div class="box hidden" id="panel">
-
   <h1>Publish Paper</h1>
 
   <label>Paper Title</label>
@@ -97,29 +73,22 @@
   <label>Subtitle / Authors</label>
   <input id="subtitle">
 
-  <label>Select PDF (must exist in /pdfs)</label>
+  <label>Select PDF (must already be in /pdfs)</label>
   <input type="file" id="pdfFile" accept="application/pdf">
 
-  <label>Select Thumbnail (must exist in /images)</label>
+  <label>Select Thumbnail (must already be in /images)</label>
   <input type="file" id="imgFile" accept="image/*">
-  <img id="imgPreview" class="preview">
+  <img id="imgPreview">
 
-  <button type="button" onclick="publish()">Publish to Home Page</button>
-
-  <button type="button" onclick="login()">Login</button>
-
-
+  <button onclick="publish()">Publish to Home Page</button>
+  <button class="logout" onclick="logout()">Logout</button>
 
   <hr style="margin:30px 0">
 
   <h2>Published Papers</h2>
   <div id="paperList"></div>
-
 </div>
 
-<script src="./admin-publish.js"></script>
+<script src="admin-publish.js"></script>
 </body>
 </html>
-
-
-
