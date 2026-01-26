@@ -78,12 +78,12 @@ function publish() {
 
   const papers = JSON.parse(localStorage.getItem("physiopulse_papers") || "[]");
 
-  papers.push({
-    title: title.value,
-    subtitle: subtitle.value,
-    pdf: pdf.value,
-    thumb: thumb.value
-  });
+papers.push({
+  title: title,
+  subtitle: subtitle,
+  pdf: "pdfs/" + pdfFilename,
+  image: "images/" + imageFilename
+});
 
   localStorage.setItem("physiopulse_papers", JSON.stringify(papers));
   alert("Paper published successfully!");
@@ -153,5 +153,6 @@ publish = function () {
 
 /* Render on admin load */
 renderPapers();
+
 
 
