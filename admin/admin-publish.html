@@ -13,11 +13,11 @@
     }
 
     .box {
-      max-width: 520px;
+      max-width: 560px;
       margin: auto;
       background: #fff;
-      padding: 30px;
-      border-radius: 12px;
+      padding: 32px;
+      border-radius: 14px;
       box-shadow: 0 15px 40px rgba(0,0,0,0.15);
     }
 
@@ -28,7 +28,7 @@
 
     label {
       font-weight: bold;
-      margin-top: 15px;
+      margin-top: 16px;
       display: block;
     }
 
@@ -41,7 +41,7 @@
     }
 
     button {
-      margin-top: 20px;
+      margin-top: 22px;
       width: 100%;
       padding: 12px;
       border: none;
@@ -66,6 +66,13 @@
       border-radius: 6px;
       margin-top: 10px;
     }
+
+    img.preview {
+      max-width: 150px;
+      display: block;
+      margin-top: 10px;
+      border-radius: 8px;
+    }
   </style>
 </head>
 
@@ -87,14 +94,15 @@
   <label>Paper Title</label>
   <input id="title">
 
-  <label>Subtitle / Author</label>
+  <label>Subtitle / Authors</label>
   <input id="subtitle">
 
-  <label>PDF file name (inside /pdfs)</label>
-  <input id="pdf" placeholder="example.pdf">
+  <label>Select PDF (must exist in /pdfs)</label>
+  <input type="file" id="pdfFile" accept="application/pdf">
 
-  <label>Thumbnail file name (inside /images)</label>
-  <input id="thumb" placeholder="example.jpg">
+  <label>Select Thumbnail (must exist in /images)</label>
+  <input type="file" id="imgFile" accept="image/*">
+  <img id="imgPreview" class="preview">
 
   <button type="button" onclick="publish()">Publish to Home Page</button>
   <button type="button" class="danger" onclick="logout()">Logout</button>
