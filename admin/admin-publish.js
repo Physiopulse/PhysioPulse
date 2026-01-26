@@ -76,15 +76,22 @@ function publish() {
     return;
   }
 
-const pdf = document.getElementById("pdfFile").value;
-const image = document.getElementById("imgFile").value;
+const pdfFilename = document.getElementById("pdfFile").value.trim();
+const imageFilename = document.getElementById("imgFile").value.trim();
+
+if (!pdfFilename || !imageFilename) {
+  alert("Please enter PDF and image file names.");
+  return;
+}
 
 papers.push({
-  title,
-  subtitle,
-  pdf,
-  image
+  title: title,
+  subtitle: subtitle,
+  pdf: "pdfs/" + pdfFilename,
+  image: "images/" + imageFilename
 });
+
+localStorage.setItem("physiopulse_papers", JSON.stringify(papers));
 
 }
 /* ======================================================
@@ -152,6 +159,7 @@ publish = function () {
 
 /* Render on admin load */
 renderPapers();
+
 
 
 
