@@ -28,15 +28,44 @@ if (localStorage.getItem("pp_admin") === "true") {
   showPanel();
 }
 
+// ================= FILE PICKERS =================
+let selectedPDF = "";
+let selectedImage = "";
+
+document.getElementById("pdfFile")?.addEventListener("change", e => {
+  const file = e.target.files[0];
+  if (!file || file.type !== "application/pdf") {
+    alert("Select a valid PDF");
+    return;
+  }
+  selectedPDF = file.name;
+});
+
+document.getElementById("imgFile")?.addEventListener("change", e => {
+  const file = e.target.files[0];
+  if (!file || !file.type.startsWith("image/")) {
+    alert("Select a valid image");
+    return;
+  }
+
+  selectedImage = file.name;
+
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const img = document.getElementById("imgPreview");
+    img.src = ev.target.result;
+    img.style.display = "block";
+  };
+  reader.readAsDataURL(file);
+});
+
 // ================= PUBLISH =================
 function publish() {
   const title = document.getElementById("title").value.trim();
   const subtitle = document.getElementById("subtitle").value.trim();
-  const pdf = document.getElementById("pdf").value.trim();
-  const thumb = document.getElementById("thumb").value.trim();
 
-  if (!title || !pdf || !thumb) {
-    alert("Please fill all required fields");
+  if (!title || !selectedPDF || !selectedImage) {
+    alert("Please fill all fields and select files");
     return;
   }
 
@@ -47,8 +76,8 @@ function publish() {
   papers.push({
     title: title,
     subtitle: subtitle,
-    pdf: "pdfs/" + pdf,
-    thumb: "images/" + thumb
+    pdf: "pdfs/" + selectedPDF,
+    thumb: "images/" + selectedImage
   });
 
   localStorage.setItem("physiopulse_papers", JSON.stringify(papers));
@@ -57,13 +86,17 @@ function publish() {
 
   document.getElementById("title").value = "";
   document.getElementById("subtitle").value = "";
-  document.getElementById("pdf").value = "";
-  document.getElementById("thumb").value = "";
+  document.getElementById("pdfFile").value = "";
+  document.getElementById("imgFile").value = "";
+  document.getElementById("imgPreview").style.display = "none";
+
+  selectedPDF = "";
+  selectedImage = "";
 
   renderPapers();
 }
 
-// ================= RENDER & DELETE =================
+// ================= RENDER / DELETE =================
 function renderPapers() {
   const list = document.getElementById("paperList");
   list.innerHTML = "";
