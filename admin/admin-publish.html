@@ -2,59 +2,57 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>PhysioPulse | Admin Publish</title>
+  <title>PhysioPulse | Admin</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
     body {
-      font-family: Poppins, sans-serif;
+      font-family: Arial, sans-serif;
       background: #f2f9f8;
       padding: 40px;
     }
 
     .box {
-      max-width: 560px;
+      max-width: 520px;
       margin: auto;
-      background: #ffffff;
-      padding: 32px;
-      border-radius: 18px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.15);
     }
 
-    h1 {
+    h1, h2 {
       text-align: center;
       color: #1f7a7a;
-      margin-bottom: 20px;
     }
 
     label {
-      font-weight: 600;
+      font-weight: bold;
+      margin-top: 15px;
       display: block;
-      margin-top: 16px;
     }
 
     input {
       width: 100%;
-      padding: 12px;
+      padding: 10px;
       margin-top: 6px;
-      border-radius: 10px;
+      border-radius: 6px;
       border: 1px solid #ccc;
     }
 
     button {
-      margin-top: 24px;
+      margin-top: 20px;
       width: 100%;
-      padding: 14px;
+      padding: 12px;
       border: none;
-      border-radius: 30px;
-      background: linear-gradient(135deg, #1f7a7a, #2fa36b);
+      border-radius: 25px;
+      background: #1f7a7a;
       color: #fff;
-      font-weight: 600;
+      font-size: 15px;
       cursor: pointer;
     }
 
-
-    .logout {
+    .danger {
       background: #c0392b;
     }
 
@@ -62,31 +60,10 @@
       display: none;
     }
 
-    /* Drag & drop */
-    .drop {
-      border: 2px dashed #1f7a7a;
-      border-radius: 14px;
-      padding: 24px;
-      margin-top: 20px;
-      text-align: center;
-      background: #f2f9f8;
-    }
-
-    .drop.drag {
-      background: #e6f4f1;
-      border-color: #2fa36b;
-    }
-
-    #imgPreview {
-      display: none;
-      max-width: 160px;
-      margin-top: 12px;
-      border-radius: 10px;
-    }
-
-    .error {
-      color: red;
-      text-align: center;
+    .paper {
+      border: 1px solid #ddd;
+      padding: 10px;
+      border-radius: 6px;
       margin-top: 10px;
     }
   </style>
@@ -94,49 +71,41 @@
 
 <body>
 
+<!-- LOGIN -->
 <div class="box" id="loginBox">
   <h1>Admin Login</h1>
   <input type="password" id="password" placeholder="Admin password">
-  <button onclick="login()">Login</button>
-  <div class="error" id="error"></div>
+  <button type="button" onclick="login()">Login</button>
+  <p id="error" style="color:red;text-align:center"></p>
 </div>
 
+<!-- PANEL -->
 <div class="box hidden" id="panel">
-  <h1>Publish Verified Research</h1>
 
-  <!-- Drag & Drop -->
-  <div id="pdfDrop" class="drop">
-    📄 Drag & Drop PDF here
-    <p id="pdfInfo"></p>
-  </div>
-
-  <div id="imgDrop" class="drop">
-    🖼️ Drag & Drop Thumbnail here
-    <img id="imgPreview">
-  </div>
+  <h1>Publish Paper</h1>
 
   <label>Paper Title</label>
   <input id="title">
 
-  <label>Authors / Subtitle</label>
+  <label>Subtitle / Author</label>
   <input id="subtitle">
 
-  <label>PDF Path</label>
-  <input id="pdf" placeholder="pdfs/example.pdf">
+  <label>PDF file name (inside /pdfs)</label>
+  <input id="pdf" placeholder="example.pdf">
 
-  <label>Thumbnail Path</label>
-  <input id="thumb" placeholder="images/thumb.jpg">
+  <label>Thumbnail file name (inside /images)</label>
+  <input id="thumb" placeholder="example.jpg">
 
-  <button onclick="publish()">Publish to Homepage</button>
-  <button class="logout" onclick="logout()">Logout</button>
+  <button type="button" onclick="publish()">Publish to Home Page</button>
+  <button type="button" class="danger" onclick="logout()">Logout</button>
+
+  <hr style="margin:30px 0">
+
+  <h2>Published Papers</h2>
+  <div id="paperList"></div>
+
 </div>
 
 <script src="./admin-publish.js"></script>
-<hr style="margin:30px 0">
-
-<h2 style="color:#1f7a7a">Published Papers</h2>
-
-<div id="paperList"></div>
-
 </body>
 </html>
