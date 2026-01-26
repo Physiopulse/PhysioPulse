@@ -1,5 +1,5 @@
 /* ================= PASSWORD ================= */
-const ADMIN_PASSWORD = "physio-kattadurai-007";
+const ADMIN_PASSWORD = "physio-admin";
 
 /* ================= LOGIN ================= */
 function login() {
@@ -153,4 +153,5 @@ publish = function () {
 
 /* Render on admin load */
 renderPapers();
+
 
