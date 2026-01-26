@@ -1,145 +1,115 @@
-// ================= ADMIN CONFIG =================
+/* ================= CONFIG ================= */
 const ADMIN_PASSWORD = "physio-admin";
 
-// ================= WAIT FOR PAGE =================
-window.onload = function () {
+/* ================= ELEMENTS ================= */
+const loginBox = document.getElementById("loginBox");
+const panel = document.getElementById("panel");
+const error = document.getElementById("error");
 
-  // ---------- LOGIN ----------
-  window.login = function () {
-    const pass = document.getElementById("password").value;
-    if (pass === ADMIN_PASSWORD) {
-      localStorage.setItem("pp_admin", "true");
-      showPanel();
-    } else {
-      document.getElementById("error").innerText = "Wrong password";
-    }
-  };
+const title = document.getElementById("title");
+const subtitle = document.getElementById("subtitle");
+const pdfFile = document.getElementById("pdfFile");
+const imgFile = document.getElementById("imgFile");
+const imgPreview = document.getElementById("imgPreview");
+const paperList = document.getElementById("paperList");
 
-  window.logout = function () {
-    localStorage.removeItem("pp_admin");
-    location.reload();
-  };
-
-  function showPanel() {
-    document.getElementById("loginBox").classList.add("hidden");
-    document.getElementById("panel").classList.remove("hidden");
-    renderPapers();
-  }
-
-  if (localStorage.getItem("pp_admin") === "true") {
+/* ================= LOGIN ================= */
+function login(){
+  if(password.value === ADMIN_PASSWORD){
+    localStorage.setItem("pp_admin","true");
     showPanel();
+  }else{
+    error.innerText = "Wrong password";
+  }
+}
+
+function showPanel(){
+  loginBox.classList.add("hidden");
+  panel.classList.remove("hidden");
+  renderPapers();
+}
+
+function logout(){
+  localStorage.removeItem("pp_admin");
+  location.reload();
+}
+
+if(localStorage.getItem("pp_admin")==="true"){
+  showPanel();
+}
+
+/* ================= PREVIEW IMAGE ================= */
+imgFile.addEventListener("change",()=>{
+  const file = imgFile.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e=>{
+    imgPreview.src = e.target.result;
+    imgPreview.style.display="block";
+  };
+  reader.readAsDataURL(file);
+});
+
+/* ================= PUBLISH ================= */
+function publish(){
+  if(!title.value || !pdfFile.files[0] || !imgFile.files[0]){
+    alert("Fill all fields");
+    return;
   }
 
-  // ---------- FILE PICKERS ----------
-  let selectedPDF = "";
-  let selectedImage = "";
+  const pdfPath = "pdfs/" + pdfFile.files[0].name;
+  const imgPath = "images/" + imgFile.files[0].name;
 
-  document.getElementById("pdfFile").addEventListener("change", e => {
-    const file = e.target.files[0];
-    if (!file || file.type !== "application/pdf") {
-      alert("Select a valid PDF");
-      return;
-    }
-    selectedPDF = file.name;
+  const papers = JSON.parse(localStorage.getItem("physiopulse_papers")||"[]");
+
+  papers.push({
+    title:title.value,
+    subtitle:subtitle.value,
+    pdf:pdfPath,
+    thumb:imgPath
   });
 
-  document.getElementById("imgFile").addEventListener("change", e => {
-    const file = e.target.files[0];
-    if (!file || !file.type.startsWith("image/")) {
-      alert("Select a valid image");
-      return;
-    }
-    selectedImage = file.name;
+  localStorage.setItem("physiopulse_papers",JSON.stringify(papers));
+  alert("Published successfully");
 
-    const reader = new FileReader();
-    reader.onload = ev => {
-      const img = document.getElementById("imgPreview");
-      img.src = ev.target.result;
-      img.style.display = "block";
-    };
-    reader.readAsDataURL(file);
-  });
+  title.value="";
+  subtitle.value="";
+  pdfFile.value="";
+  imgFile.value="";
+  imgPreview.style.display="none";
 
-  // ---------- PUBLISH ----------
-  window.publish = function () {
-    const title = document.getElementById("title").value.trim();
-    const subtitle = document.getElementById("subtitle").value.trim();
+  renderPapers();
+}
 
-    if (!title || !selectedPDF || !selectedImage) {
-      alert("Please fill all fields and select files");
-      return;
-    }
+/* ================= LIST & DELETE ================= */
+function renderPapers(){
+  const papers = JSON.parse(localStorage.getItem("physiopulse_papers")||"[]");
+  paperList.innerHTML = "";
 
-    const papers = JSON.parse(
-      localStorage.getItem("physiopulse_papers") || "[]"
-    );
-
-    papers.push({
-      title: title,
-      subtitle: subtitle,
-      pdf: "pdfs/" + selectedPDF,
-      thumb: "images/" + selectedImage
-    });
-
-    localStorage.setItem("physiopulse_papers", JSON.stringify(papers));
-
-    alert("Paper published successfully!");
-
-    document.getElementById("title").value = "";
-    document.getElementById("subtitle").value = "";
-    document.getElementById("pdfFile").value = "";
-    document.getElementById("imgFile").value = "";
-    document.getElementById("imgPreview").style.display = "none";
-
-    selectedPDF = "";
-    selectedImage = "";
-
-    renderPapers();
-  };
-
-  // ---------- RENDER ----------
-  function renderPapers() {
-    const list = document.getElementById("paperList");
-    list.innerHTML = "";
-
-    const papers = JSON.parse(
-      localStorage.getItem("physiopulse_papers") || "[]"
-    );
-
-    if (papers.length === 0) {
-      list.innerHTML = "<p>No papers published yet.</p>";
-      return;
-    }
-
-    papers.forEach((p, i) => {
-      const div = document.createElement("div");
-      div.style.border = "1px solid #ccc";
-      div.style.padding = "10px";
-      div.style.marginTop = "10px";
-      div.style.borderRadius = "8px";
-
-      div.innerHTML = `
-        <strong>${p.title}</strong><br>
-        <small>${p.subtitle || ""}</small><br>
-        <button onclick="deletePaper(${i})"
-          style="margin-top:6px;background:#c0392b;color:#fff;border:none;padding:6px 12px;border-radius:6px">
-          Delete
-        </button>
-      `;
-      list.appendChild(div);
-    });
+  if(papers.length===0){
+    paperList.innerHTML="<p>No papers published yet.</p>";
+    return;
   }
 
-  // ---------- DELETE ----------
-  window.deletePaper = function (index) {
-    if (!confirm("Unpublish this paper?")) return;
+  papers.forEach((p,i)=>{
+    const div=document.createElement("div");
+    div.className="paper";
+    div.innerHTML=`
+      <strong>${p.title}</strong><br>
+      <small>${p.subtitle||""}</small><br>
+      <button onclick="deletePaper(${i})"
+        style="margin-top:8px;background:#c0392b;color:#fff;border:none;padding:6px 14px;border-radius:6px;cursor:pointer">
+        Delete
+      </button>
+    `;
+    paperList.appendChild(div);
+  });
+}
 
-    const papers = JSON.parse(
-      localStorage.getItem("physiopulse_papers") || "[]"
-    );
-
-    papers.splice(index, 1);
-    localStorage.setItem("physiopulse_papers", JSON.stringify(papers));
-    renderPapers();
-  };
-};
+function deletePaper(i){
+  if(!confirm("Unpublish this paper?")) return;
+  const papers = JSON.parse(localStorage.getItem("physiopulse_papers")||"[]");
+  papers.splice(i,1);
+  localStorage.setItem("physiopulse_papers",JSON.stringify(papers));
+  renderPapers();
+}
