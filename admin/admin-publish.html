@@ -121,11 +121,20 @@
   <label>Authors / Subtitle</label>
   <input id="subtitle">
 
-  <label>PDF Path</label>
-  <input id="pdf" placeholder="pdfs/example.pdf">
+<input
+  type="text"
+  id="pdfFile"
+  placeholder="PDF file name (example: paper1.pdf)"
+  required
+>
 
-  <label>Thumbnail Path</label>
-  <input id="thumb" placeholder="images/thumb.jpg">
+<input
+  type="text"
+  id="imgFile"
+  placeholder="Thumbnail file name (example: thumb1.png)"
+  required
+>
+
 
   <button onclick="publish()">Publish to Homepage</button>
   <button class="logout" onclick="logout()">Logout</button>
@@ -140,3 +149,4 @@
 
 </body>
 </html>
+
