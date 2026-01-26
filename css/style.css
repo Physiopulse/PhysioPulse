@@ -1,0 +1,844 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary: #1f7a7a;
+  --secondary: #2fa36b;
+  --bg: #f2f9f8;
+  --text-dark: #1f2933;
+  --white: #ffffff;
+}
+
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text-dark);
+}
+
+/* ================= HEADER ================= */
+
+.header {
+  background: var(--primary);
+  padding: 14px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ================= LOGO ================= */
+
+.logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.logo-img {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 2px solid var(--white);
+  transition: transform 0.6s ease, box-shadow 0.6s ease;
+}
+
+/* PhysioPulse text */
+.logo,
+.logo2 {
+  font-size: 20px;
+  font-weight: 700;
+  transition:
+    transform 0.4s ease,
+    letter-spacing 0.4s ease,
+    text-shadow 0.4s ease;
+}
+
+.logo { color: var(--white); }
+.logo2 { color: var(--secondary); }
+
+/* HOVER animation on PhysioPulse */
+.logo-wrap:hover .logo,
+.logo-wrap:hover .logo2 {
+  transform: translateY(-3px) scale(1.05);
+  letter-spacing: 2px;
+  text-shadow: 0 6px 16px rgba(0,0,0,0.35);
+}
+
+.logo-wrap:hover .logo-img {
+  transform: rotate(360deg) scale(1.15);
+  box-shadow: 0 0 14px rgba(255,255,255,0.6);
+}
+
+/* ================= NAV LINKS ================= */
+
+.header-links {
+  display: flex;
+  gap: 26px;
+}
+
+.header-links a {
+  position: relative;
+  color: var(--white);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+
+  transition:
+    transform 0.35s ease,
+    letter-spacing 0.35s ease,
+    text-shadow 0.35s ease;
+}
+
+/* underline */
+.header-links a::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -6px;
+  width: 0;
+  height: 2px;
+  background: var(--secondary);
+  transform: translateX(-50%);
+  transition: width 0.35s ease;
+}
+
+/* HOVER animation on nav */
+.header-links a:hover {
+  transform: translateY(-4px) scale(1.05);
+  letter-spacing: 1.5px;
+  text-shadow: 0 8px 18px rgba(0,0,0,0.4);
+}
+
+.header-links a:hover::after {
+  width: 100%;
+}
+
+/* ================= MENU (MOBILE) ================= */
+
+.menu {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 26px;
+  color: var(--white);
+  cursor: pointer;
+}
+
+/* ================= DRAWER ================= */
+
+.drawer {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--primary);
+  padding: 30px;
+  transition: right 0.35s ease;
+  z-index: 999;
+}
+
+.drawer.open {
+  display: block;
+  right: 0;
+}
+
+/* ================= HERO ================= */
+
+.hero {
+  padding: 90px 22px;
+  text-align: center;
+  background: linear-gradient(180deg, var(--primary), var(--secondary));
+  color: var(--white);
+}
+
+.hero-title {
+  font-size: 34px;
+  line-height: 1.35;
+}
+
+.hero-subtitle {
+  margin-top: 18px;
+  font-size: 16px;
+}
+
+/* ================= SEARCH ================= */
+
+.search-box {
+  margin: 40px auto;
+  max-width: 520px;
+  display: flex;
+  background: var(--white);
+  border-radius: 40px;
+  overflow: hidden;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* hover / focus animation */
+.search-box:hover,
+.search-box:focus-within {
+  transform: scale(1.05);
+  box-shadow: 0 18px 45px rgba(0,0,0,0.25);
+}
+
+.search-box input {
+  flex: 1;
+  padding: 14px 18px;
+  border: none;
+  outline: none;
+}
+
+.search-box button {
+  background: var(--secondary);
+  color: var(--white);
+  border: none;
+  padding: 14px 26px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.search-box button:hover {
+  transform: translateX(6px);
+}
+
+/* ================= TAGS ================= */
+
+.tags span {
+  margin: 6px;
+  padding: 6px 14px;
+  background: rgba(255,255,255,0.25);
+  border-radius: 20px;
+  font-size: 13px;
+}
+
+/* ================= RECENT SCIENTIFIC RESEARCH ================= */
+
+.recent-research {
+  padding: 60px 22px 30px;
+  text-align: center;
+}
+
+/* ✨ ONLY ENHANCEMENT BELOW ✨ */
+.recent-research h2 {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--primary);
+  position: relative;
+  display: inline-block;
+  text-transform: uppercase;
+}
+
+/* animated underline */
+.recent-research h2::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -10px;
+  width: 60%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--secondary), var(--primary));
+  transform: translateX(-50%);
+  border-radius: 4px;
+}
+
+/* ================= RESEARCH GRID ================= */
+
+.research-grid {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  padding: 40px 20px;
+  flex-wrap: wrap;
+}
+
+.research-card {
+  max-width: 320px;
+  background: var(--white);
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  transition:
+    transform 0.45s ease,
+    box-shadow 0.45s ease;
+}
+
+/* HOVER animation on PDF cards */
+.research-card:hover {
+  transform: translateY(-14px) scale(1.04);
+  box-shadow: 0 28px 65px rgba(0,0,0,0.3);
+}
+
+.research-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.research-card h3 {
+  padding: 16px;
+  font-size: 16px;
+  color: var(--primary);
+}
+
+.research-card h3 span {
+  display: block;
+  font-size: 13px;
+  color: #555;
+  margin-top: 6px;
+}
+
+/* ================= PDF VIEWER ================= */
+
+.pdf-viewer {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  z-index: 9999;
+}
+
+.pdf-viewer.open {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pdf-viewer iframe {
+  width: 85%;
+  height: 90%;
+  border: none;
+  background: #fff;
+}
+
+.close-pdf {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 26px;
+  background: none;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+/* ================= FOOTER ================= */
+
+.footer {
+  text-align: center;
+  padding: 30px;
+  font-size: 14px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 900px) {
+  .header-links { display: none; }
+  .menu { display: block; }
+  .hero-title { font-size: 28px; }
+}
+/* ================= HOME FOOTER ================= */
+
+.home-footer {
+  background: #f5f9f8;
+  padding: 60px 30px;
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.footer-col h4 {
+  color: var(--primary);
+  font-size: 18px;
+  margin-bottom: 14px;
+  position: relative;
+}
+
+.footer-col h4::after {
+  content: "";
+  width: 40px;
+  height: 3px;
+  background: var(--secondary);
+  display: block;
+  margin-top: 6px;
+  border-radius: 2px;
+}
+
+/* Brand */
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.footer-brand img {
+  width: 42px;
+  height: 42px;
+}
+
+.footer-brand h3 {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+/* Text */
+.footer-col p {
+  font-size: 14px;
+  line-height: 1.7;
+  margin-bottom: 12px;
+  color: #444;
+}
+
+/* CTA */
+.footer-cta {
+  margin-top: 14px;
+  background: var(--primary);
+  color: #fff;
+  padding: 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Info list */
+.footer-info {
+  list-style: none;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.footer-info li {
+  margin-bottom: 14px;
+}
+
+/* Social buttons */
+.social-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.social-btn {
+  background: #fff;
+  padding: 12px 14px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #333;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.social-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 30px rgba(0,0,0,0.18);
+}
+
+/* Research box */
+.research-box {
+  margin-top: 18px;
+  background: #eef5f4;
+  padding: 16px;
+  border-left: 4px solid var(--primary);
+  border-radius: 10px;
+}
+
+.research-box strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--primary);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+  }
+}
+/* ================= PAPER SUBMISSION WHITE BACKGROUND (SAFE FIX) ================= */
+/* ================= PAPER SUBMISSION CLINICAL BACKGROUND ================= */
+
+.hero.paper-white {
+  background: #f4fbf9; /* soft physiotherapy clinical tone */
+  color: var(--text-dark);
+}
+
+.hero.paper-white .hero-title,
+.hero.paper-white .hero-subtitle {
+  color: var(--text-dark);
+}
+
+.hero.paper-white .submission-box,
+.hero.paper-white .certificate-box {
+  background: rgba(31,122,122,0.85);
+  color: #ffffff;
+}
+
+.hero.paper-white .submission-box ul,
+.hero.paper-white .submission-box li {
+  color: #ffffff;
+}
+/* CONTACT FORM FIX */
+.submission-box input,
+.submission-box textarea {
+  width: 100%;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  font-family: inherit;
+}
+/* ================= CONTACT PAGE FINAL FIX ================= */
+
+/* Center content like Paper Submission */
+.about-wrapper {
+  background: #f5f9f8;
+  padding: 50px 20px 90px;
+}
+
+.about-wrapper .submission-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Contact cards */
+.about-wrapper .submission-box {
+  background: #3f8f8b;
+  color: #ffffff;
+  padding: 30px;
+  border-radius: 18px;
+  margin-bottom: 36px;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+}
+
+/* Headings */
+.about-wrapper .submission-box h3 {
+  font-size: 20px;
+  margin-bottom: 18px;
+  color: #ffffff;
+}
+
+/* Contact text */
+.about-wrapper .submission-box p,
+.about-wrapper .submission-box a {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* Hover polish */
+.about-wrapper .submission-box a:hover {
+  text-decoration: underline;
+}
+
+/* Contact form inputs */
+.about-wrapper input,
+.about-wrapper textarea {
+  width: 100%;
+  padding: 14px 16px;
+  margin-bottom: 18px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  font-family: inherit;
+  font-size: 15px;
+}
+
+/* Button match */
+.about-wrapper .submit-btn {
+  background: linear-gradient(135deg, #2fa36b, #1f7a7a);
+  color: #fff;
+  border: none;
+  padding: 14px 36px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-wrapper .submit-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+}
+.home-footer {
+  margin-top: 60px;
+}
+/* ================= CONTACT PAGE – HARD RESET FIX ================= */
+
+/* Kill extra spacing before footer */
+body:has(.map-section) .about-wrapper {
+  padding-bottom: 30px !important;
+  margin-bottom: 0 !important;
+}
+
+/* Remove spacing after map heading */
+body:has(.map-section) .recent-research {
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* Force footer to touch previous section */
+body:has(.map-section) .home-footer {
+  margin-top: 0 !important;
+  border-top: none !important;
+}
+
+/* Safety: prevent iframe adding gap */
+.map-section iframe {
+  display: block;
+}
+
+
+/* ================= FOOTER COPYRIGHT ================= */
+
+.footer-copy {
+  margin-top: 40px;
+  padding-top: 20px;
+  text-align: center;
+  font-size: 13px;
+  color: #555;
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+/* ======================================================
+   FIX PDF VIEWER CENTERING (ALL DEVICES)
+   ====================================================== */
+
+.pdf-viewer.open {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pdf-viewer iframe {
+  width: min(96%, 900px);
+  height: 90%;
+  margin: 0 auto;
+  display: block;
+  border-radius: 12px;
+}
+/* ======================================================
+   DESKTOP FOOTER – INSTANT & STABLE (NO LAG)
+   ====================================================== */
+
+.home-footer,
+.footer-container,
+.footer-col {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+  animation: none !important;
+}
+/* ======================================================
+   GLOBAL MOTION SYSTEM – PHYSIOPULSE
+   ====================================================== */
+
+:root {
+  --ease-out-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-soft: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --motion-fast: 0.2s;
+  --motion-medium: 0.35s;
+  --motion-slow: 0.6s;
+}
+/* ======================================================
+   BASE TRANSITIONS (CONSISTENT EVERYWHERE)
+   ====================================================== */
+
+a,
+button,
+.research-card,
+.about-card,
+.submission-box,
+.social-btn {
+  transition:
+    transform var(--motion-medium) var(--ease-out-smooth),
+    box-shadow var(--motion-medium) var(--ease-out-smooth),
+    background-color var(--motion-fast) var(--ease-in-out-soft),
+    color var(--motion-fast) var(--ease-in-out-soft);
+}
+/* ======================================================
+   CARD INTERACTIONS
+   ====================================================== */
+
+.research-card:hover,
+.about-card:hover,
+.submission-box:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 28px 60px rgba(0,0,0,0.25);
+}
+button:hover,
+.submit-btn:hover,
+.social-btn:hover {
+  transform: translateY(-2px);
+}
+
+button:active,
+.submit-btn:active {
+  transform: scale(0.97);
+}
+/* ======================================================
+   ACCESSIBILITY – REDUCED MOTION
+   ====================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}
+/* ======================================================
+   EDITORIAL BOARD – PROFESSIONAL LAYOUT
+   ====================================================== */
+
+.editorial-section {
+  background: #f6f9fc;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.editorial-main-title {
+  font-size: 32px;
+  color: var(--primary);
+  margin-bottom: 50px;
+  letter-spacing: 2px;
+}
+
+.editorial-sub-title {
+  font-size: 24px;
+  margin: 60px 0 30px;
+  color: #1f2933;
+}
+
+/* Grid layouts */
+.editorial-grid {
+  display: grid;
+  gap: 26px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.two-col { grid-template-columns: repeat(2, 1fr); }
+.three-col { grid-template-columns: repeat(3, 1fr); }
+.five-col { grid-template-columns: repeat(5, 1fr); }
+
+/* Card */
+.editor-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 26px 18px 22px;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.08);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.editor-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 28px 60px rgba(0,0,0,0.18);
+}
+
+
+/* Image */
+.editor-card img {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 14px;
+}
+
+/* Text */
+.editor-card h3 {
+  font-size: 17px;
+  margin-bottom: 6px;
+  color: #1f2933;
+}
+
+.editor-card .role {
+  font-size: 14px;
+  color: #2fa36b;
+  margin-bottom: 6px;
+}
+
+.editor-card span {
+  font-size: 13px;
+  color: #666;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .two-col,
+  .three-col,
+  .five-col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .two-col,
+  .three-col,
+  .five-col {
+    grid-template-columns: 1fr;
+  }
+
+  .editorial-main-title {
+    font-size: 26px;
+  }
+}
+/* ======================================================
+   EDITORIAL BOARD – FINAL WORKING COLOR SYSTEM
+   ====================================================== */
+
+/* Base editor card (safe) */
+.editor-card {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Top color strip */
+.editor-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  z-index: 3;
+}
+
+/* Editorial Board – Leadership */
+.editorial-block.editorial-core .editor-card::before {
+  background-color: #1f7a7a;
+}
+
+/* Administrative Board – Management */
+.editorial-block.editorial-admin .editor-card::before {
+  background-color: #3b82f6;
+}
+
+/* Publication Board – Processing */
+.editorial-block.editorial-publication .editor-card::before {
+  background-color: #22c55e;
+}
+
+/* Associate Editorial Board – Contributors */
+.editorial-block.editorial-associate .editor-card::before {
+  background-color: #8b5cf6;
+}

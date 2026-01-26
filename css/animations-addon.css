@@ -1,0 +1,348 @@
+/* ================= HEADING ANIMATIONS (LOCKED) ================= */
+
+.recent-research h2 {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.recent-research h2.visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.8s cubic-bezier(0.22,1,0.36,1);
+}
+
+.recent-research h2 {
+  transition:
+    transform 0.4s ease,
+    letter-spacing 0.4s ease,
+    text-shadow 0.4s ease;
+}
+
+.recent-research h2:hover {
+  transform: translateY(-3px);
+  letter-spacing: 4px;
+  text-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+/* ================= FOOTER PREMIUM ANIMATIONS ================= */
+
+/* Footer container reveal */
+.home-footer {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.home-footer.visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.9s cubic-bezier(0.22,1,0.36,1);
+}
+
+/* Footer columns stagger */
+.footer-col {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.footer-col.visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.8s cubic-bezier(0.22,1,0.36,1);
+}
+
+/* Subtle hover polish */
+.footer-col p,
+.footer-info li {
+  transition: transform 0.3s ease;
+}
+
+.footer-col p:hover,
+.footer-info li:hover {
+  transform: translateX(4px);
+}
+
+/* Social buttons premium hover */
+.social-btn {
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.social-btn:hover {
+  transform: translateY(-5px) scale(1.04);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.25);
+}
+
+/* Footer CTA glow */
+.footer-cta {
+  transition: box-shadow 0.4s ease, transform 0.4s ease;
+}
+
+.footer-cta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+}
+/* ================= PAPER SUBMISSION READING ANIMATIONS ================= */
+
+/* Initial state */
+.submission-box,
+.certificate-box {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s cubic-bezier(0.22,1,0.36,1),
+    box-shadow 0.4s ease;
+}
+
+/* Reveal on scroll */
+.submission-box.visible,
+.certificate-box.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Soft focus effect while reading */
+.submission-box:hover,
+.certificate-box:hover {
+  box-shadow: 0 20px 45px rgba(0,0,0,0.25);
+  transform: translateY(-4px);
+}
+
+/* Text reading polish */
+.submission-box li,
+.process-step div {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.submission-box li:hover,
+.process-step div:hover {
+  transform: translateX(6px);
+  opacity: 0.95;
+}
+/* ================= PAPER SUBMISSION HEADING MATCH ================= */
+
+/* Make Paper Submission heading identical to RECENT SCIENTIFIC RESEARCHES */
+.hero.paper-white .hero-title {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--primary);
+  position: relative;
+  display: inline-block;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+/* Underline (same as RECENT SCIENTIFIC RESEARCHES) */
+.hero.paper-white .hero-title::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -10px;
+  width: 60%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--secondary), var(--primary));
+  transform: translateX(-50%);
+  border-radius: 4px;
+}
+/* ================= ABOUT PAGE – PAPER SUBMISSION STYLE ================= */
+
+/* Card background like submission section */
+.about-card {
+  background: rgba(255,255,255,0.92);
+  border-radius: 16px;
+  padding: 26px 28px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.10);
+  border-left: 5px solid var(--secondary);
+
+  /* animation base */
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+/* reveal on scroll */
+.about-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.8s cubic-bezier(0.22,1,0.36,1);
+}
+
+/* Heading inside box – same tone as submission headings */
+.about-card h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 12px;
+  position: relative;
+}
+
+/* subtle underline like academic sections */
+.about-card h3::after {
+  content: "";
+  width: 42px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--secondary), var(--primary));
+  display: block;
+  margin-top: 6px;
+  border-radius: 3px;
+}
+
+/* Paragraph reading animation */
+.about-card p {
+  font-size: 14.5px;
+  line-height: 1.75;
+  color: #333;
+  transition: transform 0.3s ease;
+}
+
+.about-card p:hover {
+  transform: translateX(4px);
+}
+
+/* Lists same as submission content */
+.about-card ul {
+  margin-top: 10px;
+  padding-left: 18px;
+}
+
+.about-card li {
+  font-size: 14.5px;
+  line-height: 1.7;
+  margin-bottom: 6px;
+  color: #333;
+  transition: transform 0.3s ease;
+}
+
+.about-card li:hover {
+  transform: translateX(6px);
+}
+
+/* Hover lift like submission boxes */
+.about-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 22px 50px rgba(0,0,0,0.18);
+}
+
+/* ================= ABOUT PAGE OBSERVER SUPPORT ================= */
+/* ===== CONTACT PAGE VISIBILITY FIX ===== */
+
+/* Ensure text is visible inside contact cards */
+.contact-wrapper .submission-box {
+  background: #3f8f8b; /* same as paper submission */
+  color: #ffffff;
+}
+
+/* Headings */
+.contact-wrapper .submission-box h3 {
+  color: #ffffff;
+}
+
+/* Normal text */
+.contact-wrapper .submission-box p,
+.contact-wrapper .submission-box strong {
+  color: #ffffff;
+}
+
+/* Email, phone, website links */
+.contact-wrapper .submission-box a {
+  color: #ffffff;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+/* Icons spacing polish */
+.contact-wrapper .submission-box p {
+  margin-bottom: 14px;
+}
+.social-links img {
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.social-links img:hover {
+  transform: scale(1.15);
+  filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.25));
+}
+/* ================= SOCIAL ICONS WITH TEXT ================= */
+
+.social-links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.social-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  padding: 12px 14px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.social-btn img {
+  width: 22px;
+  height: 22px;
+}
+
+.social-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 30px rgba(0,0,0,0.18);
+}
+/* ================= BRAND-COLORED SOCIAL ICONS ================= */
+
+/* Default PhysioPulse brand tint */
+.social-btn img {
+  filter: brightness(0) saturate(100%)
+          invert(32%) sepia(18%) saturate(1300%)
+          hue-rotate(135deg) brightness(90%) contrast(90%);
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+/* Brand-specific subtle accent on hover */
+.social-btn:hover img {
+  filter: brightness(0) saturate(100%)
+          invert(46%) sepia(64%) saturate(450%)
+          hue-rotate(120deg) brightness(95%) contrast(95%);
+  transform: scale(1.15);
+}
+/* ================= BRAND SOCIAL ICONS ================= */
+
+.social-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #ffffff;
+  padding: 12px 16px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #1f2933;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.social-btn img {
+  width: 22px;
+  height: 22px;
+
+  /* PhysioPulse teal brand color */
+  filter: brightness(0) saturate(100%)
+          invert(35%) sepia(20%) saturate(1200%)
+          hue-rotate(135deg) brightness(95%) contrast(95%);
+}
+
+.social-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgba(0,0,0,0.18);
+}
+
+.social-btn:hover img {
+  transform: scale(1.15);
+}

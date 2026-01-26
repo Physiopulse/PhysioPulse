@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us | PhysioPulse</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/mobile.css">
+<link rel="stylesheet" href="css/animations-addon.css">
+
+
+
+  <!-- ABOUT PAGE CARD GRID FIX -->
+  <style>
+    .about-wrapper {
+      background: #f5f9f8;
+      padding: 50px 20px 90px;
+    }
+
+    .about-grid {
+      max-width: 1100px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+
+    .about-card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 28px 30px;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .about-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 28px 60px rgba(0,0,0,0.22);
+    }
+
+    .about-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+ .about-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1f7a7a, #2fa36b);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+  box-shadow: 0 6px 18px rgba(31,122,122,0.35);
+}
+
+
+
+
+    .about-card h3 {
+      font-size: 20px;
+      color: #1f7a7a;
+      margin: 0;
+    }
+
+    .about-card p,
+    .about-card li {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #333;
+    }
+
+    .about-card ul {
+      padding-left: 18px;
+      margin-top: 10px;
+    }
+
+    .about-full {
+      grid-column: span 2;
+    }
+
+    @media (max-width: 900px) {
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+      .about-full {
+        grid-column: span 1;
+      }
+    }
+    /* ===== FORCE ABOUT PAGE VISIBILITY FIX ===== */
+.about-card {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+  </style>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+  <div class="logo-wrap">
+    <img src="images/logo.png" class="logo-img" alt="PhysioPulse Logo">
+    <div>
+      <span class="logo">PHYSIO</span>
+      <span class="logo2">PULSE</span>
+    </div>
+  </div>
+
+  <nav class="header-links">
+    <a href="index.html">Home</a>
+    <a href="submit.html">Paper Submission</a>
+    <a href="about.html">About Us</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <button class="menu" onclick="toggleMenu()">☰</button>
+</header>
+
+<nav class="drawer" id="drawer">
+  <button class="close" onclick="toggleMenu()">✕</button>
+  <a href="index.html">Home</a>
+  <a href="submit.html">Paper Submission</a>
+  <a href="about.html">About Us</a>
+  <a href="contact.html">Contact</a>
+</nav>
+
+<!-- ================= PAGE HEADING ================= -->
+
+<section class="recent-research">
+  <h2>ABOUT PHYSIOPULSE</h2>
+</section>
+
+<!-- ================= ABOUT GRID ================= -->
+
+<section class="about-wrapper">
+  <div class="about-grid">
+
+    <!-- OUR CORE -->
+    <div class="about-card">
+      <div class="about-title">
+        <div class="about-icon">🎯</div>
+        <h3>Our Core</h3>
+      </div>
+      <p>
+        PhysioPulse is founded on the principle that physiotherapy advances through
+        research-driven understanding, clinical insight, and shared scientific evidence.
+        Our core objective is to translate academic research into clinically meaningful
+        knowledge that addresses real-world rehabilitation challenges and movement
+        dysfunctions.
+      </p>
+    </div>
+
+    <!-- OUR DIRECTION -->
+    <div class="about-card">
+      <div class="about-title">
+        <div class="about-icon">🧭</div>
+        <h3>Our Direction</h3>
+      </div>
+      <p>
+        Our direction is to evolve into a globally recognized, research-focused
+        physiotherapy platform that integrates clinical practice, academic research,
+        and digital learning, contributing to advancements in rehabilitation science,
+        movement analysis, and preventive healthcare.
+      </p>
+    </div>
+
+    <!-- OUR COMMITMENT -->
+    <div class="about-card about-full">
+      <div class="about-title">
+        <div class="about-icon">🤝</div>
+        <h3>Our Commitment</h3>
+      </div>
+      <ul>
+        <li>Promote submission of original physiotherapy research, case studies, and analytical reviews</li>
+        <li>Facilitate learning through clinically relevant research-based explanations</li>
+        <li>Bridge academic theory with practical rehabilitation outcomes</li>
+        <li>Support evidence-based clinical decision-making among physiotherapists and researchers</li>
+      </ul>
+    </div>
+
+    <!-- WHAT IS PHYSIOPULSE -->
+    <div class="about-card">
+      <div class="about-title">
+        <div class="about-icon">💡</div>
+        <h3>What is PhysioPulse?</h3>
+      </div>
+      <p>
+        PhysioPulse is a digital physiotherapy research and academic learning platform
+        dedicated to the submission, publication, and dissemination of physiotherapy-
+        related research and clinical insights. It supports structured scientific inquiry,
+        clinical reasoning, and evidence-based practice.
+      </p>
+    </div>
+
+    <!-- DEFINITION -->
+    <div class="about-card">
+      <div class="about-title">
+        <div class="about-icon">📘</div>
+        <h3>Definition</h3>
+      </div>
+      <p>
+        PhysioPulse represents the intellectual and clinical consciousness of modern
+        physiotherapy practice, where scientific research informs clinical application
+        and clinical experience generates new evidence.
+      </p>
+      <p>
+        <strong>Area of Focus:</strong><br>
+        Physiotherapy Research • Clinical Rehabilitation • Evidence-Based Practice
+      </p>
+      <p>
+        <strong>Language:</strong><br>
+        English (Global Academic & Clinical Standard)
+      </p>
+    </div>
+
+  </div>
+</section>
+<section class="editorial-section">
+  <h2 class="editorial-main-title">Editorial Board</h2>
+
+  <!-- ===== Editorial Board ===== -->
+  <section class="editorial-block editorial-core">
+    <div class="editorial-grid two-col">
+      <div class="editor-card">
+        <img src="images/editor1.jpg" alt="Dr. Senthil Kumar">
+        <h3>Dr. Senthil Kumar</h3>
+        <p class="role">Editor-in-Chief</p>
+      </div>
+
+      <div class="editor-card">
+        <img src="images/editor2.jpg" alt="Dr. P. Mahindran">
+        <h3>Dr. P. Mahindran</h3>
+        <p class="role">Deputy Editor</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Administrative Board ===== -->
+  <section class="editorial-block editorial-admin">
+    <h3 class="editorial-sub-title">Administrative Board</h3>
+    <div class="editorial-grid two-col">
+      <div class="editor-card">
+        <img src="images/admin1.jpg" alt="S. Raja Durai">
+        <h3>S. Raja Durai</h3>
+        <p class="role">Founder & Managing Editor</p>
+        <span>BPT</span>
+      </div>
+
+      <div class="editor-card">
+        <img src="images/admin2.jpg" alt="S. Raj Prasanna">
+        <h3>S. Raj Prasanna</h3>
+        <p class="role">Technical & Web Administration</p>
+        <span>CSE</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Publication Board ===== -->
+  <section class="editorial-block editorial-publication">
+    <h3 class="editorial-sub-title">Publication Board</h3>
+    <div class="editorial-grid three-col">
+      <div class="editor-card">
+        <img src="images/pub1.jpg" alt="V. Pragalath">
+        <h3>V. Pragalath</h3>
+        <p class="role">Proofreading (Editorial)</p>
+      </div>
+
+      <div class="editor-card">
+        <img src="images/pub2.jpg" alt="D. Kamalesh">
+        <h3>D. Kamalesh</h3>
+        <p class="role">Formatting (Editorial)</p>
+      </div>
+
+      <div class="editor-card">
+        <img src="images/pub3.jpg" alt="S. Regunath">
+        <h3>S. Regunath</h3>
+        <p class="role">Copy Publishing (Editorial)</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Associate Editorial Board ===== -->
+  <section class="editorial-block editorial-associate">
+    <h3 class="editorial-sub-title">Associate Editorial Board</h3>
+    <div class="editorial-grid five-col">
+      <div class="editor-card">
+        <img src="images/assoc1.jpg" alt="Yogasri">
+        <h3>Yogasri</h3>
+        <span>BPT</span>
+      </div>
+
+      <div class="editor-card">
+        <img src="images/assoc2.jpg" alt="Athul Krishana">
+        <h3>Athul Krishana</h3>
+        <span>BPT</span>
+      </div>
+
+      <div class="editor-card">
+        <img src="images/assoc3.jpg" alt="Aswin Kumar">
+        <h3>Aswin Kumar</h3>
+        <span>BPT</span>
+      </div>
+
+      <div class="editor-card">
+        <img src="images/assoc4.jpg" alt="Manikandan">
+        <h3>Manikandan</h3>
+        <span>BPT</span>
+      </div>
+
+      <div class="editor-card">
+        <img src="images/assoc5.jpg" alt="Rishi Vikash">
+        <h3>Rishi Vikash</h3>
+        <span>BPT</span>
+      </div>
+    </div>
+  </section>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+  <p><strong>PhysioPulse</strong> – Evidence-Based Physiotherapy Journal</p>
+  <p>© <span id="year"></span> PhysioPulse. All rights reserved.</p>
+</footer>
+
+<script src="javascript/main.js"></script>
+<script src="javascript/animations-addon.js"></script>
+
+
+</body>
+</html>
