@@ -15,3 +15,27 @@ function closePDF() {
   document.getElementById("pdfViewer").classList.remove("open");
   document.body.style.overflow = "auto";
 }
+// ================= SEARCH PAPERS =================
+function searchPapers() {
+  const query = document.getElementById("searchInput").value.toLowerCase().trim();
+
+  const allPapers = JSON.parse(
+    localStorage.getItem("physiopulse_papers") || "[]"
+  );
+
+  if (!query) {
+    renderHomePapers(allPapers);
+    return;
+  }
+
+  const filtered = allPapers.filter(paper => {
+    return (
+      paper.title?.toLowerCase().includes(query) ||
+      paper.subtitle?.toLowerCase().includes(query) ||
+      paper.year?.toLowerCase().includes(query)
+    );
+  });
+
+  renderHomePapers(filtered);
+}
+
