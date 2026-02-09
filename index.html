@@ -45,10 +45,16 @@
     rehabilitation studies, and academic publications.
   </p>
 
-  <form class="search-box">
-    <input type="search" placeholder="Search physiotherapy research">
-    <button onclick="searchPapers()">Search</button>
-  </form>
+ <div class="search-box">
+  <input
+    type="text"
+    id="searchInput"
+    placeholder="Search by paper title, author, or year"
+    onkeyup="searchPapers()"
+  >
+  <button type="button" onclick="searchPapers()">Search</button>
+</div>
+
 
   <div class="tags">
     <span>Orthopaedics</span>
@@ -259,6 +265,7 @@ papers.forEach(p => {
 
 </body>
 </html>
+
 
 
 
