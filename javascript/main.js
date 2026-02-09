@@ -1,27 +1,35 @@
-/* ================= MOBILE MENU ================= */
+/* ================= MENU ================= */
 function toggleMenu() {
-  document.getElementById("drawer").classList.toggle("open");
+  const drawer = document.getElementById("drawer");
+  if (drawer) drawer.classList.toggle("open");
 }
 
 /* ================= FOOTER YEAR ================= */
 const yearEl = document.getElementById("year");
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-
 /* ================= PDF VIEWER ================= */
 function openPDF(path) {
-  document.getElementById("pdfFrame").src = path;
-  document.getElementById("pdfViewer").classList.add("open");
+  const viewer = document.getElementById("pdfViewer");
+  const frame = document.getElementById("pdfFrame");
+  if (!viewer || !frame) return;
+
+  frame.src = path;
+  viewer.classList.add("open");
   document.body.style.overflow = "hidden";
 }
 
 function closePDF() {
-  document.getElementById("pdfFrame").src = "";
-  document.getElementById("pdfViewer").classList.remove("open");
+  const viewer = document.getElementById("pdfViewer");
+  const frame = document.getElementById("pdfFrame");
+  if (!viewer || !frame) return;
+
+  frame.src = "";
+  viewer.classList.remove("open");
   document.body.style.overflow = "auto";
 }
 
-/* ================= LOAD PAPERS ON HOME ================= */
+/* ================= LOAD PAPERS ================= */
 document.addEventListener("DOMContentLoaded", () => {
   const papers = JSON.parse(
     localStorage.getItem("physiopulse_papers") || "[]"
@@ -29,75 +37,63 @@ document.addEventListener("DOMContentLoaded", () => {
   renderHomePapers(papers);
 });
 
-/* ================= SEARCH PAPERS ================= */
+/* ================= SEARCH ================= */
 function searchPapers() {
-  const query = document
-    .getElementById("searchInput")
-    .value
-    .toLowerCase()
-    .trim();
+  const input = document.getElementById("searchInput");
+  if (!input) return;
 
-  const allPapers = JSON.parse(
+  const query = input.value.toLowerCase().trim();
+
+  const papers = JSON.parse(
     localStorage.getItem("physiopulse_papers") || "[]"
   );
 
-  if (!query) {
-    renderHomePapers(allPapers);
+  if (query === "") {
+    renderHomePapers(papers);
     return;
   }
 
-  const filtered = allPapers.filter(paper => {
-    return (
-      paper.title?.toLowerCase().includes(query) ||
-      paper.subtitle?.toLowerCase().includes(query) ||
-      paper.year?.toLowerCase().includes(query)
-    );
-  });
+  const filtered = papers.filter(p =>
+    (p.title && p.title.toLowerCase().includes(query)) ||
+    (p.subtitle && p.subtitle.toLowerCase().includes(query)) ||
+    (p.year && p.year.toLowerCase().includes(query))
+  );
 
   renderHomePapers(filtered);
 }
 
-/* ================= RENDER PAPERS ================= */
+/* ================= RENDER ================= */
 function renderHomePapers(papers) {
   const grid = document.querySelector(".research-grid");
   if (!grid) return;
 
   grid.innerHTML = "";
 
-  if (!papers || papers.length === 0) {
+  if (papers.length === 0) {
     grid.innerHTML = `
-      <p style="
-        width:100%;
-        text-align:center;
-        font-size:16px;
-        color:#666;
-        margin-top:20px;">
-        No matching papers found.
+      <p style="text-align:center;width:100%;color:#666">
+        No matching papers found
       </p>
     `;
     return;
   }
 
-  papers.forEach(paper => {
+  papers.forEach(p => {
     const card = document.createElement("div");
     card.className = "research-card";
 
     card.innerHTML = `
-      <img src="${paper.thumb}" alt="${paper.title}">
+      <img src="${p.thumb}" alt="${p.title}">
       <h3>
-        ${paper.title}
+        ${p.title}
         <span>
-          ${paper.subtitle || ""}
-          ${paper.year ? " • " + paper.year : ""}
+          ${p.subtitle || ""}
+          ${p.year ? " • " + p.year : ""}
         </span>
       </h3>
     `;
 
-    card.addEventListener("click", () => {
-      openPDF(paper.pdf);
-    });
-
+    card.onclick = () => openPDF(p.pdf);
     grid.appendChild(card);
   });
 }
-
