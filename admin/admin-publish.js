@@ -62,12 +62,13 @@ function publish(){
 
   const papers = JSON.parse(localStorage.getItem("physiopulse_papers")||"[]");
 
-  papers.push({
-    title:title.value,
-    subtitle:subtitle.value,
-    pdf:pdfPath,
-    thumb:imgPath
-  });
+ papers.push({
+  title: title.value,
+  subtitle: subtitle.value,
+  year: document.getElementById("year").value,
+  pdf: pdfPath,
+  thumb: imgPath
+});
 
   localStorage.setItem("physiopulse_papers",JSON.stringify(papers));
   alert("Published successfully");
@@ -113,3 +114,4 @@ function deletePaper(i){
   localStorage.setItem("physiopulse_papers",JSON.stringify(papers));
   renderPapers();
 }
+
