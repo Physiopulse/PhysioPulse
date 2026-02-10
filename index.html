@@ -45,10 +45,14 @@
     rehabilitation studies, and academic publications.
   </p>
 
-  <form class="search-box">
-    <input type="search" placeholder="Search physiotherapy research">
-    <button type="submit">Search</button>
-  </form>
+<form class="search-box" onsubmit="event.preventDefault(); searchPapers();">
+  <input
+    type="search"
+    id="searchInput"
+    placeholder="Search by title, author, or year">
+  <button type="submit">Search</button>
+</form>
+
 
   <div class="tags">
     <span>Orthopaedics</span>
@@ -255,7 +259,7 @@ papers.forEach(p => {
   grid.appendChild(card);
 });
 </script>
- <script>
+<script>
 function searchPapers() {
   const input = document.getElementById("searchInput");
   if (!input) return;
@@ -263,7 +267,7 @@ function searchPapers() {
   const query = input.value.toLowerCase().trim();
   const cards = document.querySelectorAll(".research-card");
 
-  // 🔒 IMPORTANT: if search is empty, SHOW ALL cards
+  // If search is empty → show all papers
   if (query === "") {
     cards.forEach(card => {
       card.style.display = "";
@@ -278,9 +282,9 @@ function searchPapers() {
 }
 </script>
 
-
 </body>
 </html>
+
 
 
 
