@@ -49,10 +49,12 @@
   <input
     type="text"
     id="searchInput"
-    placeholder="Search by paper title, author, or year"
+    placeholder="Search by title, author, year..."
+    oninput="searchPapers()"
   >
-  <button type="button" onclick="searchPapers()">Search</button>
+  <button onclick="searchPapers()">Search</button>
 </div>
+
 
 
 
@@ -265,6 +267,7 @@ papers.forEach(p => {
 
 </body>
 </html>
+
 
 
 
