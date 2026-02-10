@@ -264,49 +264,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const input = document.getElementById("searchInput");
   const button = document.getElementById("searchBtn");
-  const cards = document.querySelectorAll(".research-card");
 
-  if (!input || !button || cards.length === 0) return;
-
-  // 🔒 Store original HTML once
-  cards.forEach(card => {
-    card.dataset.original = card.innerHTML;
-  });
+  if (!input || !button) return;
 
   function runSearch() {
     const query = input.value.toLowerCase().trim();
+    const cards = document.querySelectorAll(".research-card");
+
+    if (query === "") {
+      cards.forEach(card => card.style.display = "");
+      return;
+    }
 
     cards.forEach(card => {
-      // Restore original content before highlighting
-      card.innerHTML = card.dataset.original;
-
-      if (query === "") {
-        card.style.display = "";
-        return;
-      }
-
       const text = card.innerText.toLowerCase();
-
-      if (!text.includes(query)) {
-        card.style.display = "none";
-        return;
-      }
-
-      card.style.display = "";
-
-      // Highlight matched text
-      const regex = new RegExp(`(${query})`, "gi");
-      card.innerHTML = card.innerHTML.replace(
-        regex,
-        `<mark style="background:#ffe58a;padding:0 4px;border-radius:4px">$1</mark>`
-      );
+      card.style.display = text.includes(query) ? "" : "none";
     });
   }
 
-  // Live search
+  // 🔴 NEW: live search while typing
   input.addEventListener("input", runSearch);
 
-  // Button search
+  // Existing button search (kept)
   button.addEventListener("click", runSearch);
 
 });
@@ -314,6 +293,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 </body>
 </html>
+
 
 
 
