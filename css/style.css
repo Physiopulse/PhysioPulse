@@ -842,3 +842,34 @@ button:active,
 .editorial-block.editorial-associate .editor-card::before {
   background-color: #8b5cf6;
 }
+
+/* ================= SEARCH RENDER FIX ================= */
+
+/* Ensure cards are visible after JS render */
+.research-card {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Prevent grid collapse */
+.research-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+/* Smooth re-render animation */
+.research-card {
+  animation: fadeInCard 0.35s ease forwards;
+}
+
+@keyframes fadeInCard {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
