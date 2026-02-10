@@ -62,7 +62,7 @@
   <h2>RECENT SCIENTIFIC RESEARCHES</h2>
 </section>
 
-<section class="research-grid">
+<section class="research-grid" id="researchGrid">
 
   <div class="research-card" onclick="openPDF('pdfs/criminal-negligence.pdf')">
     <img src="images/criminal-negligence.png" alt="Criminal Negligence">
@@ -236,7 +236,6 @@
 
 
 <script src="javascript/main.js"></script>
-<script src="javascript/main.js"></script>
 <link rel="stylesheet" href="css/animations-addon.css">
 <script src="javascript/animations-addon.js"></script>
 <script>
@@ -258,38 +257,51 @@ papers.forEach(p => {
 </script>
   <script>
 /* ================= LOAD ADMIN-PUBLISHED PAPERS ================= */
-(function () {
-  const papers = JSON.parse(
-    localStorage.getItem("physiopulse_papers") || "[]"
-  );
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
-  if (!papers.length) return;
+  const stored = localStorage.getItem("physiopulse_papers");
+  if (!stored) {
+    console.warn("No admin papers found in localStorage");
+    return;
+  }
+
+  const papers = JSON.parse(stored);
+  if (!Array.isArray(papers) || papers.length === 0) {
+    console.warn("Admin papers array is empty");
+    return;
+  }
 
   const grid = document.getElementById("researchGrid");
-  if (!grid) return;
+  if (!grid) {
+    console.error("researchGrid not found");
+    return;
+  }
 
   papers.forEach(p => {
+    if (!p.title || !p.pdf || !p.thumb) return;
+
     const card = document.createElement("div");
     card.className = "research-card";
 
-    card.onclick = function () {
-      openPDF(p.pdf);
-    };
+    card.onclick = () => openPDF(p.pdf);
 
     card.innerHTML = `
       <img src="${p.thumb}" alt="${p.title}">
       <h3>
         ${p.title}
-        <span>${p.subtitle || ""} ${p.year ? "• " + p.year : ""}</span>
+        <span>${p.subtitle || ""}</span>
       </h3>
     `;
 
     grid.appendChild(card);
   });
-})();
+
+});
 </script>
 
 
 </body>
 </html>
+
 
