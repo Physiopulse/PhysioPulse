@@ -65,15 +65,7 @@
 <section class="recent-research">
   <h2>RECENT SCIENTIFIC RESEARCHES</h2>
 </section>
-  <div class="filter-bar">
-  <button class="filter-btn active" data-filter="all">All</button>
-  <button class="filter-btn" data-filter="2024">2024</button>
-  <button class="filter-btn" data-filter="orthopaedics">Orthopaedics</button>
-  <button class="filter-btn" data-filter="neurology">Neurology</button>
-  <button class="filter-btn" data-filter="rehabilitation">Rehabilitation</button>
-</div>
-
-
+  
 <section class="research-grid" id="researchGrid">
 
   <div class="research-card" onclick="openPDF('pdfs/criminal-negligence.pdf')">
@@ -298,39 +290,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 </script>
-  <script>
-document.addEventListener("DOMContentLoaded", function () {
-
-  const filterButtons = document.querySelectorAll(".filter-btn");
-
-  filterButtons.forEach(btn => {
-    btn.addEventListener("click", function () {
-
-      // Button active state
-      filterButtons.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-
-      const filter = btn.dataset.filter;
-      const cards = document.querySelectorAll(".research-card");
-
-      cards.forEach(card => {
-        const text = card.innerText.toLowerCase();
-
-        if (filter === "all") {
-          card.style.display = "";
-        } else {
-          card.style.display = text.includes(filter) ? "" : "none";
-        }
-      });
-    });
-  });
-
-});
-</script>
-
-
 </body>
 </html>
+
 
 
 
