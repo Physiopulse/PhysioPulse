@@ -45,14 +45,10 @@
     rehabilitation studies, and academic publications.
   </p>
 
-<div class="search-box">
-  <input
-    type="text"
-    id="searchInput"
-    placeholder="Search by title, author, year"
-    oninput="searchPapers()"
-  >
-</div>
+  <form class="search-box">
+    <input type="search" placeholder="Search physiotherapy research">
+    <button type="submit">Search</button>
+  </form>
 
   <div class="tags">
     <span>Orthopaedics</span>
@@ -66,7 +62,7 @@
   <h2>RECENT SCIENTIFIC RESEARCHES</h2>
 </section>
 
-<section class="research-grid" id="researchGrid">
+<section class="research-grid">
 
   <div class="research-card" onclick="openPDF('pdfs/criminal-negligence.pdf')">
     <img src="images/criminal-negligence.png" alt="Criminal Negligence">
@@ -207,7 +203,7 @@
           <span>WhatsApp</span>
         </a>
 
-        <a href="https://www.instagram.com/physio_pulse_12?igsh=MXg5b2s0NTFoN2Nycw==/" class="social-btn" target="_blank">
+        <a href="https://www.instagram.com/" class="social-btn" target="_blank">
           <img src="images/icons/instagram.svg" alt="Instagram">
           <span>Instagram</span>
         </a>
@@ -263,13 +259,3 @@ papers.forEach(p => {
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
