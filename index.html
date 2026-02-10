@@ -45,13 +45,13 @@
     rehabilitation studies, and academic publications.
   </p>
 
-<form class="search-box" onsubmit="event.preventDefault(); searchPapers();">
+<div class="search-box">
   <input
     type="search"
     id="searchInput"
     placeholder="Search by title, author, or year">
-  <button type="submit">Search</button>
-</form>
+  <button type="button" id="searchBtn">Search</button>
+</div>
 
 
   <div class="tags">
@@ -260,30 +260,44 @@ papers.forEach(p => {
 });
 </script>
 <script>
-function searchPapers() {
+document.addEventListener("DOMContentLoaded", function () {
+
   const input = document.getElementById("searchInput");
-  if (!input) return;
+  const button = document.getElementById("searchBtn");
 
-  const query = input.value.toLowerCase().trim();
-  const cards = document.querySelectorAll(".research-card");
+  if (!input || !button) return;
 
-  // If search is empty → show all papers
-  if (query === "") {
+  function runSearch() {
+    const query = input.value.toLowerCase().trim();
+    const cards = document.querySelectorAll(".research-card");
+
+    if (query === "") {
+      cards.forEach(card => card.style.display = "");
+      return;
+    }
+
     cards.forEach(card => {
-      card.style.display = "";
+      const text = card.innerText.toLowerCase();
+      card.style.display = text.includes(query) ? "" : "none";
     });
-    return;
   }
 
-  cards.forEach(card => {
-    const text = card.innerText.toLowerCase();
-    card.style.display = text.includes(query) ? "" : "none";
+  button.addEventListener("click", runSearch);
+
+  input.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      runSearch();
+    }
   });
-}
+
+});
 </script>
+
 
 </body>
 </html>
+
 
 
 
