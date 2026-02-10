@@ -255,53 +255,32 @@ papers.forEach(p => {
   grid.appendChild(card);
 });
 </script>
-  <script>
-/* ================= LOAD ADMIN-PUBLISHED PAPERS ================= */
-<script>
-document.addEventListener("DOMContentLoaded", function () {
+ <script>
+function searchPapers() {
+  const input = document.getElementById("searchInput");
+  if (!input) return;
 
-  const stored = localStorage.getItem("physiopulse_papers");
-  if (!stored) {
-    console.warn("No admin papers found in localStorage");
+  const query = input.value.toLowerCase().trim();
+  const cards = document.querySelectorAll(".research-card");
+
+  // 🔒 IMPORTANT: if search is empty, SHOW ALL cards
+  if (query === "") {
+    cards.forEach(card => {
+      card.style.display = "";
+    });
     return;
   }
 
-  const papers = JSON.parse(stored);
-  if (!Array.isArray(papers) || papers.length === 0) {
-    console.warn("Admin papers array is empty");
-    return;
-  }
-
-  const grid = document.getElementById("researchGrid");
-  if (!grid) {
-    console.error("researchGrid not found");
-    return;
-  }
-
-  papers.forEach(p => {
-    if (!p.title || !p.pdf || !p.thumb) return;
-
-    const card = document.createElement("div");
-    card.className = "research-card";
-
-    card.onclick = () => openPDF(p.pdf);
-
-    card.innerHTML = `
-      <img src="${p.thumb}" alt="${p.title}">
-      <h3>
-        ${p.title}
-        <span>${p.subtitle || ""}</span>
-      </h3>
-    `;
-
-    grid.appendChild(card);
+  cards.forEach(card => {
+    const text = card.innerText.toLowerCase();
+    card.style.display = text.includes(query) ? "" : "none";
   });
-
-});
+}
 </script>
 
 
 </body>
 </html>
+
 
 
