@@ -50,6 +50,8 @@ function renderHomePapers(papers) {
 
   if (!papers.length) {
     grid.innerHTML =
+      grid.style.display = "flex";
+
       "<p style='text-align:center;color:#666'>No matching papers found.</p>";
     return;
   }
@@ -70,3 +72,4 @@ function renderHomePapers(papers) {
     grid.appendChild(card);
   });
 }
+
