@@ -282,21 +282,18 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  button.addEventListener("click", runSearch);
+  // 🔴 NEW: live search while typing
+  input.addEventListener("input", runSearch);
 
-  input.addEventListener("keydown", function (e) {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      runSearch();
-    }
-  });
+  // Existing button search (kept)
+  button.addEventListener("click", runSearch);
 
 });
 </script>
 
-
 </body>
 </html>
+
 
 
 
