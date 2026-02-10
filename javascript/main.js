@@ -1,42 +1,35 @@
-/* ================= MENU ================= */
-function toggleMenu() {
-  const drawer = document.getElementById("drawer");
-  if (drawer) drawer.classList.toggle("open");
-}
+let ALL_PAPERS = [];
 
-/* ================= FOOTER YEAR ================= */
-const yearEl = document.getElementById("year");
-if (yearEl) yearEl.textContent = new Date().getFullYear();
+/* ================= LOAD DATA ================= */
+fetch("data/papers.json")
+  .then(res => res.json())
+  .then(data => {
+    ALL_PAPERS = data;
+    renderHomePapers(ALL_PAPERS);
+  })
+  .catch(err => {
+    console.error("Failed to load papers.json", err);
+  });
 
-/* ================= PDF VIEWER ================= */
-function openPDF(path) {
-  const viewer = document.getElementById("pdfViewer");
-  const frame = document.getElementById("pdfFrame");
-  if (!viewer || !frame) return;
+/* ================= SEARCH ================= */
+function searchPapers() {
+  const q = document.getElementById("searchInput").value.toLowerCase().trim();
 
-  frame.src = path;
-  viewer.classList.add("open");
-  document.body.style.overflow = "hidden";
-}
+  if (!q) {
+    renderHomePapers(ALL_PAPERS);
+    return;
+  }
 
-function closePDF() {
-  const viewer = document.getElementById("pdfViewer");
-  const frame = document.getElementById("pdfFrame");
-  if (!viewer || !frame) return;
-
-  frame.src = "";
-  viewer.classList.remove("open");
-  document.body.style.overflow = "auto";
-}
-
-/* ================= LOAD & RENDER ================= */
-document.addEventListener("DOMContentLoaded", () => {
-  const papers = JSON.parse(
-    localStorage.getItem("physiopulse_papers") || "[]"
+  const filtered = ALL_PAPERS.filter(p =>
+    p.title.toLowerCase().includes(q) ||
+    p.subtitle.toLowerCase().includes(q) ||
+    p.year.includes(q)
   );
-  renderHomePapers(papers);
-});
 
+  renderHomePapers(filtered);
+}
+
+/* ================= RENDER ================= */
 function renderHomePapers(papers) {
   const grid = document.getElementById("researchGrid");
   if (!grid) return;
@@ -44,49 +37,18 @@ function renderHomePapers(papers) {
   grid.innerHTML = "";
 
   if (papers.length === 0) {
-    grid.innerHTML =
-      "<p style='text-align:center;color:#666'>No papers found</p>";
+    grid.innerHTML = "<p>No papers found.</p>";
     return;
   }
 
   papers.forEach(p => {
     const card = document.createElement("div");
     card.className = "research-card";
-
     card.innerHTML = `
       <img src="${p.thumb}">
-      <h3>
-        ${p.title}
-        <span>${p.subtitle || ""} ${p.year ? "• " + p.year : ""}</span>
-      </h3>
+      <h3>${p.title}<span>${p.subtitle} • ${p.year}</span></h3>
     `;
-
-    card.onclick = () => openPDF(p.pdf);
+    card.onclick = () => window.open(p.pdf, "_blank");
     grid.appendChild(card);
   });
-}
-
-/* ================= SEARCH ================= */
-function searchPapers() {
-  const input = document.getElementById("searchInput");
-  if (!input) return;
-
-  const query = input.value.toLowerCase().trim();
-
-  const papers = JSON.parse(
-    localStorage.getItem("physiopulse_papers") || "[]"
-  );
-
-  if (!query) {
-    renderHomePapers(papers);
-    return;
-  }
-
-  const filtered = papers.filter(p =>
-    p.title.toLowerCase().includes(query) ||
-    (p.subtitle && p.subtitle.toLowerCase().includes(query)) ||
-    (p.year && p.year.toLowerCase().includes(query))
-  );
-
-  renderHomePapers(filtered);
 }
