@@ -49,8 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // ================= AUTO LOGOUT (5 MINUTES) =================
 /* ================= AUTO LOGOUT SYSTEM ================= */
 
-const INACTIVITY_LIMIT = 10 * 1000; // 10 seconds
- // 5 minutes
+const INACTIVITY_LIMIT = 5 * 60 * 1000;// 5 minutes
 let inactivityTimer;
 
 // Start timer only if logged in
@@ -176,6 +175,7 @@ document.addEventListener("keydown", function(e) {
     e.preventDefault();
   }
 });
+
 
 
 
