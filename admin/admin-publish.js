@@ -23,6 +23,18 @@ document.addEventListener("DOMContentLoaded", function () {
     const hashBuffer = await crypto.subtle.digest("SHA-256", data);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+    
+    /* ================= DISABLE RIGHT CLICK (ADMIN ONLY) ================= */
+
+document.addEventListener("contextmenu", function (e) {
+
+  // Only block if admin panel is visible
+  if (!panel.classList.contains("hidden")) {
+    e.preventDefault();
+  }
+
+});
+
   }
 
   /* ================= LOGIN ================= */
@@ -42,12 +54,6 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       error.innerText = "Wrong password";
     }
-    /* ================= DISABLE RIGHT CLICK IN ADMIN PANEL ================= */
-
-panel.addEventListener("contextmenu", function (e) {
-  e.preventDefault();
-});
-
   };
 
   /* ================= LOGOUT ================= */
@@ -158,5 +164,6 @@ panel.addEventListener("contextmenu", function (e) {
   };
 
 });
+
 
 
