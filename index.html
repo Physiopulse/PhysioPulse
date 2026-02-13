@@ -278,20 +278,13 @@ function runSearch() {
     const text = card.innerText.toLowerCase();
 
     if (query === "") {
-      card.classList.remove("hide");
-      card.classList.add("show");
-      return;
-    }
-
-    if (text.includes(query)) {
-      card.classList.remove("hide");
-      card.classList.add("show");
+      card.style.display = "";
     } else {
-      card.classList.remove("show");
-      card.classList.add("hide");
+      card.style.display = text.includes(query) ? "" : "none";
     }
   });
 }
+
 
   // 🔴 NEW: live search while typing
   input.addEventListener("input", runSearch);
@@ -303,6 +296,7 @@ function runSearch() {
 </script>
 </body>
 </html>
+
 
 
 
