@@ -888,5 +888,39 @@ button:active,
 .research-card:not([style*="display: none"]) {
   opacity: 1;
 }
+/* ================= SORT DROPDOWN ANIMATION ================= */
+
+.sort-select {
+  padding: 8px 14px;
+  border-radius: 30px;
+  border: 2px solid var(--primary);
+  background: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 
+    all 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.2s ease;
+}
+
+/* Hover */
+.sort-select:hover {
+  background: var(--primary);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(31,122,122,0.25);
+}
+
+/* Click press */
+.sort-select:active {
+  transform: scale(0.96);
+}
+
+/* Focus glow */
+.sort-select:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(31,122,122,0.2);
+}
+
 
 
