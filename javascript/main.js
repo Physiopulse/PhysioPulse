@@ -71,13 +71,25 @@ function renderHomePapers(papers) {
 
 /* ================= PDF VIEWER ================= */
 function openPDF(path) {
-  const viewer = document.getElementById("pdfViewer");
-  const frame = document.getElementById("pdfFrame");
 
-  frame.src = path;
-  viewer.classList.add("open");
-  document.body.style.overflow = "hidden";
+  // ===== VIEW COUNTER =====
+  const views = JSON.parse(localStorage.getItem("paperViews") || "{}");
+
+  if (!views[path]) {
+    views[path] = 1;
+  } else {
+    views[path]++;
+  }
+
+  localStorage.setItem("paperViews", JSON.stringify(views));
+
+  updateViewDisplays();
+
+  // ===== OPEN PDF =====
+  document.getElementById("pdfFrame").src = path;
+  document.getElementById("pdfViewer").classList.add("open");
 }
+
 
 function closePDF() {
   const viewer = document.getElementById("pdfViewer");
@@ -87,3 +99,35 @@ function closePDF() {
   viewer.classList.remove("open");
   document.body.style.overflow = "auto";
 }
+function updateViewDisplays() {
+
+  const views = JSON.parse(localStorage.getItem("paperViews") || "{}");
+  const cards = document.querySelectorAll(".research-card");
+
+  cards.forEach(card => {
+    const onclickAttr = card.getAttribute("onclick");
+    if (!onclickAttr) return;
+
+    const match = onclickAttr.match(/openPDF\('(.+?)'\)/);
+    if (!match) return;
+
+    const path = match[1];
+    const count = views[path] || 0;
+
+    let viewEl = card.querySelector(".view-count");
+
+    if (!viewEl) {
+      viewEl = document.createElement("div");
+      viewEl.className = "view-count";
+      viewEl.style.marginTop = "8px";
+      viewEl.style.fontSize = "13px";
+      viewEl.style.color = "#777";
+      card.querySelector("h3").appendChild(viewEl);
+    }
+
+    viewEl.innerText = `Views: ${count}`;
+  });
+}
+document.addEventListener("DOMContentLoaded", function () {
+  updateViewDisplays();
+});
