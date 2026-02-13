@@ -114,6 +114,17 @@ button:hover {
   <label>Select Thumbnail (must already be in /images)</label>
   <input type="file" id="imgFile" accept="image/*">
   <img id="imgPreview">
+  <hr style="margin:25px 0">
+
+<h3 style="margin-bottom:10px;">Live Preview</h3>
+
+<div id="previewCard" class="research-card" style="display:none; max-width:320px;">
+  <img id="previewImage" style="width:100%; border-radius:12px;">
+  <h3 id="previewTitle">
+    <span id="previewSubtitle"></span>
+  </h3>
+</div>
+
 
   <button onclick="publish()">Publish to Home Page</button>
   <button class="logout" onclick="logout()">Logout</button>
@@ -127,5 +138,6 @@ button:hover {
 <script src="admin-publish.js"></script>
 </body>
 </html>
+
 
 
