@@ -47,21 +47,41 @@ document.addEventListener("DOMContentLoaded", function () {
     showPanel();
   }
   // ================= AUTO LOGOUT (5 MINUTES) =================
+/* ================= AUTO LOGOUT SYSTEM ================= */
+
+const INACTIVITY_LIMIT = 5 * 60 * 1000; // 5 minutes
 let inactivityTimer;
 
-function resetTimer() {
+// Start timer only if logged in
+function startInactivityTimer() {
+
   clearTimeout(inactivityTimer);
+
   inactivityTimer = setTimeout(() => {
+
     localStorage.removeItem("pp_admin");
-    alert("Session expired. Please login again.");
-    location.reload();
-  }, 5 * 60 * 1000);
+    alert("Session expired due to inactivity.");
+    window.location.reload();
+
+  }, INACTIVITY_LIMIT);
 }
 
-document.addEventListener("mousemove", resetTimer);
-document.addEventListener("keydown", resetTimer);
+// Reset timer on user activity
+function resetInactivityTimer() {
+  startInactivityTimer();
+}
 
-resetTimer();
+// Only activate when admin is logged in
+if (localStorage.getItem("pp_admin") === "true") {
+
+  startInactivityTimer();
+
+  document.addEventListener("mousemove", resetInactivityTimer);
+  document.addEventListener("keydown", resetInactivityTimer);
+  document.addEventListener("click", resetInactivityTimer);
+  document.addEventListener("scroll", resetInactivityTimer);
+
+}
 
   /* ================= PUBLISH ================= */
   window.publish = function () {
@@ -155,6 +175,7 @@ document.addEventListener("keydown", function(e) {
     e.preventDefault();
   }
 });
+
 
 
 
