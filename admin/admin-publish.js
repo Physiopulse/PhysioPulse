@@ -161,14 +161,16 @@ document.addEventListener("contextmenu", function (e) {
   }
 
 });
-  /* ================= DISABLE RIGHT CLICK (FULL ADMIN PAGE) ================= */
+
+
+});
+/* ================= DISABLE RIGHT CLICK (FULL ADMIN PAGE) ================= */
 
 document.addEventListener("contextmenu", function (e) {
   e.preventDefault();
 });
 
 
-});
 
 
 
