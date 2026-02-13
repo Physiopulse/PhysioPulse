@@ -105,29 +105,25 @@ function updateViewDisplays() {
   const cards = document.querySelectorAll(".research-card");
 
   cards.forEach(card => {
-    const onclickAttr = card.getAttribute("onclick");
-    if (!onclickAttr) return;
 
-    const match = onclickAttr.match(/openPDF\('(.+?)'\)/);
-    if (!match) return;
+    const pdfPath = card.getAttribute("data-pdf");
+    if (!pdfPath) return;
 
-    const path = match[1];
-    const count = views[path] || 0;
+    const count = views[pdfPath] || 0;
 
     let viewEl = card.querySelector(".view-count");
 
     if (!viewEl) {
       viewEl = document.createElement("div");
       viewEl.className = "view-count";
-      viewEl.style.marginTop = "8px";
+      viewEl.style.marginTop = "6px";
       viewEl.style.fontSize = "13px";
       viewEl.style.color = "#777";
-      card.querySelector("h3").appendChild(viewEl);
+      card.appendChild(viewEl);
     }
 
-    viewEl.innerText = `Views: ${count}`;
+    viewEl.innerText = "Views: " + count;
+
   });
 }
-document.addEventListener("DOMContentLoaded", function () {
-  updateViewDisplays();
-});
+
