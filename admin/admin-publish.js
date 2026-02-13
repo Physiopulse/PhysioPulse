@@ -10,6 +10,17 @@ if (localStorage.getItem("pp_admin") !== "true") {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+  // ================= ADMIN ROUTE PROTECTION =================
+const allowedPath = "pp-portal-8437.html";
+
+if (!window.location.pathname.includes(allowedPath)) {
+  window.location.href = "index.html";
+}
+  // ================= BASIC ANTI-TAMPER =================
+if (!window.crypto || !window.crypto.subtle) {
+  document.body.innerHTML = "<h1>Unsupported Environment</h1>";
+}
+
 
   const loginBox = document.getElementById("loginBox");
   const panel = document.getElementById("panel");
@@ -22,32 +33,52 @@ document.addEventListener("DOMContentLoaded", function () {
   const pdfFile = document.getElementById("pdfFile");
   const imgFile = document.getElementById("imgFile");
   const paperList = document.getElementById("paperList");
+  // ================= DEVTOOLS DETECTION =================
+setInterval(function () {
+  if (window.outerWidth - window.innerWidth > 160 ||
+      window.outerHeight - window.innerHeight > 160) {
+
+    document.body.innerHTML = "<h1>Access Restricted</h1>";
+  }
+}, 1000);
+
 
   /* ================= LOGIN ================= */
-  window.login = function () {
-    if (passwordInput.value === ADMIN_PASSWORD) {
-      localStorage.setItem("pp_admin", "true");
-      showPanel();
-    } else {
-      error.innerText = "Wrong password";
-    }
-  };
+async function hashPassword(password) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(password);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+}
 
-  function showPanel() {
-    loginBox.classList.add("hidden");
-    panel.classList.remove("hidden");
-    renderPapers();
+window.login = async function () {
+
+  if (isLocked()) {
+    alert("Too many failed attempts. Try again later.");
+    return;
   }
 
-  window.logout = function () {
-    localStorage.removeItem("pp_admin");
-    location.reload();
-  };
+  const enteredHash = await hashPassword(passwordInput.value);
 
-  if (localStorage.getItem("pp_admin") === "true") {
+  if (enteredHash === ADMIN_HASH) {
+
+    const sessionToken = btoa(Date.now() + "-" + Math.random());
+    localStorage.setItem("pp_admin", sessionToken);
     showPanel();
+
+  } else {
+    loginAttempts++;
+    error.innerText = "Wrong password";
+
+    if (loginAttempts >= MAX_ATTEMPTS) {
+      const lockUntil = Date.now() + LOCK_TIME;
+      localStorage.setItem("admin_lock_until", lockUntil);
+      alert("Admin locked for 10 minutes.");
+    }
   }
-  // ================= AUTO LOGOUT (5 MINUTES) =================
+};
+
 /* ================= AUTO LOGOUT SYSTEM ================= */
 
 const INACTIVITY_LIMIT = 5 * 60 * 1000;// 5 minutes
@@ -73,7 +104,7 @@ function resetInactivityTimer() {
 }
 
 // Only activate when admin is logged in
-if (localStorage.getItem("pp_admin") === "true") {
+if (localStorage.getItem("pp_admin")) {
 
   startInactivityTimer();
 
@@ -176,6 +207,7 @@ document.addEventListener("keydown", function(e) {
     e.preventDefault();
   }
 });
+
 
 
 
