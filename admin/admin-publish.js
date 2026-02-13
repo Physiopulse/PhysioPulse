@@ -1,6 +1,6 @@
 // ================= SECURE HASHED PASSWORD =================
 const ADMIN_HASH =
-  "9d5e3ecdeb94b0cfa2e63d0dfd8eaa1c6c3dbb0a2f6d6a31d2b1e8a71c2e0d52";
+  "8c6976e5b5410415bde908bd4dee15dfb16f5f8d8e8b5f9d2d1a3c6d53295d85";
 
 document.addEventListener("DOMContentLoaded", function () {
 
@@ -195,3 +195,4 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
 });
+
