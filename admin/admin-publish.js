@@ -43,21 +43,35 @@ if (localStorage.getItem("pp_admin") === "true") {
 /* ================= PUBLISH ================= */
 function publish() {
 
-  if (!titleInput.value || !pdfInput.value || !thumbInput.value) {
+  const title = document.getElementById("title");
+  const subtitle = document.getElementById("subtitle");
+  const year = document.getElementById("year");
+  const pdfFile = document.getElementById("pdfFile");
+  const imgFile = document.getElementById("imgFile");
+
+  if (!title || !pdfFile || !imgFile) {
+    alert("Form elements not found. Check input IDs.");
+    return;
+  }
+
+  if (!title.value || !pdfFile.files.length || !imgFile.files.length) {
     alert("Please complete all required fields.");
     return;
   }
+
+  const pdfPath = "pdfs/" + pdfFile.files[0].name;
+  const thumbPath = "images/" + imgFile.files[0].name;
 
   const papers = JSON.parse(
     localStorage.getItem("physiopulse_papers") || "[]"
   );
 
   papers.push({
-    title: titleInput.value.trim(),
-    subtitle: subtitleInput.value.trim(),
-    year: yearInput ? yearInput.value.trim() : "",
-    pdf: pdfInput.value.trim(),
-    thumb: thumbInput.value.trim()
+    title: title.value.trim(),
+    subtitle: subtitle.value.trim(),
+    year: year ? year.value.trim() : "",
+    pdf: pdfPath,
+    thumb: thumbPath
   });
 
   localStorage.setItem("physiopulse_papers", JSON.stringify(papers));
@@ -65,6 +79,8 @@ function publish() {
   alert("Paper published successfully!");
 
   renderPapers();
+}
+
 
   // Optional: clear form
   titleInput.value = "";
@@ -118,3 +134,4 @@ function deletePaper(i) {
 
   renderPapers();
 }
+
