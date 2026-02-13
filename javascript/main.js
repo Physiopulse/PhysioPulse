@@ -122,8 +122,10 @@ function updateViewDisplays() {
       card.appendChild(viewEl);
     }
 
-    viewEl.innerText = "Views: " + count;
+  viewEl.innerText = count + " Views";
+
 
   });
 }
+
 
