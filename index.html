@@ -280,7 +280,11 @@ const grid = document.querySelector(".research-grid");
 papers.forEach(p => {
   const card = document.createElement("div");
   card.className = "research-card";
-  card.onclick = () => openPDF(p.pdf);
+card.className = "research-card";
+card.setAttribute("data-pdf", p.pdf);
+card.onclick = function () {
+  openPDF(p.pdf);
+};
 
 card.innerHTML = `
   <img src="${p.thumb}">
@@ -291,8 +295,8 @@ card.innerHTML = `
       ${p.year ? " • " + p.year : ""}
     </span>
   </h3>
+  <div class="view-count" style="margin-top:6px;font-size:13px;color:#777;"></div>
 `;
-
 
   grid.appendChild(card);
 });
@@ -417,6 +421,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 </body>
 </html>
+
 
 
 
