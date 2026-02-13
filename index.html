@@ -282,10 +282,17 @@ papers.forEach(p => {
   card.className = "research-card";
   card.onclick = () => openPDF(p.pdf);
 
-  card.innerHTML = `
-    <img src="${p.thumb}">
-    <h3>${p.title}<span>${p.subtitle || ""}</span></h3>
-  `;
+card.innerHTML = `
+  <img src="${p.thumb}">
+  <h3>
+    ${p.title}
+    <span>
+      ${p.subtitle || ""}
+      ${p.year ? " • " + p.year : ""}
+    </span>
+  </h3>
+`;
+
 
   grid.appendChild(card);
 });
@@ -410,6 +417,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 </body>
 </html>
+
 
 
 
