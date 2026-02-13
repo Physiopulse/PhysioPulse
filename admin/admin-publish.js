@@ -1,6 +1,5 @@
-// ================= CORRECT HASH FOR "physio-admin" =================
-const ADMIN_HASH =
-  "8c6976e5b5410415bde908bd4dee15dfb16f5f8d8e8b5f9d2d1a3c6d53295d85";
+// ================= CORRECT HASH =================
+const ADMIN_HASH = "8c2069ca7865c8b85ca99bdd0070805544ff5c6f94033f3d58e4162f70d23eee";
 
 document.addEventListener("DOMContentLoaded", function () {
 
@@ -153,3 +152,4 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
 });
+
