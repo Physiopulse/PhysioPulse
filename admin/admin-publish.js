@@ -1,5 +1,12 @@
 /* ================= CONFIG ================= */
 const ADMIN_PASSWORD = "physio-admin";
+// ================= HARD ACCESS PROTECTION =================
+if (localStorage.getItem("pp_admin") !== "true") {
+  const allowed = confirm("Admin access required. Login?");
+  if (!allowed) {
+    window.location.href = "index.html";
+  }
+}
 
 document.addEventListener("DOMContentLoaded", function () {
 
@@ -39,6 +46,22 @@ document.addEventListener("DOMContentLoaded", function () {
   if (localStorage.getItem("pp_admin") === "true") {
     showPanel();
   }
+  // ================= AUTO LOGOUT (5 MINUTES) =================
+let inactivityTimer;
+
+function resetTimer() {
+  clearTimeout(inactivityTimer);
+  inactivityTimer = setTimeout(() => {
+    localStorage.removeItem("pp_admin");
+    alert("Session expired. Please login again.");
+    location.reload();
+  }, 5 * 60 * 1000);
+}
+
+document.addEventListener("mousemove", resetTimer);
+document.addEventListener("keydown", resetTimer);
+
+resetTimer();
 
   /* ================= PUBLISH ================= */
   window.publish = function () {
@@ -120,3 +143,17 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
 });
+// ================= DISABLE RIGHT CLICK =================
+document.addEventListener("contextmenu", function(e) {
+  e.preventDefault();
+});
+// ================= BLOCK DEVTOOLS SHORTCUTS =================
+document.addEventListener("keydown", function(e) {
+  if (e.key === "F12" ||
+     (e.ctrlKey && e.shiftKey && e.key === "I") ||
+     (e.ctrlKey && e.key === "U")) {
+    e.preventDefault();
+  }
+});
+
+
