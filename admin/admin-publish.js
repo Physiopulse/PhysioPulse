@@ -51,35 +51,35 @@ imgFile.addEventListener("change",()=>{
 });
 
 /* ================= PUBLISH ================= */
-function publish(){
-  if(!title.value || !pdfFile.files[0] || !imgFile.files[0]){
-    alert("Fill all fields");
+function publish() {
+
+  const titleInput = document.getElementById("title");
+  const subtitleInput = document.getElementById("subtitle");
+  const yearInput = document.getElementById("year");
+  const pdfInput = document.getElementById("pdf");
+  const thumbInput = document.getElementById("thumb");
+
+  if (!titleInput.value || !pdfInput.value || !thumbInput.value) {
+    alert("Please complete all required fields");
     return;
   }
 
-  const pdfPath = "pdfs/" + pdfFile.files[0].name;
-  const imgPath = "images/" + imgFile.files[0].name;
+  const papers = JSON.parse(
+    localStorage.getItem("physiopulse_papers") || "[]"
+  );
 
-  const papers = JSON.parse(localStorage.getItem("physiopulse_papers")||"[]");
+  papers.push({
+    title: titleInput.value,
+    subtitle: subtitleInput.value,
+    year: yearInput ? yearInput.value : "",
+    pdf: pdfInput.value,
+    thumb: thumbInput.value
+  });
 
-papers.push({
-  title: title.value,
-  subtitle: subtitle.value,
-  year: document.getElementById("year").value,
-  pdf: pdf.value,
-  thumb: thumb.value
-});
+  localStorage.setItem("physiopulse_papers", JSON.stringify(papers));
 
-  localStorage.setItem("physiopulse_papers",JSON.stringify(papers));
-  alert("Published successfully");
+  alert("Paper published successfully!");
 
-  title.value="";
-  subtitle.value="";
-  pdfFile.value="";
-  imgFile.value="";
-  imgPreview.style.display="none";
-
-  renderPapers();
 }
 
 /* ================= LIST & DELETE ================= */
@@ -114,6 +114,7 @@ function deletePaper(i){
   localStorage.setItem("physiopulse_papers",JSON.stringify(papers));
   renderPapers();
 }
+
 
 
 
