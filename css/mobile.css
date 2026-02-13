@@ -175,6 +175,20 @@
   }
 
 }
+/* ===== REMOVE DESKTOP HOVER EFFECTS ON MOBILE ===== */
+
+@media (max-width: 768px) {
+
+  .search-box button:hover {
+    transform: none !important;
+  }
+
+  button:hover {
+    transform: none !important;
+  }
+
+}
+
 
 
 
