@@ -11,11 +11,11 @@ if (localStorage.getItem("pp_admin") !== "true") {
 
 document.addEventListener("DOMContentLoaded", function () {
   // ================= ADMIN ROUTE PROTECTION =================
-const allowedPath = "pp-portal-8437.html";
+//const allowedPath = "pp-portal-8437.html";
 
-if (!window.location.pathname.includes(allowedPath)) {
-  window.location.href = "index.html";
-}
+//if (!window.location.pathname.includes(allowedPath)) {
+ // window.location.href = "index.html";
+//}
   // ================= BASIC ANTI-TAMPER =================
 if (!window.crypto || !window.crypto.subtle) {
   document.body.innerHTML = "<h1>Unsupported Environment</h1>";
@@ -207,6 +207,7 @@ document.addEventListener("keydown", function(e) {
     e.preventDefault();
   }
 });
+
 
 
 
