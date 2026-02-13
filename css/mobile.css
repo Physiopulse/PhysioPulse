@@ -475,3 +475,93 @@
     transform var(--motion-fast) var(--ease-out-smooth),
     opacity var(--motion-fast) ease;
 }
+/* ================= MOBILE HEADER REFINEMENT ================= */
+
+@media (max-width: 768px) {
+
+  .header {
+    padding: 12px 16px;
+  }
+
+  .logo-img {
+    width: 36px;
+    height: 36px;
+  }
+
+  .logo {
+    font-size: 17px;
+  }
+
+  .logo2 {
+    font-size: 17px;
+  }
+
+  .menu {
+    font-size: 28px;
+    transition: transform 0.25s ease;
+  }
+
+  .menu:active {
+    transform: scale(0.9);
+  }
+
+}
+/* ================= MOBILE HERO ================= */
+
+@media (max-width: 768px) {
+
+  .hero {
+    padding: 60px 18px 50px;
+  }
+
+  .hero-title {
+    font-size: 22px;
+    line-height: 1.4;
+  }
+
+  .hero-subtitle {
+    font-size: 14.5px;
+    margin-top: 12px;
+  }
+
+}
+/* ================= MOBILE SEARCH UX ================= */
+
+@media (max-width: 768px) {
+
+  .search-box {
+    border-radius: 22px;
+    overflow: hidden;
+  }
+
+  .search-box input {
+    font-size: 15px;
+    padding: 14px;
+  }
+
+  .search-box button {
+    min-height: 48px;
+    font-size: 15px;
+  }
+
+}
+/* ================= MOBILE CARD STACK ================= */
+
+@media (max-width: 768px) {
+
+  .research-grid {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .research-card {
+    width: 100%;
+    border-radius: 18px;
+  }
+
+  .research-card img {
+    height: 200px;
+  }
+
+}
+
