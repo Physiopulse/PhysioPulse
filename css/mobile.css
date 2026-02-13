@@ -71,7 +71,7 @@
 
 .search-box button {
   position: absolute;
-  right: 6px;   /* 👈 tighter to right */
+  right: 10px;   /* 👈 tighter to right */
   top: 50%;
   transform: translateY(-50%);
   border: none;
@@ -196,6 +196,7 @@
   }
 
 }
+
 
 
 
