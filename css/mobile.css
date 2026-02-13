@@ -1,308 +1,163 @@
-/* ===========================================
+/* ======================================================
    PREMIUM MOBILE UI – PHYSIOPULSE
-=========================================== */
+   ====================================================== */
 
 @media (max-width: 768px) {
 
   body {
-    font-size: 15.5px;
-    background: linear-gradient(180deg, #f2f9f8 0%, #ffffff 100%);
+    background: #f5f7f8;
   }
 
   /* ================= HEADER ================= */
 
   .header {
     padding: 14px 18px;
-  }
-
-  .logo-img {
-    width: 36px;
-    height: 36px;
-  }
-
-  .logo {
-    font-size: 17px;
-  }
-
-  .logo2 {
-    font-size: 17px;
+    backdrop-filter: blur(20px);
+    background: rgba(31,122,122,0.95);
   }
 
   /* ================= HERO ================= */
 
   .hero {
-    padding: 70px 22px 60px;
-    border-bottom-left-radius: 28px;
-    border-bottom-right-radius: 28px;
+    padding: 60px 20px 50px;
+    text-align: center;
+    background: linear-gradient(135deg,#1f7a7a,#2fa36b);
+    border-radius: 0 0 36px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::after {
+    content: "";
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 140%;
+    height: 120px;
+    background: #f5f7f8;
+    border-radius: 50%;
   }
 
   .hero-title {
     font-size: 22px;
+    font-weight: 700;
     line-height: 1.4;
   }
 
   .hero-subtitle {
     font-size: 14px;
-    margin-top: 14px;
-    opacity: 0.95;
+    margin-top: 12px;
+    opacity: 0.9;
   }
 
   /* ================= SEARCH BOX ================= */
 
   .search-box {
-    margin-top: 26px;
-    flex-direction: column;
-    border-radius: 20px;
+    margin: 25px auto 0;
+    max-width: 100%;
+    border-radius: 18px;
     overflow: hidden;
-    backdrop-filter: blur(8px);
-    box-shadow: 0 18px 45px rgba(0,0,0,0.15);
+    background: #ffffff;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+    flex-direction: column;
   }
 
   .search-box input {
-    padding: 14px 16px;
-    font-size: 15px;
-    border: none;
+    border-radius: 18px 18px 0 0;
+    padding: 16px;
+    font-size: 14px;
   }
 
   .search-box button {
-    width: 100%;
+    border-radius: 0 0 18px 18px;
     padding: 14px;
-    font-size: 15px;
-    border-radius: 0 0 20px 20px;
   }
 
   /* ================= TAGS ================= */
 
   .tags {
-    margin-top: 22px;
+    margin-top: 18px;
   }
 
   .tags span {
     font-size: 12px;
     padding: 6px 12px;
+    background: rgba(255,255,255,0.25);
+    backdrop-filter: blur(10px);
   }
 
-  /* ================= SECTION HEADINGS ================= */
+  /* ================= SECTION TITLE ================= */
 
   .recent-research {
-    padding: 50px 18px 25px;
+    padding: 50px 20px 20px;
+    text-align: center;
+    background: #f5f7f8;
   }
 
   .recent-research h2 {
-    font-size: 20px;
+    font-size: 18px;
     letter-spacing: 2px;
+    font-weight: 700;
+  }
+
+  /* ================= SORT BUTTON ================= */
+
+  select {
+    padding: 10px 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: white;
+    font-size: 13px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
   }
 
   /* ================= RESEARCH GRID ================= */
 
   .research-grid {
-    flex-direction: column;
-    gap: 22px;
-    padding: 25px 18px 40px;
+    display: flex;
+    overflow-x: auto;
+    gap: 16px;
+    padding: 20px;
+    scroll-snap-type: x mandatory;
   }
 
   .research-card {
-    width: 100%;
-    max-width: 100%;
+    min-width: 260px;
     border-radius: 20px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.12);
-  }
-
-  .research-card img {
-    height: 210px;
-  }
-
-  .research-card h3 {
-    font-size: 15px;
-    padding: 18px;
-  }
-
-  .research-card h3 span {
-    font-size: 13px;
-    margin-top: 6px;
-  }
-
-  /* ================= SORT BUTTON ================= */
-
-  select {
-    border-radius: 18px;
-    padding: 6px 14px;
-  }
-
-  /* ================= PDF VIEWER ================= */
-
-  .pdf-viewer iframe {
-    width: 96%;
-    height: 88%;
-    border-radius: 16px;
-  }
-
-  /* ================= FOOTER ================= */
-
-  .home-footer {
-    padding: 50px 22px;
-  }
-
-  .footer-container {
-    grid-template-columns: 1fr;
-    gap: 30px;
-  }
-
-  .footer-col h4 {
-    font-size: 16px;
-  }
-
-  .footer-col p,
-  .footer-info li {
-    font-size: 14px;
-    line-height: 1.7;
-  }
-
-  .social-btn {
-    padding: 14px;
-    border-radius: 14px;
-  }
-
-}
-/* =====================================================
-   🍏 HIGH GLOSS APPLE STYLE – MOBILE PREMIUM UI
-   ===================================================== */
-
-@media (max-width: 768px) {
-
-  body {
-    background: linear-gradient(180deg, #f8fafc, #eef2f7);
-  }
-
-  /* ================= HEADER ================= */
-
-  .header {
-    backdrop-filter: blur(20px);
-    background: rgba(31, 122, 122, 0.85);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-  }
-
-  .logo-img {
-    border: none;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.2);
-  }
-
-  /* ================= HERO ================= */
-
-
-
-.hero {
-  padding: 70px 22px 80px;
-  border-radius: 0 0 40px 40px;
-  background: linear-gradient(135deg, #1f7a7a, #2fa36b);
-  box-shadow: 0 25px 60px rgba(0,0,0,0.2);
-  position: relative;
-  z-index: 2;
-}
-
-/* Push next section down properly */
-.recent-research {
-  position: relative;
-  z-index: 1;
-  margin-top: 30px;
-}
-
-
-  .hero-title {
-    font-size: 23px;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-  }
-
-  .hero-subtitle {
-    opacity: 0.85;
-    font-size: 14.5px;
-  }
-
-  /* ================= SEARCH BAR ================= */
-
-  .search-box {
-    border-radius: 50px;
-    background: rgba(255,255,255,0.85);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
-  }
-
-  .search-box input {
-    border-radius: 50px 0 0 50px;
-    font-size: 14px;
-  }
-
-  .search-box button {
-    border-radius: 0 50px 50px 0;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-  }
-
-  /* ================= TAGS ================= */
-
-  .tags span {
-    background: rgba(255,255,255,0.3);
-    backdrop-filter: blur(10px);
-    font-weight: 500;
-  }
-
-  /* ================= RESEARCH CARDS ================= */
-
-  .research-card {
-    border-radius: 22px;
     overflow: hidden;
-    background: rgba(255,255,255,0.85);
-    backdrop-filter: blur(18px);
-    box-shadow: 
-      0 10px 30px rgba(0,0,0,0.15),
-      0 1px 0 rgba(255,255,255,0.4) inset;
-    transition: all 0.4s cubic-bezier(.2,.8,.2,1);
+    background: white;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    scroll-snap-align: start;
+    transition: transform 0.3s ease;
   }
 
-  .research-card:hover {
-    transform: translateY(-6px) scale(1.02);
-    box-shadow:
-      0 25px 60px rgba(0,0,0,0.25);
+  .research-card:active {
+    transform: scale(0.96);
   }
 
   .research-card img {
-    border-radius: 22px 22px 0 0;
+    height: 170px;
+    object-fit: cover;
   }
 
   .research-card h3 {
-    font-weight: 600;
-    letter-spacing: -0.2px;
+    padding: 14px;
+    font-size: 14px;
   }
 
   .research-card h3 span {
+    font-size: 12px;
     opacity: 0.7;
-    font-size: 13px;
-  }
-
-  /* ================= SORT BUTTON ================= */
-
-  select {
-    border-radius: 30px;
-    padding: 8px 14px;
-    border: none;
-    background: rgba(255,255,255,0.85);
-    backdrop-filter: blur(12px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
   }
 
   /* ================= FOOTER ================= */
 
   .home-footer {
-    border-radius: 40px 40px 0 0;
-    background: linear-gradient(180deg, #ffffff, #f2f9f8);
-    box-shadow: 0 -20px 50px rgba(0,0,0,0.15);
-  }
-
-  .footer-col {
-    padding: 10px 0;
+    padding: 50px 20px;
+    background: #ffffff;
+    border-radius: 30px 30px 0 0;
+    box-shadow: 0 -15px 40px rgba(0,0,0,0.08);
   }
 
 }
-
-
