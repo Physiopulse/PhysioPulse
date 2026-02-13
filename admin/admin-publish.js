@@ -18,14 +18,14 @@ document.addEventListener("DOMContentLoaded", function () {
   const paperList = document.getElementById("paperList");
 
   /* ================= LOGIN LIMITER ================= */
-  let loginAttempts = 0;
-  const MAX_ATTEMPTS = 5;
-  const LOCK_TIME = 10 * 60 * 1000;
+  //let loginAttempts = 0;
+ // const MAX_ATTEMPTS = 5;
+ // const LOCK_TIME = 10 * 60 * 1000;
 
-  function isLocked() {
-    const lockUntil = localStorage.getItem("admin_lock_until");
-    if (!lockUntil) return false;
-    return Date.now() < parseInt(lockUntil);
+ // function isLocked() {
+   // const lockUntil = localStorage.getItem("admin_lock_until");
+    //if (!lockUntil) return false;
+    //return Date.now() < parseInt(lockUntil);
   }
 
   /* ================= HASH FUNCTION ================= */
@@ -195,4 +195,5 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
 });
+
 
