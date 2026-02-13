@@ -114,4 +114,32 @@ function deletePaper(i){
   localStorage.setItem("physiopulse_papers",JSON.stringify(papers));
   renderPapers();
 }
+/* ================= LIVE PREVIEW ================= */
+
+const previewCard = document.getElementById("previewCard");
+const previewImage = document.getElementById("previewImage");
+const previewTitle = document.getElementById("previewTitle");
+const previewSubtitle = document.getElementById("previewSubtitle");
+
+function updatePreview() {
+
+  if (!title.value && !subtitle.value && !thumb.value) {
+    previewCard.style.display = "none";
+    return;
+  }
+
+  previewCard.style.display = "block";
+
+  previewTitle.innerHTML = title.value || "Paper Title";
+  previewSubtitle.innerHTML = subtitle.value || "Author / Subtitle";
+
+  if (thumb.value) {
+    previewImage.src = thumb.value;
+  }
+}
+
+title.addEventListener("input", updatePreview);
+subtitle.addEventListener("input", updatePreview);
+thumb.addEventListener("input", updatePreview);
+
 
