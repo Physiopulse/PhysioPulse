@@ -114,45 +114,6 @@ function deletePaper(i){
   localStorage.setItem("physiopulse_papers",JSON.stringify(papers));
   renderPapers();
 }
-/* ================= LIVE PREVIEW ================= */
-
-/* ================= LIVE PREVIEW (SAFE VERSION) ================= */
-
-document.addEventListener("DOMContentLoaded", function () {
-
-  const titleInput = document.getElementById("title");
-  const subtitleInput = document.getElementById("subtitle");
-  const thumbInput = document.getElementById("thumb");
-
-  const previewCard = document.getElementById("previewCard");
-  const previewImage = document.getElementById("previewImage");
-  const previewTitle = document.getElementById("previewTitle");
-  const previewSubtitle = document.getElementById("previewSubtitle");
-
-  if (!titleInput || !subtitleInput || !thumbInput) return;
-
-  function updatePreview() {
-
-    if (!titleInput.value && !subtitleInput.value && !thumbInput.value) {
-      previewCard.style.display = "none";
-      return;
-    }
-
-    previewCard.style.display = "block";
-
-    previewTitle.innerHTML = titleInput.value || "Paper Title";
-    previewSubtitle.innerHTML = subtitleInput.value || "Author / Subtitle";
-
-    if (thumbInput.value) {
-      previewImage.src = thumbInput.value;
-    }
-  }
-
-  titleInput.addEventListener("input", updatePreview);
-  subtitleInput.addEventListener("input", updatePreview);
-  thumbInput.addEventListener("input", updatePreview);
-
-});
 
 
 
