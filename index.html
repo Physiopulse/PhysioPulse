@@ -45,11 +45,27 @@
     rehabilitation studies, and academic publications.
   </p>
 
-<div class="search-box">
+<div class="search-box" style="position:relative;">
   <input
     type="search"
     id="searchInput"
-    placeholder="Search by title, author, or year">
+    placeholder="Search by title, author, or year"
+    style="padding-right:40px;">
+
+  <span id="clearSearch"
+        style="
+          position:absolute;
+          right:100px;
+          top:50%;
+          transform:translateY(-50%);
+          cursor:pointer;
+          font-weight:bold;
+          font-size:18px;
+          display:none;
+        ">
+    ×
+  </span>
+
   <button type="button" id="searchBtn">Search</button>
 </div>
 
@@ -306,11 +322,26 @@ function runSearch() {
 
   // Existing button search (kept)
   button.addEventListener("click", runSearch);
+  const clearBtn = document.getElementById("clearSearch");
+
+if (clearBtn) {
+  input.addEventListener("input", function () {
+    clearBtn.style.display = input.value.trim() !== "" ? "block" : "none";
+  });
+
+  clearBtn.addEventListener("click", function () {
+    input.value = "";
+    clearBtn.style.display = "none";
+    runSearch();
+  });
+}
+
 
 });
 </script>
 </body>
 </html>
+
 
 
 
