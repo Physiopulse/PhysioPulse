@@ -73,7 +73,7 @@
     <h3>
       Criminal Negligence & IPC 304A Judicial Interpretation in Healthcare Cases
     
-      <span>RAJA DURAI.S</span>
+      <span></span>
     </h3>
   </div>
 
@@ -82,7 +82,7 @@
     <h3>
       Medical Negligence & Liability in Physiotherapy – Legal Review
      
-      <span>RAJA DURAI.S</span>
+      <span></span>
     </h3>
   </div>
 
@@ -91,7 +91,7 @@
     <h3>
       Rapid Upper Limb Analysis (RULA) Ergonomic Risk Factors
   
-      <span>POORNA DHARSHINI</span>
+      <span></span>
     </h3>
   </div>
 
@@ -270,20 +270,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (!input || !button) return;
 
-  function runSearch() {
-    const query = input.value.toLowerCase().trim();
-    const cards = document.querySelectorAll(".research-card");
+function runSearch() {
+  const query = input.value.toLowerCase().trim();
+  const cards = document.querySelectorAll(".research-card");
+
+  cards.forEach(card => {
+    const text = card.innerText.toLowerCase();
 
     if (query === "") {
-      cards.forEach(card => card.style.display = "");
+      card.classList.remove("hide");
+      card.classList.add("show");
       return;
     }
 
-    cards.forEach(card => {
-      const text = card.innerText.toLowerCase();
-      card.style.display = text.includes(query) ? "" : "none";
-    });
-  }
+    if (text.includes(query)) {
+      card.classList.remove("hide");
+      card.classList.add("show");
+    } else {
+      card.classList.remove("show");
+      card.classList.add("hide");
+    }
+  });
+}
 
   // 🔴 NEW: live search while typing
   input.addEventListener("input", runSearch);
@@ -295,6 +303,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 </body>
 </html>
+
 
 
 
