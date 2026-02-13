@@ -158,5 +158,23 @@
   }
 
 }
+/* ================= HARD STOP FOR MOBILE SEARCH ANIMATION ================= */
+
+@media (max-width: 768px) {
+
+  .search-box,
+  .search-box * {
+    animation: none !important;
+  }
+
+  .search-box button {
+    transform: none !important;
+    position: relative !important;
+    right: 0 !important;
+    top: 0 !important;
+  }
+
+}
+
 
 
