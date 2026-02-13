@@ -42,6 +42,12 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       error.innerText = "Wrong password";
     }
+    /* ================= DISABLE RIGHT CLICK IN ADMIN PANEL ================= */
+
+panel.addEventListener("contextmenu", function (e) {
+  e.preventDefault();
+});
+
   };
 
   /* ================= LOGOUT ================= */
@@ -152,4 +158,5 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
 });
+
 
