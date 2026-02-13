@@ -277,16 +277,27 @@ document.addEventListener("DOMContentLoaded", function () {
 function runSearch() {
   const query = input.value.toLowerCase().trim();
   const cards = document.querySelectorAll(".research-card");
+  const noResults = document.getElementById("noResults");
+
+  let visibleCount = 0;
 
   cards.forEach(card => {
     const text = card.innerText.toLowerCase();
 
     if (query === "") {
       card.style.display = "";
+      visibleCount++;
+    } else if (text.includes(query)) {
+      card.style.display = "";
+      visibleCount++;
     } else {
-      card.style.display = text.includes(query) ? "" : "none";
+      card.style.display = "none";
     }
   });
+
+  if (noResults) {
+    noResults.style.display = visibleCount === 0 ? "block" : "none";
+  }
 }
 
 
@@ -300,6 +311,7 @@ function runSearch() {
 </script>
 </body>
 </html>
+
 
 
 
