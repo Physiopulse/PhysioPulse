@@ -81,6 +81,14 @@
 <section class="recent-research">
   <h2>RECENT SCIENTIFIC RESEARCHES</h2>
 </section>
+  <div style="text-align:right; margin:15px 0;">
+  <select id="sortSelect" style="padding:6px 10px; border-radius:6px;">
+    <option value="default">Sort By</option>
+    <option value="az">Title A–Z</option>
+    <option value="za">Title Z–A</option>
+    <option value="latest">Latest Year</option>
+  </select>
+</div>
   
 <section class="research-grid" id="researchGrid">
 
@@ -335,12 +343,50 @@ if (clearBtn) {
     runSearch();
   });
 }
+  const sortSelect = document.getElementById("sortSelect");
+
+if (sortSelect) {
+  sortSelect.addEventListener("change", function () {
+    const grid = document.getElementById("researchGrid");
+    const cards = Array.from(grid.querySelectorAll(".research-card"));
+
+    let sortedCards;
+
+    if (this.value === "az") {
+      sortedCards = cards.sort((a, b) =>
+        a.innerText.localeCompare(b.innerText)
+      );
+    }
+
+    else if (this.value === "za") {
+      sortedCards = cards.sort((a, b) =>
+        b.innerText.localeCompare(a.innerText)
+      );
+    }
+
+    else if (this.value === "latest") {
+      sortedCards = cards.sort((a, b) => {
+        const yearA = a.innerText.match(/\b(20\d{2})\b/);
+        const yearB = b.innerText.match(/\b(20\d{2})\b/);
+        return (yearB ? yearB[0] : 0) - (yearA ? yearA[0] : 0);
+      });
+    }
+
+    else {
+      return; // default — do nothing
+    }
+
+    sortedCards.forEach(card => grid.appendChild(card));
+  });
+}
+
 
 
 });
 </script>
 </body>
 </html>
+
 
 
 
