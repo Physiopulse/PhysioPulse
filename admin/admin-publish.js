@@ -1,4 +1,4 @@
-// ================= SECURE HASHED PASSWORD =================
+// ================= CORRECT HASH FOR "physio-admin" =================
 const ADMIN_HASH =
   "8c6976e5b5410415bde908bd4dee15dfb16f5f8d8e8b5f9d2d1a3c6d53295d85";
 
@@ -17,17 +17,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const imgPreview = document.getElementById("imgPreview");
   const paperList = document.getElementById("paperList");
 
-  /* ================= LOGIN LIMITER ================= */
-  let loginAttempts = 0;
-  const MAX_ATTEMPTS = 5;
-  const LOCK_TIME = 10 * 60 * 1000;
-
-   function isLocked() {
-   const lockUntil = localStorage.getItem("admin_lock_until");
-    if (!lockUntil) return false;
-    return Date.now() < parseInt(lockUntil);
-  }
-
   /* ================= HASH FUNCTION ================= */
   async function hashPassword(password) {
     const encoder = new TextEncoder();
@@ -40,40 +29,23 @@ document.addEventListener("DOMContentLoaded", function () {
   /* ================= LOGIN ================= */
   window.login = async function () {
 
-    if (isLocked()) {
-      alert("Too many failed attempts. Try again later.");
-      return;
-    }
-
     const enteredHash = await hashPassword(passwordInput.value.trim());
 
     if (enteredHash === ADMIN_HASH) {
 
-      const sessionToken = btoa(Date.now() + "-" + Math.random());
-      localStorage.setItem("pp_admin", sessionToken);
+      localStorage.setItem("pp_admin", "active-session");
 
-      showPanel();
-      startInactivityTimer();
+      loginBox.classList.add("hidden");
+      panel.classList.remove("hidden");
+
+      renderPapers();
 
     } else {
-
-      loginAttempts++;
       error.innerText = "Wrong password";
-
-      if (loginAttempts >= MAX_ATTEMPTS) {
-        const lockUntil = Date.now() + LOCK_TIME;
-        localStorage.setItem("admin_lock_until", lockUntil);
-        alert("Admin locked for 10 minutes.");
-      }
     }
   };
 
-  function showPanel() {
-    loginBox.classList.add("hidden");
-    panel.classList.remove("hidden");
-    renderPapers();
-  }
-
+  /* ================= LOGOUT ================= */
   window.logout = function () {
     localStorage.removeItem("pp_admin");
     location.reload();
@@ -81,26 +53,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   /* ================= SESSION CHECK ================= */
   if (localStorage.getItem("pp_admin")) {
-    showPanel();
-    startInactivityTimer();
+    loginBox.classList.add("hidden");
+    panel.classList.remove("hidden");
+    renderPapers();
   }
-
-  /* ================= AUTO LOGOUT ================= */
-  const INACTIVITY_LIMIT = 5 * 60 * 1000;
-  let inactivityTimer;
-
-  function startInactivityTimer() {
-    clearTimeout(inactivityTimer);
-    inactivityTimer = setTimeout(() => {
-      localStorage.removeItem("pp_admin");
-      alert("Session expired.");
-      location.reload();
-    }, INACTIVITY_LIMIT);
-  }
-
-  document.addEventListener("mousemove", startInactivityTimer);
-  document.addEventListener("keydown", startInactivityTimer);
-  document.addEventListener("click", startInactivityTimer);
 
   /* ================= IMAGE PREVIEW ================= */
   imgFile.addEventListener("change", function () {
@@ -149,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function () {
     yearInput.value = "";
   };
 
-  /* ================= LIST & DELETE ================= */
+  /* ================= LIST ================= */
   function renderPapers() {
 
     const papers = JSON.parse(
@@ -181,7 +137,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  /* ================= DELETE ================= */
   window.deletePaper = function (i) {
+
     if (!confirm("Unpublish this paper?")) return;
 
     const papers = JSON.parse(
@@ -195,6 +153,3 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
 });
-
-
-
