@@ -189,12 +189,24 @@
 
   /* ================= HERO ================= */
 
-  .hero {
-    padding: 70px 22px 60px;
-    border-radius: 0 0 40px 40px;
-    background: linear-gradient(135deg, #1f7a7a, #2fa36b);
-    box-shadow: 0 25px 60px rgba(0,0,0,0.2);
-  }
+
+
+.hero {
+  padding: 70px 22px 80px;
+  border-radius: 0 0 40px 40px;
+  background: linear-gradient(135deg, #1f7a7a, #2fa36b);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+  position: relative;
+  z-index: 2;
+}
+
+/* Push next section down properly */
+.recent-research {
+  position: relative;
+  z-index: 1;
+  margin-top: 30px;
+}
+
 
   .hero-title {
     font-size: 23px;
@@ -292,4 +304,5 @@
   }
 
 }
+
 
