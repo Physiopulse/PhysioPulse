@@ -143,4 +143,20 @@
   }
 
 }
+/* ===== FORCE SEARCH BUTTON STABILITY ===== */
+
+@media (max-width: 768px) {
+
+  .search-box {
+    overflow: hidden !important;
+  }
+
+  .search-box button {
+    position: relative !important;
+    right: 0 !important;
+    transform: none !important;
+  }
+
+}
+
 
