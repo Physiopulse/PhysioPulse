@@ -1,5 +1,6 @@
 /* ================= CONFIG ================= */
-const ADMIN_PASSWORD = "physio-admin";
+// ================= SECURE HASHED PASSWORD =================
+const ADMIN_HASH = "9d5e3ecdeb94b0cfa2e63d0dfd8eaa1c6c3dbb0a2f6d6a31d2b1e8a71c2e0d52"; 
 // ================= HARD ACCESS PROTECTION =================
 if (localStorage.getItem("pp_admin") !== "true") {
   const allowed = confirm("Admin access required. Login?");
@@ -175,6 +176,7 @@ document.addEventListener("keydown", function(e) {
     e.preventDefault();
   }
 });
+
 
 
 
