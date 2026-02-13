@@ -875,18 +875,18 @@ button:active,
 }
 /* ================= SMOOTH FILTER ANIMATION ================= */
 
+/* ================= SAFE FADE ANIMATION ================= */
+
 .research-card {
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.25s ease;
 }
 
-.research-card.hide {
+.research-card[style*="display: none"] {
   opacity: 0;
-  transform: scale(0.95);
-  pointer-events: none;
 }
 
-.research-card.show {
+.research-card:not([style*="display: none"]) {
   opacity: 1;
-  transform: scale(1);
 }
+
 
