@@ -62,12 +62,12 @@ function publish(){
 
   const papers = JSON.parse(localStorage.getItem("physiopulse_papers")||"[]");
 
- papers.push({
+papers.push({
   title: title.value,
   subtitle: subtitle.value,
   year: document.getElementById("year").value,
-  pdf: pdfPath,
-  thumb: imgPath
+  pdf: pdf.value,
+  thumb: thumb.value
 });
 
   localStorage.setItem("physiopulse_papers",JSON.stringify(papers));
@@ -114,6 +114,7 @@ function deletePaper(i){
   localStorage.setItem("physiopulse_papers",JSON.stringify(papers));
   renderPapers();
 }
+
 
 
 
