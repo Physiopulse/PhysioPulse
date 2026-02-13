@@ -259,42 +259,31 @@ body {
   flex-wrap: wrap;
 }
 
+/* ================= DESKTOP CARD POLISH ================= */
+
 .research-card {
-  max-width: 320px;
-  background: var(--white);
-  border-radius: 16px;
+  position: relative;
+  background: white;
+  border-radius: 18px;
   overflow: hidden;
-  cursor: pointer;
-
-  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
-  transition:
-    transform 0.45s ease,
-    box-shadow 0.45s ease;
+  transition: 
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    opacity 0.25s ease;
 }
 
-/* HOVER animation on PDF cards */
 .research-card:hover {
-  transform: translateY(-14px) scale(1.04);
-  box-shadow: 0 28px 65px rgba(0,0,0,0.3);
+  transform: translateY(-8px);
+  box-shadow: 0 25px 55px rgba(0,0,0,0.18);
 }
 
+/* Image zoom on hover */
 .research-card img {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
+  transition: transform 0.4s ease;
 }
 
-.research-card h3 {
-  padding: 16px;
-  font-size: 16px;
-  color: var(--primary);
-}
-
-.research-card h3 span {
-  display: block;
-  font-size: 13px;
-  color: #555;
-  margin-top: 6px;
+.research-card:hover img {
+  transform: scale(1.05);
 }
 
 /* ================= PDF VIEWER ================= */
@@ -921,6 +910,7 @@ button:active,
   outline: none;
   box-shadow: 0 0 0 4px rgba(31,122,122,0.2);
 }
+
 
 
 
