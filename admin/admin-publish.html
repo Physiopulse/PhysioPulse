@@ -50,6 +50,38 @@ button{
   margin-bottom:10px;
   background:#fafafa
 }
+  /* ================= ADMIN POLISH ================= */
+
+body {
+  background: linear-gradient(135deg, #f2f9f8, #e6f4f1);
+}
+
+.box {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 30px 70px rgba(0,0,0,0.18);
+}
+
+button {
+  transition: all 0.25s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(31,122,122,0.3);
+}
+
+.drop {
+  transition: all 0.25s ease;
+}
+
+.drop.drag {
+  transform: scale(1.03);
+}
+
 </style>
 </head>
 
@@ -95,4 +127,5 @@ button{
 <script src="admin-publish.js"></script>
 </body>
 </html>
+
 
