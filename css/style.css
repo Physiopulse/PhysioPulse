@@ -922,26 +922,6 @@ button:active,
   outline: none;
   box-shadow: 0 0 0 4px rgba(31,122,122,0.2);
 }
-/* ================= GLOBAL SMOOTH SCROLL ================= */
-
-html {
-  scroll-behavior: smooth;
-}
-/* ================= SCROLL REVEAL ================= */
-
-.section-reveal {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.section-reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-.hero {
-  background-attachment: fixed;
-}
 /* ================= VIEW COUNTER BADGE ================= */
 
 .view-count {
@@ -969,6 +949,7 @@ html {
   color: #fff;
   transform: translateY(-2px);
 }
+
 
 
 
