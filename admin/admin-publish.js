@@ -116,30 +116,43 @@ function deletePaper(i){
 }
 /* ================= LIVE PREVIEW ================= */
 
-const previewCard = document.getElementById("previewCard");
-const previewImage = document.getElementById("previewImage");
-const previewTitle = document.getElementById("previewTitle");
-const previewSubtitle = document.getElementById("previewSubtitle");
+/* ================= LIVE PREVIEW (SAFE VERSION) ================= */
 
-function updatePreview() {
+document.addEventListener("DOMContentLoaded", function () {
 
-  if (!title.value && !subtitle.value && !thumb.value) {
-    previewCard.style.display = "none";
-    return;
+  const titleInput = document.getElementById("title");
+  const subtitleInput = document.getElementById("subtitle");
+  const thumbInput = document.getElementById("thumb");
+
+  const previewCard = document.getElementById("previewCard");
+  const previewImage = document.getElementById("previewImage");
+  const previewTitle = document.getElementById("previewTitle");
+  const previewSubtitle = document.getElementById("previewSubtitle");
+
+  if (!titleInput || !subtitleInput || !thumbInput) return;
+
+  function updatePreview() {
+
+    if (!titleInput.value && !subtitleInput.value && !thumbInput.value) {
+      previewCard.style.display = "none";
+      return;
+    }
+
+    previewCard.style.display = "block";
+
+    previewTitle.innerHTML = titleInput.value || "Paper Title";
+    previewSubtitle.innerHTML = subtitleInput.value || "Author / Subtitle";
+
+    if (thumbInput.value) {
+      previewImage.src = thumbInput.value;
+    }
   }
 
-  previewCard.style.display = "block";
+  titleInput.addEventListener("input", updatePreview);
+  subtitleInput.addEventListener("input", updatePreview);
+  thumbInput.addEventListener("input", updatePreview);
 
-  previewTitle.innerHTML = title.value || "Paper Title";
-  previewSubtitle.innerHTML = subtitle.value || "Author / Subtitle";
+});
 
-  if (thumb.value) {
-    previewImage.src = thumb.value;
-  }
-}
-
-title.addEventListener("input", updatePreview);
-subtitle.addEventListener("input", updatePreview);
-thumb.addEventListener("input", updatePreview);
 
 
