@@ -196,6 +196,27 @@
   }
 
 }
+/* ===== HARD LOCK MOBILE SEARCH ALIGNMENT ===== */
+
+@media (max-width:768px){
+
+  .search-box{
+    position: relative !important;
+    padding: 14px 65px 14px 22px !important;
+  }
+
+  .search-box button{
+    position: absolute !important;
+    right: 8px !important;
+    left: auto !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    margin: 0 !important;
+    width: auto !important;
+  }
+
+}
+
 
 
 
