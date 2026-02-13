@@ -1,137 +1,122 @@
 /* ================= CONFIG ================= */
 const ADMIN_PASSWORD = "physio-admin";
 
-/* ================= ELEMENTS ================= */
-const loginBox = document.getElementById("loginBox");
-const panel = document.getElementById("panel");
-const error = document.getElementById("error");
-const passwordInput = document.getElementById("password");
+document.addEventListener("DOMContentLoaded", function () {
 
-const titleInput = document.getElementById("title");
-const subtitleInput = document.getElementById("subtitle");
-const yearInput = document.getElementById("year");
-const pdfInput = document.getElementById("pdf");
-const thumbInput = document.getElementById("thumb");
+  const loginBox = document.getElementById("loginBox");
+  const panel = document.getElementById("panel");
+  const error = document.getElementById("error");
+  const passwordInput = document.getElementById("password");
 
-const paperList = document.getElementById("paperList");
-
-/* ================= LOGIN ================= */
-function login() {
-  if (passwordInput.value === ADMIN_PASSWORD) {
-    localStorage.setItem("pp_admin", "true");
-    showPanel();
-  } else {
-    error.innerText = "Wrong password";
-  }
-}
-
-function showPanel() {
-  loginBox.classList.add("hidden");
-  panel.classList.remove("hidden");
-  renderPapers();
-}
-
-function logout() {
-  localStorage.removeItem("pp_admin");
-  location.reload();
-}
-
-if (localStorage.getItem("pp_admin") === "true") {
-  showPanel();
-}
-
-/* ================= PUBLISH ================= */
-function publish() {
-
-  const title = document.getElementById("title");
-  const subtitle = document.getElementById("subtitle");
-  const year = document.getElementById("year");
+  const titleInput = document.getElementById("title");
+  const subtitleInput = document.getElementById("subtitle");
+  const yearInput = document.getElementById("year");
   const pdfFile = document.getElementById("pdfFile");
   const imgFile = document.getElementById("imgFile");
+  const paperList = document.getElementById("paperList");
 
-  if (!title || !pdfFile || !imgFile) {
-    alert("Form elements not found. Check input IDs.");
-    return;
+  /* ================= LOGIN ================= */
+  window.login = function () {
+    if (passwordInput.value === ADMIN_PASSWORD) {
+      localStorage.setItem("pp_admin", "true");
+      showPanel();
+    } else {
+      error.innerText = "Wrong password";
+    }
+  };
+
+  function showPanel() {
+    loginBox.classList.add("hidden");
+    panel.classList.remove("hidden");
+    renderPapers();
   }
 
-  if (!title.value || !pdfFile.files.length || !imgFile.files.length) {
-    alert("Please complete all required fields.");
-    return;
+  window.logout = function () {
+    localStorage.removeItem("pp_admin");
+    location.reload();
+  };
+
+  if (localStorage.getItem("pp_admin") === "true") {
+    showPanel();
   }
 
-  const pdfPath = "pdfs/" + pdfFile.files[0].name;
-  const thumbPath = "images/" + imgFile.files[0].name;
+  /* ================= PUBLISH ================= */
+  window.publish = function () {
 
-  const papers = JSON.parse(
-    localStorage.getItem("physiopulse_papers") || "[]"
-  );
+    if (!titleInput.value || !pdfFile.files.length || !imgFile.files.length) {
+      alert("Please complete all required fields.");
+      return;
+    }
 
-  papers.push({
-    title: title.value.trim(),
-    subtitle: subtitle.value.trim(),
-    year: year ? year.value.trim() : "",
-    pdf: pdfPath,
-    thumb: thumbPath
-  });
+    const pdfPath = "pdfs/" + pdfFile.files[0].name;
+    const thumbPath = "images/" + imgFile.files[0].name;
 
-  localStorage.setItem("physiopulse_papers", JSON.stringify(papers));
+    const papers = JSON.parse(
+      localStorage.getItem("physiopulse_papers") || "[]"
+    );
 
-  alert("Paper published successfully!");
+    papers.push({
+      title: titleInput.value.trim(),
+      subtitle: subtitleInput.value.trim(),
+      year: yearInput ? yearInput.value.trim() : "",
+      pdf: pdfPath,
+      thumb: thumbPath
+    });
 
-  renderPapers();
-}
+    localStorage.setItem("physiopulse_papers", JSON.stringify(papers));
 
+    alert("Paper published successfully!");
 
-  // Optional: clear form
-  titleInput.value = "";
-  subtitleInput.value = "";
-  if (yearInput) yearInput.value = "";
-  pdfInput.value = "";
-  thumbInput.value = "";
-}
+    renderPapers();
 
-/* ================= LIST & DELETE ================= */
-function renderPapers() {
+    titleInput.value = "";
+    subtitleInput.value = "";
+    if (yearInput) yearInput.value = "";
+  };
 
-  const papers = JSON.parse(
-    localStorage.getItem("physiopulse_papers") || "[]"
-  );
+  /* ================= LIST & DELETE ================= */
+  function renderPapers() {
 
-  paperList.innerHTML = "";
+    const papers = JSON.parse(
+      localStorage.getItem("physiopulse_papers") || "[]"
+    );
 
-  if (papers.length === 0) {
-    paperList.innerHTML = "<p>No papers published yet.</p>";
-    return;
+    paperList.innerHTML = "";
+
+    if (papers.length === 0) {
+      paperList.innerHTML = "<p>No papers published yet.</p>";
+      return;
+    }
+
+    papers.forEach((p, i) => {
+
+      const div = document.createElement("div");
+
+      div.innerHTML = `
+        <strong>${p.title}</strong><br>
+        <small>${p.subtitle || ""} ${p.year ? " • " + p.year : ""}</small><br>
+        <button onclick="deletePaper(${i})"
+          style="margin-top:8px;background:#c0392b;color:#fff;border:none;padding:6px 14px;border-radius:6px;cursor:pointer">
+          Delete
+        </button>
+      `;
+
+      paperList.appendChild(div);
+    });
   }
 
-  papers.forEach((p, i) => {
+  window.deletePaper = function (i) {
 
-    const div = document.createElement("div");
-    div.className = "paper";
+    if (!confirm("Unpublish this paper?")) return;
 
-    div.innerHTML = `
-      <strong>${p.title}</strong><br>
-      <small>${p.subtitle || ""} ${p.year ? " • " + p.year : ""}</small><br>
-      <button onclick="deletePaper(${i})"
-        style="margin-top:8px;background:#c0392b;color:#fff;border:none;padding:6px 14px;border-radius:6px;cursor:pointer">
-        Delete
-      </button>
-    `;
+    const papers = JSON.parse(
+      localStorage.getItem("physiopulse_papers") || "[]"
+    );
 
-    paperList.appendChild(div);
-  });
-}
+    papers.splice(i, 1);
+    localStorage.setItem("physiopulse_papers", JSON.stringify(papers));
 
-function deletePaper(i) {
-  if (!confirm("Unpublish this paper?")) return;
+    renderPapers();
+  };
 
-  const papers = JSON.parse(
-    localStorage.getItem("physiopulse_papers") || "[]"
-  );
-
-  papers.splice(i, 1);
-  localStorage.setItem("physiopulse_papers", JSON.stringify(papers));
-
-  renderPapers();
-}
-
+});
