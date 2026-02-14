@@ -113,18 +113,6 @@
     font-size: 13px;
   }
 
-  /* ========= HORIZONTAL PAPER SCROLL ========= */
-
-
-  .research-card h3 {
-    font-size: 15px;
-    padding: 14px;
-  }
-
-  .research-card span {
-    font-size: 12px;
-  }
-
   /* ========= PDF VIEWER ========= */
 
   .pdf-viewer iframe {
@@ -144,35 +132,41 @@
   }
 
 }
-/* ================= MOBILE PDF HORIZONTAL SCROLL ================= */
+/* ================= FORCE MOBILE HORIZONTAL PDF SCROLL ================= */
 
 @media screen and (max-width: 768px) {
 
-  #researchGrid,
-  .research-grid {
+  body #researchGrid {
     display: flex !important;
+    flex-wrap: nowrap !important;
     flex-direction: row !important;
+
     overflow-x: auto !important;
     overflow-y: hidden !important;
-    gap: 18px !important;
-    padding: 20px !important;
+
+    gap: 20px !important;
+    padding: 20px 16px !important;
+
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
   }
 
-  #researchGrid::-webkit-scrollbar,
-  .research-grid::-webkit-scrollbar {
+  body #researchGrid::-webkit-scrollbar {
     display: none;
   }
 
-  .research-card {
+  body #researchGrid .research-card {
+    flex: 0 0 85% !important;
     min-width: 85% !important;
-    flex: 0 0 auto !important;
     scroll-snap-align: center;
-    border-radius: 20px;
-    box-shadow: 0 14px 30px rgba(0,0,0,0.15);
+
+    border-radius: 22px;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.18);
   }
 
 }
+
+}
+
 
 
