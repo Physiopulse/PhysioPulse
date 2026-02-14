@@ -1,130 +1,107 @@
+/* ================= SUPABASE CONFIG ================= */
+const SUPABASE_URL = "https://kfjcgpilaxbwddzlemqa.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_MsZECRHn-hpaXhAcZR_P-g_451qrrhF";
+
+const supabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
+
 /* ================= FOOTER YEAR ================= */
 const yearEl = document.getElementById("year");
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-/* ================= GLOBAL DATA ================= */
-let ALL_PAPERS = [];
-
 /* ================= LOAD PAPERS ================= */
-fetch("data/papers.json")
-  .then(res => res.json())
-  .then(data => {
-    ALL_PAPERS = data;
-    renderHomePapers(ALL_PAPERS);
-  })
-  .catch(err => {
-    console.error("Failed to load papers.json", err);
-  });
+async function loadPapers() {
 
-/* ================= SEARCH ================= */
-function searchPapers() {
-  const input = document.getElementById("searchInput");
-  if (!input) return;
+  const { data, error } = await supabase
+    .from("papers")
+    .select("*")
+    .order("created_at", { ascending: false });
 
-  const query = input.value.toLowerCase().trim();
-
-  if (!query) {
-    renderHomePapers(ALL_PAPERS);
+  if (error) {
+    console.error("Error loading papers:", error);
     return;
   }
 
-  const filtered = ALL_PAPERS.filter(p =>
-    p.title.toLowerCase().includes(query) ||
-    p.subtitle.toLowerCase().includes(query) ||
-    p.year.includes(query)
-  );
-
-  renderHomePapers(filtered);
+  renderHomePapers(data);
 }
+
+document.addEventListener("DOMContentLoaded", loadPapers);
 
 /* ================= RENDER PAPERS ================= */
 function renderHomePapers(papers) {
-  const grid = document.querySelector(".research-grid");
+
+  const grid = document.getElementById("researchGrid");
   if (!grid) return;
 
   grid.innerHTML = "";
 
-  if (papers.length === 0) {
-    grid.innerHTML = `
-      <p style="text-align:center;width:100%;color:#666">
-        No matching papers found.
-      </p>`;
+  if (!papers.length) {
+    grid.innerHTML = "<p>No papers found.</p>";
     return;
   }
 
   papers.forEach(p => {
+
     const card = document.createElement("div");
     card.className = "research-card";
 
     card.innerHTML = `
-      <img src="${p.thumb}" alt="${p.title}">
+      <img src="${p.thumb_url}" alt="${p.title}">
       <h3>
         ${p.title}
-        <span>${p.subtitle} • ${p.year}</span>
+        <span>
+          ${p.subtitle || ""}
+          ${p.year ? " • " + p.year : ""}
+        </span>
       </h3>
+      <div class="view-count">${p.views || 0} Views</div>
     `;
 
-    card.onclick = () => openPDF(p.pdf);
+    card.onclick = () => openPDF(p.id, p.pdf_url);
+
     grid.appendChild(card);
   });
 }
 
-/* ================= PDF VIEWER ================= */
-function openPDF(path) {
+/* ================= PDF VIEW + VIEW COUNTER ================= */
+async function openPDF(id, url) {
 
-  // ===== VIEW COUNTER =====
-  const views = JSON.parse(localStorage.getItem("paperViews") || "{}");
+  // Increase view count
+  await supabase.rpc("increment_views", { row_id: id });
 
-  if (!views[path]) {
-    views[path] = 1;
-  } else {
-    views[path]++;
-  }
-
-  localStorage.setItem("paperViews", JSON.stringify(views));
-
-  updateViewDisplays();
-
-  // ===== OPEN PDF =====
-  document.getElementById("pdfFrame").src = path;
+  // Open viewer
+  document.getElementById("pdfFrame").src = url;
   document.getElementById("pdfViewer").classList.add("open");
-}
 
+  // Reload papers to refresh view count
+  loadPapers();
+}
 
 function closePDF() {
-  const viewer = document.getElementById("pdfViewer");
-  const frame = document.getElementById("pdfFrame");
-
-  frame.src = "";
-  viewer.classList.remove("open");
-  document.body.style.overflow = "auto";
-}
-function updateViewDisplays() {
-
-  const views = JSON.parse(localStorage.getItem("paperViews") || "{}");
-  const cards = document.querySelectorAll(".research-card");
-
-  cards.forEach(card => {
-
-    const pdfPath = card.getAttribute("data-pdf");
-    if (!pdfPath) return;
-
-    const count = views[pdfPath] || 0;
-
-    let viewEl = card.querySelector(".view-count");
-
-    if (!viewEl) {
-      viewEl = document.createElement("div");
-      viewEl.className = "view-count";
-      viewEl.style.marginTop = "6px";
-      viewEl.style.fontSize = "13px";
-      viewEl.style.color = "#777";
-      card.appendChild(viewEl);
-    }
-
-  viewEl.innerText = count + " Views";
-
-
-  });
+  document.getElementById("pdfFrame").src = "";
+  document.getElementById("pdfViewer").classList.remove("open");
 }
 
+/* ================= SEARCH ================= */
+document.addEventListener("DOMContentLoaded", function () {
+
+  const input = document.getElementById("searchInput");
+  const button = document.getElementById("searchBtn");
+
+  function runSearch() {
+    const query = input.value.toLowerCase().trim();
+
+    const cards = document.querySelectorAll(".research-card");
+
+    cards.forEach(card => {
+      const text = card.innerText.toLowerCase();
+      card.style.display = text.includes(query) ? "" : "none";
+    });
+  }
+
+  input.addEventListener("input", runSearch);
+  button.addEventListener("click", runSearch);
+
+});
