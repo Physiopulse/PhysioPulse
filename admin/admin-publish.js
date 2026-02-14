@@ -1,178 +1,110 @@
-// ================= CORRECT HASH =================
-const ADMIN_HASH = "8c2069ca7865c8b85ca99bdd0070805544ff5c6f94033f3d58e4162f70d23eee";
+/* ================= SUPABASE CONFIG ================= */
+const SUPABASE_URL = "https://kfjcgpilaxbwddzlemqa.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_MsZECRHn-hpaXhAcZR_P-g_451qrrhF";
 
-document.addEventListener("DOMContentLoaded", function () {
+const supabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
 
-  const loginBox = document.getElementById("loginBox");
-  const panel = document.getElementById("panel");
-  const error = document.getElementById("error");
-  const passwordInput = document.getElementById("password");
+/* ================= ADMIN LOGIN ================= */
+const loginBox = document.getElementById("loginBox");
+const panel = document.getElementById("panel");
+const error = document.getElementById("error");
 
-  const titleInput = document.getElementById("title");
-  const subtitleInput = document.getElementById("subtitle");
-  const yearInput = document.getElementById("year");
-  const pdfFile = document.getElementById("pdfFile");
-  const imgFile = document.getElementById("imgFile");
-  const imgPreview = document.getElementById("imgPreview");
-  const paperList = document.getElementById("paperList");
+async function login() {
 
-  /* ================= HASH FUNCTION ================= */
-  async function hashPassword(password) {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(password);
-    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
-  
-  }
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-  /* ================= LOGIN ================= */
-  window.login = async function () {
-
-    const enteredHash = await hashPassword(passwordInput.value.trim());
-
-    if (enteredHash === ADMIN_HASH) {
-
-      localStorage.setItem("pp_admin", "active-session");
-
-      loginBox.classList.add("hidden");
-      panel.classList.remove("hidden");
-
-      renderPapers();
-
-    } else {
-      error.innerText = "Wrong password";
-    }
-  };
-
-  /* ================= LOGOUT ================= */
-  window.logout = function () {
-    localStorage.removeItem("pp_admin");
-    location.reload();
-  };
-
-  /* ================= SESSION CHECK ================= */
-  if (localStorage.getItem("pp_admin")) {
-    loginBox.classList.add("hidden");
-    panel.classList.remove("hidden");
-    renderPapers();
-  }
-
-  /* ================= IMAGE PREVIEW ================= */
-  imgFile.addEventListener("change", function () {
-    const file = imgFile.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = e => {
-      imgPreview.src = e.target.result;
-      imgPreview.style.display = "block";
-    };
-    reader.readAsDataURL(file);
+  const { error: loginError } = await supabase.auth.signInWithPassword({
+    email,
+    password
   });
 
-  /* ================= PUBLISH ================= */
-  window.publish = function () {
-
-    if (!titleInput.value || !pdfFile.files.length || !imgFile.files.length) {
-      alert("Please complete all required fields.");
-      return;
-    }
-
-    const pdfPath = "pdfs/" + pdfFile.files[0].name;
-    const thumbPath = "images/" + imgFile.files[0].name;
-
-    const papers = JSON.parse(
-      localStorage.getItem("physiopulse_papers") || "[]"
-    );
-
-    papers.unshift({
-      title: titleInput.value.trim(),
-      subtitle: subtitleInput.value.trim(),
-      year: yearInput.value.trim(),
-      pdf: pdfPath,
-      thumb: thumbPath
-    });
-
-    localStorage.setItem("physiopulse_papers", JSON.stringify(papers));
-
-    alert("Paper published successfully!");
-
-    renderPapers();
-
-    titleInput.value = "";
-    subtitleInput.value = "";
-    yearInput.value = "";
-  };
-
-  /* ================= LIST ================= */
-  function renderPapers() {
-
-    const papers = JSON.parse(
-      localStorage.getItem("physiopulse_papers") || "[]"
-    );
-
-    paperList.innerHTML = "";
-
-    if (papers.length === 0) {
-      paperList.innerHTML = "<p>No papers published yet.</p>";
-      return;
-    }
-
-    papers.forEach((p, i) => {
-
-      const div = document.createElement("div");
-      div.className = "paper";
-
-      div.innerHTML = `
-        <strong>${p.title}</strong><br>
-        <small>${p.subtitle || ""} ${p.year ? " • " + p.year : ""}</small><br>
-        <button onclick="deletePaper(${i})"
-          style="margin-top:8px;background:#c0392b;color:#fff;border:none;padding:6px 14px;border-radius:6px;cursor:pointer">
-          Delete
-        </button>
-      `;
-
-      paperList.appendChild(div);
-    });
+  if (loginError) {
+    error.innerText = "Invalid credentials";
+    return;
   }
 
-  /* ================= DELETE ================= */
-  window.deletePaper = function (i) {
+  loginBox.classList.add("hidden");
+  panel.classList.remove("hidden");
+}
 
-    if (!confirm("Unpublish this paper?")) return;
+async function logout() {
+  await supabase.auth.signOut();
+  location.reload();
+}
 
-    const papers = JSON.parse(
-      localStorage.getItem("physiopulse_papers") || "[]"
-    );
+/* ================= UPLOAD PAPER ================= */
+async function publish() {
 
-    papers.splice(i, 1);
-    localStorage.setItem("physiopulse_papers", JSON.stringify(papers));
+  const title = document.getElementById("title").value.trim();
+  const subtitle = document.getElementById("subtitle").value.trim();
+  const year = document.getElementById("year").value.trim();
 
-    renderPapers();
-  };
-/* ================= DISABLE RIGHT CLICK (ADMIN ONLY) ================= */
+  const pdfFile = document.getElementById("pdfFile").files[0];
+  const thumbFile = document.getElementById("imgFile").files[0];
 
-document.addEventListener("contextmenu", function (e) {
-
-  // Only block if admin panel is visible
-  if (!panel.classList.contains("hidden")) {
-    e.preventDefault();
+  if (!title || !pdfFile || !thumbFile) {
+    alert("Please complete all required fields.");
+    return;
   }
 
-});
+  /* ========= UPLOAD PDF ========= */
+  const pdfPath = `pdfs/${Date.now()}-${pdfFile.name}`;
 
+  const { error: pdfError } = await supabase.storage
+    .from("pdfs")
+    .upload(pdfPath, pdfFile);
 
-});
-/* ================= DISABLE RIGHT CLICK (FULL ADMIN PAGE) ================= */
+  if (pdfError) {
+    alert("PDF upload failed.");
+    return;
+  }
 
-document.addEventListener("contextmenu", function (e) {
-  e.preventDefault();
-});
+  const { data: pdfData } = supabase.storage
+    .from("pdfs")
+    .getPublicUrl(pdfPath);
 
+  /* ========= UPLOAD THUMBNAIL ========= */
+  const thumbPath = `thumbs/${Date.now()}-${thumbFile.name}`;
 
+  const { error: thumbError } = await supabase.storage
+    .from("thumbnails")
+    .upload(thumbPath, thumbFile);
 
+  if (thumbError) {
+    alert("Thumbnail upload failed.");
+    return;
+  }
 
+  const { data: thumbData } = supabase.storage
+    .from("thumbnails")
+    .getPublicUrl(thumbPath);
 
+  /* ========= INSERT INTO DATABASE ========= */
+  const { error: insertError } = await supabase
+    .from("papers")
+    .insert([
+      {
+        title,
+        subtitle,
+        year,
+        pdf_url: pdfData.publicUrl,
+        thumb_url: thumbData.publicUrl,
+        views: 0
+      }
+    ]);
 
+  if (insertError) {
+    alert("Database insert failed.");
+    return;
+  }
 
+  alert("Paper published successfully!");
+
+  document.getElementById("title").value = "";
+  document.getElementById("subtitle").value = "";
+  document.getElementById("year").value = "";
+}
