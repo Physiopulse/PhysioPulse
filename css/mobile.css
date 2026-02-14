@@ -115,42 +115,6 @@
 
   /* ========= HORIZONTAL PAPER SCROLL ========= */
 
-@media (max-width: 768px) {
-
-  .research-grid {
-    display: flex;
-    gap: 18px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    padding: 20px 20px 40px;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .research-grid::-webkit-scrollbar {
-    display: none;
-  }
-
-  .research-card {
-    min-width: 82%;
-    flex: 0 0 auto;
-    scroll-snap-align: center;
-    border-radius: 20px;
-    box-shadow: 0 14px 35px rgba(0,0,0,0.15);
-    transition: transform 0.3s ease;
-  }
-
-  .research-card:active {
-    transform: scale(0.96);
-  }
-
-  .research-card img {
-    width: 100%;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-  }
-
-}
-
 
   .research-card h3 {
     font-size: 15px;
@@ -180,4 +144,35 @@
   }
 
 }
+/* ================= MOBILE PDF HORIZONTAL SCROLL ================= */
+
+@media screen and (max-width: 768px) {
+
+  #researchGrid,
+  .research-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    gap: 18px !important;
+    padding: 20px !important;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #researchGrid::-webkit-scrollbar,
+  .research-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .research-card {
+    min-width: 85% !important;
+    flex: 0 0 auto !important;
+    scroll-snap-align: center;
+    border-radius: 20px;
+    box-shadow: 0 14px 30px rgba(0,0,0,0.15);
+  }
+
+}
+
 
