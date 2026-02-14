@@ -1,15 +1,48 @@
 /* =========================================
-   PREMIUM MOBILE LAYOUT
+   PHYSIOPULSE – MOBILE LAYOUT (STABLE)
    ========================================= */
 
 @media screen and (max-width: 768px) {
 
+  /* ================= GLOBAL ================= */
+
+  html, body {
+    overflow-x: visible;
+  }
+
+  body {
+    font-size: 15px;
+  }
+
+  section {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  /* ================= HEADER ================= */
+
+  .header {
+    padding: 12px 16px;
+  }
+
+  .logo-img {
+    width: 32px;
+  }
+
+  .logo {
+    font-size: 16px;
+  }
+
+  .logo2 {
+    font-size: 16px;
+  }
+
   /* ================= HERO ================= */
 
   .hero {
-    padding: 60px 18px 40px;
-    border-bottom-left-radius: 40px;
-    border-bottom-right-radius: 40px;
+    padding: 50px 18px 40px;
+    border-bottom-left-radius: 32px;
+    border-bottom-right-radius: 32px;
   }
 
   .hero-title {
@@ -19,65 +52,79 @@
 
   .hero-subtitle {
     font-size: 14px;
+    line-height: 1.6;
   }
 
   /* ================= SEARCH BAR ================= */
 
   .search-box {
-    display: flex !important;
-    align-items: center;
     position: relative;
-    border-radius: 50px;
-    overflow: hidden;
-    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    margin-top: 22px;
   }
 
   .search-box input {
     width: 100%;
-    padding: 14px 120px 14px 20px;
-    border-radius: 50px;
+    padding: 14px 110px 14px 18px;
+    border-radius: 40px;
     border: none;
+    font-size: 16px; /* prevents zoom jump */
   }
 
   .search-box button {
     position: absolute;
-    right: 8px;
+    right: 6px;
     top: 50%;
     transform: translateY(-50%);
+    padding: 9px 18px;
     border-radius: 30px;
-    padding: 10px 18px;
     font-size: 14px;
+  }
+
+  .search-box button:active,
+  .search-box button:focus,
+  .search-box button:hover {
+    transform: translateY(-50%);
   }
 
   /* ================= TAGS ================= */
 
   .tags {
+    margin-top: 18px;
     display: flex;
     flex-wrap: wrap;
+    gap: 8px;
     justify-content: center;
-    gap: 10px;
   }
 
-/* ================= PREMIUM HORIZONTAL SCROLL ================= */
+  .tags span {
+    padding: 6px 14px;
+    font-size: 12px;
+  }
 
-/* ================= PERFECT MOBILE CAROUSEL ================= */
+  /* ================= SORT DROPDOWN ================= */
 
-@media screen and (max-width: 768px) {
+  .sort-select {
+    padding: 8px 14px;
+    border-radius: 30px;
+    font-size: 13px;
+  }
+
+  /* ================= HORIZONTAL PDF SECTION ================= */
 
   #researchGrid {
     display: flex !important;
+    flex-direction: row !important;
     flex-wrap: nowrap !important;
 
     overflow-x: auto;
     overflow-y: hidden;
 
-    padding-left: 16px;
-    padding-right: 16px;
     gap: 16px;
+    padding: 20px 16px;
 
     scroll-snap-type: x mandatory;
-    scroll-padding-left: 16px;
-
     -webkit-overflow-scrolling: touch;
   }
 
@@ -90,9 +137,47 @@
     max-width: 85%;
 
     scroll-snap-align: start;
+
+    border-radius: 18px;
+    box-shadow: 0 16px 35px rgba(0,0,0,0.15);
+  }
+
+  #researchGrid .research-card img {
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+  }
+
+  #researchGrid .research-card h3 {
+    font-size: 15px;
+    padding: 14px;
+  }
+
+  /* ================= OTHER RESEARCH GRID (WHY SECTION) ================= */
+
+  .research-grid:not(#researchGrid) {
+    display: block;
+  }
+
+  .research-grid:not(#researchGrid) .research-card {
+    margin-bottom: 20px;
+  }
+
+  /* ================= PDF VIEWER ================= */
+
+  .pdf-viewer iframe {
+    width: 100%;
+    height: 85vh;
+  }
+
+  /* ================= FOOTER ================= */
+
+  .footer-container {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .footer-col {
+    width: 100%;
   }
 
 }
-
-
-
