@@ -58,20 +58,24 @@
     gap: 10px;
   }
 
-  /* ================= HORIZONTAL PAPER SCROLL ================= */
+/* ================= PREMIUM HORIZONTAL SCROLL ================= */
+
+@media screen and (max-width: 768px) {
 
   #researchGrid {
     display: flex !important;
     flex-direction: row !important;
     flex-wrap: nowrap !important;
 
-    overflow-x: auto !important;
-    overflow-y: hidden !important;
+    overflow-x: auto;
+    overflow-y: hidden;
 
-    gap: 18px;
-    padding: 20px 16px;
+    padding: 20px 20px;   /* important */
+    gap: 16px;
 
     scroll-snap-type: x mandatory;
+    scroll-padding-left: 20px;
+
     -webkit-overflow-scrolling: touch;
   }
 
@@ -80,13 +84,15 @@
   }
 
   #researchGrid .research-card {
-    flex: 0 0 85% !important;
-    min-width: 85% !important;
+    flex: 0 0 80%;
+    max-width: 80%;
 
-    scroll-snap-align: center;
+    scroll-snap-align: start;
 
-    border-radius: 22px;
-    box-shadow: 0 20px 45px rgba(0,0,0,0.18);
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
   }
 
 }
+
+
