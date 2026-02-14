@@ -60,21 +60,23 @@
 
 /* ================= PREMIUM HORIZONTAL SCROLL ================= */
 
+/* ================= PERFECT MOBILE CAROUSEL ================= */
+
 @media screen and (max-width: 768px) {
 
   #researchGrid {
     display: flex !important;
-    flex-direction: row !important;
     flex-wrap: nowrap !important;
 
     overflow-x: auto;
     overflow-y: hidden;
 
-    padding: 20px 20px;   /* important */
+    padding-left: 16px;
+    padding-right: 16px;
     gap: 16px;
 
     scroll-snap-type: x mandatory;
-    scroll-padding-left: 20px;
+    scroll-padding-left: 16px;
 
     -webkit-overflow-scrolling: touch;
   }
@@ -84,15 +86,13 @@
   }
 
   #researchGrid .research-card {
-    flex: 0 0 80%;
-    max-width: 80%;
+    flex: 0 0 85%;
+    max-width: 85%;
 
     scroll-snap-align: start;
-
-    border-radius: 20px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
   }
 
 }
+
 
 
