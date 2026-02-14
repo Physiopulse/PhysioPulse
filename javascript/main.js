@@ -1,23 +1,35 @@
 /* ================= FOOTER YEAR ================= */
-const yearEl = document.getElementById("year");
-if (yearEl) yearEl.textContent = new Date().getFullYear();
+document.addEventListener("DOMContentLoaded", function () {
+
+  const yearEl = document.getElementById("year");
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+});
+
 
 /* ================= GLOBAL DATA ================= */
 let ALL_PAPERS = [];
 
+
 /* ================= LOAD PAPERS ================= */
-fetch("data/papers.json")
-  .then(res => res.json())
-  .then(data => {
-    ALL_PAPERS = data;
-    renderHomePapers(ALL_PAPERS);
-  })
-  .catch(err => {
-    console.error("Failed to load papers.json", err);
-  });
+document.addEventListener("DOMContentLoaded", function () {
+
+  fetch("data/papers.json")
+    .then(res => res.json())
+    .then(data => {
+      ALL_PAPERS = data;
+      renderHomePapers(ALL_PAPERS);
+    })
+    .catch(err => {
+      console.error("Failed to load papers.json", err);
+    });
+
+});
+
 
 /* ================= SEARCH ================= */
 function searchPapers() {
+
   const input = document.getElementById("searchInput");
   if (!input) return;
 
@@ -29,22 +41,25 @@ function searchPapers() {
   }
 
   const filtered = ALL_PAPERS.filter(p =>
-    p.title.toLowerCase().includes(query) ||
-    p.subtitle.toLowerCase().includes(query) ||
-    p.year.includes(query)
+    (p.title && p.title.toLowerCase().includes(query)) ||
+    (p.subtitle && p.subtitle.toLowerCase().includes(query)) ||
+    (p.year && p.year.toString().includes(query))
   );
 
   renderHomePapers(filtered);
+
 }
+
 
 /* ================= RENDER PAPERS ================= */
 function renderHomePapers(papers) {
-  const grid = document.querySelector(".research-grid");
+
+  const grid = document.getElementById("researchGrid");
   if (!grid) return;
 
   grid.innerHTML = "";
 
-  if (papers.length === 0) {
+  if (!papers || papers.length === 0) {
     grid.innerHTML = `
       <p style="text-align:center;width:100%;color:#666">
         No matching papers found.
@@ -53,23 +68,33 @@ function renderHomePapers(papers) {
   }
 
   papers.forEach(p => {
+
     const card = document.createElement("div");
     card.className = "research-card";
+    card.setAttribute("data-pdf", p.pdf);
 
     card.innerHTML = `
       <img src="${p.thumb}" alt="${p.title}">
       <h3>
         ${p.title}
-        <span>${p.subtitle} • ${p.year}</span>
+        <span>${p.subtitle || ""} ${p.year ? " • " + p.year : ""}</span>
       </h3>
+      <div class="view-count"></div>
     `;
 
-    card.onclick = () => openPDF(p.pdf);
+    card.onclick = function () {
+      openPDF(p.pdf);
+    };
+
     grid.appendChild(card);
+
   });
+
+  updateViewDisplays();
 }
 
-/* ================= PDF VIEWER ================= */
+
+/* ================= PDF OPEN (MOBILE SAFE) ================= */
 function openPDF(path) {
 
   // ===== VIEW COUNTER =====
@@ -85,20 +110,13 @@ function openPDF(path) {
 
   updateViewDisplays();
 
-  // ===== OPEN PDF =====
-  document.getElementById("pdfFrame").src = path;
-  document.getElementById("pdfViewer").classList.add("open");
+  // ===== OPEN PDF IN NEW TAB (MOBILE STABLE) =====
+  window.open(path, "_blank");
+
 }
 
 
-function closePDF() {
-  const viewer = document.getElementById("pdfViewer");
-  const frame = document.getElementById("pdfFrame");
-
-  frame.src = "";
-  viewer.classList.remove("open");
-  document.body.style.overflow = "auto";
-}
+/* ================= UPDATE VIEW DISPLAY ================= */
 function updateViewDisplays() {
 
   const views = JSON.parse(localStorage.getItem("paperViews") || "{}");
@@ -111,21 +129,28 @@ function updateViewDisplays() {
 
     const count = views[pdfPath] || 0;
 
-    let viewEl = card.querySelector(".view-count");
-
-    if (!viewEl) {
-      viewEl = document.createElement("div");
-      viewEl.className = "view-count";
-      viewEl.style.marginTop = "6px";
-      viewEl.style.fontSize = "13px";
-      viewEl.style.color = "#777";
-      card.appendChild(viewEl);
+    const viewEl = card.querySelector(".view-count");
+    if (viewEl) {
+      viewEl.innerText = count + " Views";
     }
 
-  viewEl.innerText = count + " Views";
-
-
   });
+
 }
 
 
+/* ================= SEARCH BUTTON AUTO BIND ================= */
+document.addEventListener("DOMContentLoaded", function () {
+
+  const searchBtn = document.getElementById("searchBtn");
+  const input = document.getElementById("searchInput");
+
+  if (searchBtn) {
+    searchBtn.addEventListener("click", searchPapers);
+  }
+
+  if (input) {
+    input.addEventListener("input", searchPapers);
+  }
+
+});
