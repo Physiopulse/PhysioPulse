@@ -11,9 +11,8 @@ const supabase = window.supabase.createClient(
 const yearEl = document.getElementById("year");
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-/* ================= LOAD PAPERS ================= */
+/* ================= LOAD PAPERS FROM SUPABASE ================= */
 async function loadPapers() {
-
   const { data, error } = await supabase
     .from("papers")
     .select("*")
@@ -27,23 +26,22 @@ async function loadPapers() {
   renderHomePapers(data);
 }
 
-document.addEventListener("DOMContentLoaded", loadPapers);
-
 /* ================= RENDER PAPERS ================= */
 function renderHomePapers(papers) {
-
   const grid = document.getElementById("researchGrid");
   if (!grid) return;
 
   grid.innerHTML = "";
 
-  if (!papers.length) {
-    grid.innerHTML = "<p>No papers found.</p>";
+  if (!papers || papers.length === 0) {
+    grid.innerHTML = `
+      <p style="text-align:center;width:100%;color:#666">
+        No research papers found.
+      </p>`;
     return;
   }
 
   papers.forEach(p => {
-
     const card = document.createElement("div");
     card.className = "research-card";
 
@@ -60,23 +58,32 @@ function renderHomePapers(papers) {
     `;
 
     card.onclick = () => openPDF(p.id, p.pdf_url);
-
     grid.appendChild(card);
   });
 }
 
-/* ================= PDF VIEW + VIEW COUNTER ================= */
-async function openPDF(id, url) {
+/* ================= OPEN PDF + INCREMENT VIEWS ================= */
+async function openPDF(id, pdfUrl) {
 
-  // Increase view count
-  await supabase.rpc("increment_views", { row_id: id });
+  // increment view count
+  const { data } = await supabase
+    .from("papers")
+    .select("views")
+    .eq("id", id)
+    .single();
 
-  // Open viewer
-  document.getElementById("pdfFrame").src = url;
-  document.getElementById("pdfViewer").classList.add("open");
+  const newViews = (data?.views || 0) + 1;
 
-  // Reload papers to refresh view count
+  await supabase
+    .from("papers")
+    .update({ views: newViews })
+    .eq("id", id);
+
   loadPapers();
+
+  // open viewer
+  document.getElementById("pdfFrame").src = pdfUrl;
+  document.getElementById("pdfViewer").classList.add("open");
 }
 
 function closePDF() {
@@ -85,23 +92,38 @@ function closePDF() {
 }
 
 /* ================= SEARCH ================= */
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
+
+  loadPapers();
 
   const input = document.getElementById("searchInput");
   const button = document.getElementById("searchBtn");
 
-  function runSearch() {
+  if (!input || !button) return;
+
+  async function runSearch() {
+
     const query = input.value.toLowerCase().trim();
 
-    const cards = document.querySelectorAll(".research-card");
+    if (!query) {
+      loadPapers();
+      return;
+    }
 
-    cards.forEach(card => {
-      const text = card.innerText.toLowerCase();
-      card.style.display = text.includes(query) ? "" : "none";
-    });
+    const { data } = await supabase
+      .from("papers")
+      .select("*");
+
+    const filtered = data.filter(p =>
+      p.title.toLowerCase().includes(query) ||
+      (p.subtitle || "").toLowerCase().includes(query) ||
+      (p.year || "").toLowerCase().includes(query)
+    );
+
+    renderHomePapers(filtered);
   }
 
   input.addEventListener("input", runSearch);
   button.addEventListener("click", runSearch);
-
 });
+
