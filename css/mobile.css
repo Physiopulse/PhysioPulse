@@ -1,265 +1,175 @@
-/* =========================
-   CLEAN PREMIUM MOBILE UI
-   ========================= */
+/* ===========================
+   MOBILE PREMIUM UI
+   =========================== */
 
 @media (max-width: 768px) {
+
+  /* ========= GLOBAL ========= */
 
   body {
     overflow-x: hidden;
   }
 
-  /* ================= HEADER ================= */
-
   .header {
-    padding: 14px 18px;
+    padding: 12px 16px;
   }
 
   .logo-img {
-    width: 34px;
-    height: 34px;
+    width: 32px;
   }
 
-  .logo,
+  .logo {
+    font-size: 16px;
+  }
+
   .logo2 {
-    font-size: 17px;
+    font-size: 16px;
   }
 
-  /* ================= HERO ================= */
+  /* ========= HERO SECTION ========= */
 
   .hero {
-    padding: 36px 20px 26px;
+    padding: 40px 20px 60px;
     border-bottom-left-radius: 28px;
     border-bottom-right-radius: 28px;
   }
 
   .hero-title {
-    font-size: 21px;
+    font-size: 22px;
     line-height: 1.4;
   }
 
   .hero-subtitle {
-    font-size: 13px;
-    margin-top: 12px;
+    font-size: 14px;
+    margin-top: 10px;
+    line-height: 1.6;
   }
 
-  /* ================= SEARCH BAR ================= */
-/* ================= PREMIUM MOBILE SEARCH ================= */
+  /* ========= SEARCH BAR (STABLE FLEX VERSION) ========= */
 
-@media (max-width: 768px) {
+  .search-box {
+    margin-top: 25px;
+    display: flex;
+    align-items: center;
+    background: #f3f3f3;
+    border-radius: 50px;
+    padding: 6px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+  }
 
-/* ================= PREMIUM MOBILE SEARCH – FIXED ALIGNMENT ================= */
+  .search-box input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 14px 18px;
+    font-size: 16px; /* critical to prevent zoom jump */
+    outline: none;
+  }
 
-.search-box {
-  position: relative;
-  width: 100%;
-  margin: 24px 0;
-  background: #ffffff;
-  border-radius: 60px;
-  padding: 12px 60px 12px 20px; /* less right padding */
-  box-shadow: 0 20px 40px rgba(0,0,0,0.18);
-}
+  .search-box button {
+    border: none;
+    background: linear-gradient(135deg,#1f7a7a,#2fa36b);
+    color: white;
+    padding: 12px 22px;
+    border-radius: 40px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
 
-.search-box input {
-  width: 100%;
-  border: none;
-  outline: none;
-  font-size: 15px;
-  font-weight: 500;
-  background: transparent;
-  color: #1f2933;
-}
+  .search-box button:active {
+    transform: scale(0.96);
+  }
 
-.search-box button {
-  position: absolute;
-  right: 20px;   /* 👈 tighter to right */
-  top: 50%;
-  transform: translateY(-50%);
-  border: none;
-  padding: 8px 18px;
-  border-radius: 40px;
-  background: linear-gradient(135deg, #1f7a7a, #2fa36b);
-  color: #ffffff;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 8px 20px rgba(31,122,122,0.35);
-  transition: all 0.25s ease;
-}
-
-.search-box button:active {
-  transform: translateY(-50%) scale(0.95);
-}
-
-}
-
-  /* ================= TAGS ================= */
+  /* ========= TAGS ========= */
 
   .tags {
+    margin-top: 20px;
     display: flex;
     flex-wrap: wrap;
+    gap: 10px;
     justify-content: center;
-    gap: 8px;
   }
 
   .tags span {
-    font-size: 11px;
-    padding: 6px 12px;
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-size: 12px;
   }
 
-  /* ================= SECTION TITLE ================= */
-
-  .recent-research {
-    padding: 30px 0 10px;
-  }
+  /* ========= SECTION TITLE ========= */
 
   .recent-research h2 {
-    font-size: 17px;
-    letter-spacing: 2px;
+    font-size: 16px;
+    letter-spacing: 1.5px;
+    margin-top: 40px;
   }
 
-  /* ================= SORT BUTTON ================= */
+  /* ========= SORT BUTTON ========= */
 
   select {
+    padding: 10px 18px;
+    border-radius: 30px;
     font-size: 13px;
-    padding: 6px 12px;
   }
 
-  /* ================= HORIZONTAL PAPER SCROLL ================= */
+  /* ========= HORIZONTAL PAPER SCROLL ========= */
 
   .research-grid {
     display: flex;
-    gap: 16px;
+    gap: 18px;
     overflow-x: auto;
-    padding: 20px 16px;
     scroll-snap-type: x mandatory;
+    padding: 10px 20px 30px;
+  }
+
+  .research-grid::-webkit-scrollbar {
+    display: none;
   }
 
   .research-card {
     min-width: 85%;
     flex: 0 0 auto;
-    scroll-snap-align: start;
+    scroll-snap-align: center;
+    border-radius: 18px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease;
+  }
+
+  .research-card:active {
+    transform: scale(0.97);
   }
 
   .research-card img {
-    height: 170px;
-    object-fit: cover;
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
   }
 
-  /* Hide scrollbar */
-  .research-grid::-webkit-scrollbar {
-    display: none;
+  .research-card h3 {
+    font-size: 15px;
+    padding: 14px;
   }
 
-}
-/* ===== FORCE SEARCH BUTTON STABILITY ===== */
-
-@media (max-width: 768px) {
-
-  .search-box {
-    overflow: hidden !important;
+  .research-card span {
+    font-size: 12px;
   }
 
-  .search-box button {
-    position: relative !important;
-    right: 0 !important;
-    transform: none !important;
+  /* ========= PDF VIEWER ========= */
+
+  .pdf-viewer iframe {
+    width: 100%;
+    height: 80vh;
   }
 
-}
-/* ================= HARD STOP FOR MOBILE SEARCH ANIMATION ================= */
+  /* ========= FOOTER ========= */
 
-@media (max-width: 768px) {
-
-  .search-box,
-  .search-box * {
-    animation: none !important;
+  .footer-container {
+    flex-direction: column;
+    gap: 30px;
   }
 
-  .search-box button {
-    transform: none !important;
-    position: relative !important;
-    right: 0 !important;
-    top: 0 !important;
+  .footer-col {
+    width: 100%;
   }
 
 }
-/* ===== REMOVE DESKTOP HOVER EFFECTS ON MOBILE ===== */
-
-@media (max-width: 768px) {
-
-  .search-box button:hover {
-    transform: none !important;
-  }
-
-  button:hover {
-    transform: none !important;
-  }
-
-}
-/* ===== HARD LOCK MOBILE SEARCH ALIGNMENT ===== */
-
-@media (max-width:768px){
-
-  .search-box{
-    position: relative !important;
-    padding: 14px 65px 14px 22px !important;
-  }
-
-  .search-box button{
-    position: absolute !important;
-    right: 8px !important;
-    left: auto !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    margin: 0 !important;
-    width: auto !important;
-  }
-
-}
-@media (max-width:768px){
-
-  /* Prevent mobile zoom jump */
-  .search-box input{
-    font-size:16px !important; /* critical */
-  }
-
-  /* Make search container stable */
-  .search-box{
-    display:flex !important;
-    align-items:center !important;
-    position:relative !important;
-    background:#f2f2f2;
-    border-radius:50px;
-    padding:6px;
-  }
-
-  .search-box input{
-    flex:1;
-    border:none;
-    background:transparent;
-    padding:14px 18px;
-    outline:none;
-  }
-
-  .search-box button{
-    position:relative !important;
-    right:auto !important;
-    top:auto !important;
-    transform:none !important;
-    border-radius:40px;
-    padding:12px 22px;
-    margin-left:8px;
-  }
-
-}
-
-
-
-
-
-
-
-
-
-
-
