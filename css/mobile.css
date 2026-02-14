@@ -216,6 +216,43 @@
   }
 
 }
+@media (max-width:768px){
+
+  /* Prevent mobile zoom jump */
+  .search-box input{
+    font-size:16px !important; /* critical */
+  }
+
+  /* Make search container stable */
+  .search-box{
+    display:flex !important;
+    align-items:center !important;
+    position:relative !important;
+    background:#f2f2f2;
+    border-radius:50px;
+    padding:6px;
+  }
+
+  .search-box input{
+    flex:1;
+    border:none;
+    background:transparent;
+    padding:14px 18px;
+    outline:none;
+  }
+
+  .search-box button{
+    position:relative !important;
+    right:auto !important;
+    top:auto !important;
+    transform:none !important;
+    border-radius:40px;
+    padding:12px 22px;
+    margin-left:8px;
+  }
+
+}
+
 
 
 
