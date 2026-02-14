@@ -80,8 +80,6 @@ function openPDF(path) {
   } else {
     views[path]++;
   }
-    // Open PDF in new tab (stable for mobile)
-  window.open(path, "_blank");
 
   localStorage.setItem("paperViews", JSON.stringify(views));
 
@@ -129,3 +127,4 @@ function updateViewDisplays() {
 
   });
 }
+
