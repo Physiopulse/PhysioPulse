@@ -1,7 +1,7 @@
 /* ================= SUPABASE INIT ================= */
 const { createClient } = window.supabase;
 
-const supabase = createClient(
+const client = createClient(
   "https://kfjcgpilaxbwddzlemqa.supabase.co",
   "sb_publishable_MsZECRHn-hpaXhAcZR_P-g_451qrrhF"
 );
@@ -12,9 +12,9 @@ const panel = document.getElementById("panel");
 const errorEl = document.getElementById("error");
 const paperList = document.getElementById("paperList");
 
-/* ================= AUTO SESSION CHECK ================= */
+/* ================= SESSION CHECK ================= */
 document.addEventListener("DOMContentLoaded", async () => {
-  const { data } = await supabase.auth.getSession();
+  const { data } = await client.auth.getSession();
   if (data.session) {
     showPanel();
   }
@@ -28,12 +28,7 @@ async function login() {
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value.trim();
 
-  if (!email || !password) {
-    errorEl.innerText = "Enter email and password";
-    return;
-  }
-
-  const { error } = await supabase.auth.signInWithPassword({
+  const { error } = await client.auth.signInWithPassword({
     email,
     password
   });
@@ -55,11 +50,11 @@ function showPanel() {
 
 /* ================= LOGOUT ================= */
 async function logout() {
-  await supabase.auth.signOut();
+  await client.auth.signOut();
   location.reload();
 }
 
-/* ================= PUBLISH PAPER ================= */
+/* ================= PUBLISH ================= */
 async function publish() {
 
   const title = document.getElementById("title").value.trim();
@@ -69,50 +64,50 @@ async function publish() {
   const thumbFile = document.getElementById("imgFile").files[0];
 
   if (!title || !pdfFile || !thumbFile) {
-    alert("Fill all required fields.");
+    alert("Fill required fields.");
     return;
   }
 
   /* ===== Upload PDF ===== */
   const pdfPath = `${Date.now()}-${pdfFile.name}`;
 
-  const { error: pdfError } = await supabase.storage
+  const { error: pdfError } = await client.storage
     .from("pdfs")
     .upload(pdfPath, pdfFile);
 
   if (pdfError) {
-    alert("PDF upload failed: " + pdfError.message);
+    alert(pdfError.message);
     return;
   }
 
-  const { data: pdfData } = supabase.storage
+  const { data: pdfData } = client.storage
     .from("pdfs")
     .getPublicUrl(pdfPath);
 
   /* ===== Upload Thumbnail ===== */
   const thumbPath = `${Date.now()}-${thumbFile.name}`;
 
-  const { error: thumbError } = await supabase.storage
+  const { error: thumbError } = await client.storage
     .from("thumbnails")
     .upload(thumbPath, thumbFile);
 
   if (thumbError) {
-    alert("Thumbnail upload failed: " + thumbError.message);
+    alert(thumbError.message);
     return;
   }
 
-  const { data: thumbData } = supabase.storage
+  const { data: thumbData } = client.storage
     .from("thumbnails")
     .getPublicUrl(thumbPath);
 
-  /* ===== Insert into DB ===== */
-  const { error: insertError } = await supabase
+  /* ===== Insert Database ===== */
+  const { error: insertError } = await client
     .from("papers")
     .insert([
       {
-        title: title,
-        subtitle: subtitle,
-        year: year,
+        title,
+        subtitle,
+        year,
         pdf_url: pdfData.publicUrl,
         thumb_url: thumbData.publicUrl,
         views: 0
@@ -120,7 +115,7 @@ async function publish() {
     ]);
 
   if (insertError) {
-    alert("Database insert failed: " + insertError.message);
+    alert(insertError.message);
     return;
   }
 
@@ -135,18 +130,15 @@ async function publish() {
   loadPapers();
 }
 
-/* ================= LOAD PUBLISHED PAPERS ================= */
+/* ================= LOAD PAPERS ================= */
 async function loadPapers() {
 
-  const { data, error } = await supabase
+  const { data, error } = await client
     .from("papers")
     .select("*")
     .order("created_at", { ascending: false });
 
-  if (error) {
-    console.error(error);
-    return;
-  }
+  if (error) return;
 
   paperList.innerHTML = "";
 
@@ -165,3 +157,4 @@ async function loadPapers() {
     paperList.appendChild(div);
   });
 }
+
