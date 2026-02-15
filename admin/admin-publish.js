@@ -1,20 +1,19 @@
 /* ================= SUPABASE INIT ================= */
-const { createClient } = window.supabase;
+const SUPABASE_URL = "https://kfjcgpilaxbwddzlemqa.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_MsZECRHn-hpaXhAcZR_P-g_451qrrh"; // keep your real key
 
-const client = createClient(
-  "https://kfjcgpilaxbwddzlemqa.supabase.co",
-  "sb_publishable_MsZECRHn-hpaXhAcZR_P-g_451qrrhF"
-);
+const { createClient } = window.supabase;
+const supabaseClient = createClient("https://kfjcgpilaxbwddzlemqa.supabase.co","sb_publishable_MsZECRHn-hpaXhAcZR_P-g_451qrrh" );
 
 /* ================= ELEMENTS ================= */
 const loginBox = document.getElementById("loginBox");
 const panel = document.getElementById("panel");
-const errorEl = document.getElementById("error");
-const paperList = document.getElementById("paperList");
+const errorBox = document.getElementById("error");
 
-/* ================= SESSION CHECK ================= */
+/* ================= CHECK SESSION ================= */
 document.addEventListener("DOMContentLoaded", async () => {
-  const { data } = await client.auth.getSession();
+  const { data } = await supabaseClient.auth.getSession();
+
   if (data.session) {
     showPanel();
   }
@@ -22,35 +21,33 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 /* ================= LOGIN ================= */
 async function login() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-  errorEl.innerText = "";
-
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value.trim();
-
-  const { error } = await client.auth.signInWithPassword({
+  const { error } = await supabaseClient.auth.signInWithPassword({
     email,
     password
   });
 
   if (error) {
-    errorEl.innerText = "Invalid credentials";
+    errorBox.innerText = "Invalid credentials";
     return;
   }
 
   showPanel();
 }
 
+/* ================= LOGOUT ================= */
+async function logout() {
+  await supabaseClient.auth.signOut();
+  location.reload();
+}
+
 /* ================= SHOW PANEL ================= */
 function showPanel() {
   loginBox.classList.add("hidden");
   panel.classList.remove("hidden");
-}
-
-/* ================= LOGOUT ================= */
-async function logout() {
-  await client.auth.signOut();
-  location.reload();
+  loadPapers();
 }
 
 /* ================= PUBLISH ================= */
@@ -59,18 +56,19 @@ async function publish() {
   const title = document.getElementById("title").value.trim();
   const subtitle = document.getElementById("subtitle").value.trim();
   const year = document.getElementById("year").value.trim();
-  const pdfFile = document.getElementById("pdfFile").files[0];
-  const thumbFile = document.getElementById("imgFile").files[0];
 
-  if (!title || !pdfFile || !thumbFile) {
-    alert("Fill required fields.");
+  const pdfFile = document.getElementById("pdfFile").files[0];
+  const imgFile = document.getElementById("imgFile").files[0];
+
+  if (!title || !pdfFile || !imgFile) {
+    alert("Please complete all required fields.");
     return;
   }
 
   /* ===== Upload PDF ===== */
   const pdfPath = `pdfs/${Date.now()}-${pdfFile.name}`;
 
-  const { error: pdfError } = await client.storage
+  const { error: pdfError } = await supabaseClient.storage
     .from("pdfs")
     .upload(pdfPath, pdfFile);
 
@@ -79,28 +77,28 @@ async function publish() {
     return;
   }
 
-  const { data: pdfData } = client.storage
+  const { data: pdfData } = supabaseClient.storage
     .from("pdfs")
     .getPublicUrl(pdfPath);
 
-  /* ===== Upload Thumbnail ===== */
-  const thumbPath = `${Date.now()}-${thumbFile.name}`;
+  /* ===== Upload Image ===== */
+  const imgPath = `thumbs/${Date.now()}-${imgFile.name}`;
 
-  const { error: thumbError } = await client.storage
+  const { error: imgError } = await supabaseClient.storage
     .from("thumbnails")
-    .upload(thumbPath, thumbFile);
+    .upload(imgPath, imgFile);
 
-  if (thumbError) {
-    alert(thumbError.message);
+  if (imgError) {
+    alert(imgError.message);
     return;
   }
 
-  const { data: thumbData } = client.storage
+  const { data: imgData } = supabaseClient.storage
     .from("thumbnails")
-    .getPublicUrl(thumbPath);
+    .getPublicUrl(imgPath);
 
   /* ===== Insert Database ===== */
-  const { error: insertError } = await client
+  const { error: insertError } = await supabaseClient
     .from("papers")
     .insert([
       {
@@ -108,7 +106,7 @@ async function publish() {
         subtitle,
         year,
         pdf_url: pdfData.publicUrl,
-        thumb_url: thumbData.publicUrl,
+        thumb_url: imgData.publicUrl,
         views: 0
       }
     ]);
@@ -118,85 +116,44 @@ async function publish() {
     return;
   }
 
-  alert("Paper published successfully!");
-
-  document.getElementById("title").value = "";
-  document.getElementById("subtitle").value = "";
-  document.getElementById("year").value = "";
-  document.getElementById("pdfFile").value = "";
-  document.getElementById("imgFile").value = "";
-
+  alert("Paper Published Successfully!");
   loadPapers();
 }
 
 /* ================= LOAD PAPERS ================= */
-async function publish() {
+async function loadPapers() {
 
-  const title = document.getElementById("title").value.trim();
-  const subtitle = document.getElementById("subtitle").value.trim();
-  const year = document.getElementById("year").value.trim();
-
-  const pdfFile = document.getElementById("pdfFile").files[0];
-  const thumbFile = document.getElementById("imgFile").files[0];
-
-  if (!title || !pdfFile || !thumbFile) {
-    alert("Please complete all required fields.");
-    return;
-  }
-
-  // 🚀 IMPORTANT: DO NOT ADD .pdf manually
-  const pdfPath = `pdfs/${Date.now()}-${pdfFile.name}`;
-
-  const { error: pdfError } = await supabase.storage
-    .from("pdfs")
-    .upload(pdfPath, pdfFile);
-
-  if (pdfError) {
-    console.error(pdfError);
-    alert("PDF upload failed.");
-    return;
-  }
-
-  const { data: pdfData } = supabase.storage
-    .from("pdfs")
-    .getPublicUrl(pdfPath);
-
-  // 🚀 IMPORTANT: DO NOT ADD .png or .jpg manually
-  const thumbPath = `thumbs/${Date.now()}-${thumbFile.name}`;
-
-  const { error: thumbError } = await supabase.storage
-    .from("thumbnails")
-    .upload(thumbPath, thumbFile);
-
-  if (thumbError) {
-    console.error(thumbError);
-    alert("Thumbnail upload failed.");
-    return;
-  }
-
-  const { data: thumbData } = supabase.storage
-    .from("thumbnails")
-    .getPublicUrl(thumbPath);
-
-  const { error: insertError } = await supabase
+  const { data, error } = await supabaseClient
     .from("papers")
-    .insert([{
-      title,
-      subtitle,
-      year,
-      pdf_url: pdfData.publicUrl,
-      thumb_url: thumbData.publicUrl,
-      views: 0
-    }]);
+    .select("*")
+    .order("created_at", { ascending: false });
 
-  if (insertError) {
-    console.error(insertError);
-    alert("Database insert failed.");
+  if (error) {
+    console.error(error);
     return;
   }
 
-  alert("Paper published successfully!");
+  const paperList = document.getElementById("paperList");
+  paperList.innerHTML = "";
+
+  if (!data.length) {
+    paperList.innerHTML = "<p>No papers published yet.</p>";
+    return;
+  }
+
+  data.forEach(p => {
+    const div = document.createElement("div");
+    div.className = "paper";
+
+    div.innerHTML = `
+      <strong>${p.title}</strong><br>
+      <small>${p.subtitle || ""} ${p.year ? " • " + p.year : ""}</small>
+    `;
+
+    paperList.appendChild(div);
+  });
 }
+
 
 
 
