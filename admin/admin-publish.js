@@ -45,7 +45,6 @@ async function login() {
 function showPanel() {
   loginBox.classList.add("hidden");
   panel.classList.remove("hidden");
-  loadPapers();
 }
 
 /* ================= LOGOUT ================= */
@@ -198,6 +197,7 @@ async function publish() {
 
   alert("Paper published successfully!");
 }
+
 
 
 
