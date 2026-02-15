@@ -69,7 +69,7 @@ async function publish() {
   }
 
   /* ===== Upload PDF ===== */
-  const pdfPath = `${Date.now()}-${pdfFile.name}`;
+  const pdfPath = `pdfs/${Date.now()}-${pdfFile.name}`;
 
   const { error: pdfError } = await client.storage
     .from("pdfs")
@@ -157,4 +157,5 @@ async function loadPapers() {
     paperList.appendChild(div);
   });
 }
+
 
