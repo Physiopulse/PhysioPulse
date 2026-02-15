@@ -3,9 +3,11 @@
 const SUPABASE_URL = "https://kfjcgpilaxbwddzlemqa.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_MsZECRHn-hpaXhAcZR_P-g_451qrrhF"; // put full key
 
-const supabaseClient = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_ANON_KEY
+const { createClient } = window.supabase;
+
+const supabase = createClient(
+  "https://kfjcgpilaxbwddzlemqa.supabase.co",
+  "sb_publishable_MsZECRHn-hpaXhAcZR_P-g_451qrrhF"
 );
 
 /* ================= ELEMENTS ================= */
@@ -131,3 +133,4 @@ async function publish() {
   document.getElementById("pdfFile").value = "";
   document.getElementById("imgFile").value = "";
 }
+
