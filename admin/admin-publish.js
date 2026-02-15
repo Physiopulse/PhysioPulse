@@ -131,31 +131,73 @@ async function publish() {
 }
 
 /* ================= LOAD PAPERS ================= */
-async function loadPapers() {
+async function publish() {
 
-  const { data, error } = await client
-    .from("papers")
-    .select("*")
-    .order("created_at", { ascending: false });
+  const title = document.getElementById("title").value.trim();
+  const subtitle = document.getElementById("subtitle").value.trim();
+  const year = document.getElementById("year").value.trim();
 
-  if (error) return;
+  const pdfFile = document.getElementById("pdfFile").files[0];
+  const thumbFile = document.getElementById("imgFile").files[0];
 
-  paperList.innerHTML = "";
-
-  if (!data.length) {
-    paperList.innerHTML = "<p>No papers published yet.</p>";
+  if (!title || !pdfFile || !thumbFile) {
+    alert("Please complete all required fields.");
     return;
   }
 
-  data.forEach(paper => {
-    const div = document.createElement("div");
-    div.className = "paper";
-    div.innerHTML = `
-      <strong>${paper.title}</strong><br>
-      <small>${paper.subtitle || ""} ${paper.year ? " • " + paper.year : ""}</small>
-    `;
-    paperList.appendChild(div);
-  });
+  // 🚀 IMPORTANT: DO NOT ADD .pdf manually
+  const pdfPath = `pdfs/${Date.now()}-${pdfFile.name}`;
+
+  const { error: pdfError } = await supabase.storage
+    .from("pdfs")
+    .upload(pdfPath, pdfFile);
+
+  if (pdfError) {
+    console.error(pdfError);
+    alert("PDF upload failed.");
+    return;
+  }
+
+  const { data: pdfData } = supabase.storage
+    .from("pdfs")
+    .getPublicUrl(pdfPath);
+
+  // 🚀 IMPORTANT: DO NOT ADD .png or .jpg manually
+  const thumbPath = `thumbs/${Date.now()}-${thumbFile.name}`;
+
+  const { error: thumbError } = await supabase.storage
+    .from("thumbnails")
+    .upload(thumbPath, thumbFile);
+
+  if (thumbError) {
+    console.error(thumbError);
+    alert("Thumbnail upload failed.");
+    return;
+  }
+
+  const { data: thumbData } = supabase.storage
+    .from("thumbnails")
+    .getPublicUrl(thumbPath);
+
+  const { error: insertError } = await supabase
+    .from("papers")
+    .insert([{
+      title,
+      subtitle,
+      year,
+      pdf_url: pdfData.publicUrl,
+      thumb_url: thumbData.publicUrl,
+      views: 0
+    }]);
+
+  if (insertError) {
+    console.error(insertError);
+    alert("Database insert failed.");
+    return;
+  }
+
+  alert("Paper published successfully!");
 }
+
 
 
