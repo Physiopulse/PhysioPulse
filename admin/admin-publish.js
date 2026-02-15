@@ -1,8 +1,5 @@
 /* ================= SUPABASE CONFIG ================= */
 
-const SUPABASE_URL = "https://kfjcgpilaxbwddzlemqa.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_MsZECRHn-hpaXhAcZR_P-g_451qrrhF"; // put full key
-
 const { createClient } = window.supabase;
 
 const supabase = createClient(
@@ -133,4 +130,5 @@ async function publish() {
   document.getElementById("pdfFile").value = "";
   document.getElementById("imgFile").value = "";
 }
+
 
